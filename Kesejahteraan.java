@@ -74,7 +74,7 @@ public class Kesejahteraan{
         this.isBuangAir = isBuangAir;
     }
 
-    public boolean isAlive(int mood, int hunger, int health) throws DeadException{
+    public boolean isAlive() throws DeadException{
         if (mood <= 0 ||  hunger <= 0 || health <= 0 ){
             throw new DeadException();
         }
