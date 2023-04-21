@@ -8,12 +8,12 @@ public class Kesejahteraan{
     private boolean isSleep;
     private boolean isBuangAir;
 
-    public Kesejahteraan (int mood, int hunger, int health, boolean isSleep, boolean isBuangAir){
-        this.mood = mood;
-        this.hunger =  hunger;
-        this.health = health;
-        this.isSleep  = isSleep;
-        this.isBuangAir = isBuangAir;
+    public Kesejahteraan (){
+        this.mood = 100;
+        this.hunger =  100;
+        this.health = 100;
+        this.isSleep  = true;
+        this.isBuangAir = true;
     }
 
     public int getMood(){
