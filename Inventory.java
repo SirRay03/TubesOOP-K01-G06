@@ -3,8 +3,6 @@ import java.util.ArrayList;
 public class Inventory {
     private static ArrayList<String> objects;
 
-    //Konstruktor 
-
     public Inventory () {
         objects = new ArrayList<String>();
     }
