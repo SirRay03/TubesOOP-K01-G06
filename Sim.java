@@ -10,6 +10,8 @@ public class Sim {
     private String status; 
     private Point point;
     private Inventory inventory; 
+    private Rumah currentRumah;
+    private Ruangan currentRuangan;
 
     /**
      * Konstruktor
@@ -25,7 +27,6 @@ public class Sim {
         this.point = new Point(0,0);
         this.inventory = new Inventory();
         this.status = "-";
-
     }
     public String getFirstName() {
         return this.firstName;
@@ -68,7 +69,37 @@ public class Sim {
         return this.kesejahteraan;
     }
 
-    public Point getLocation() {
+    public Point getPoint() {
         return this.point;
     }
+
+    public void setPoint(Point point) {
+       this.point = point;
+    }
+
+    public Rumah getcurrentRumah () {
+        return currentRumah;
+    }
+
+    public void setRumah (Rumah rumah) {
+        this.currentRumah = rumah;
+    }
+
+    public Ruangan getcurrentRuangan() {
+        return currentRuangan;
+    }
+
+    public void pindahRuangan (Ruangan ruangan)
+    {
+        this.currentRuangan = ruangan;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void viewCurrentLocation () {
+        System.out.println("lalala");
+    }
+
 }
