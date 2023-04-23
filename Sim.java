@@ -101,5 +101,16 @@ public class Sim {
     public void viewCurrentLocation () {
         System.out.println("lalala");
     }
-
+    public void ngobrol(Sim sim){
+        this.kesejahteraan.setHunger(-10);
+        this.kesejahteraan.setHealth(15);
+        this.kesejahteraan.setMood(15);
+        sim.kesejahteraan.setHunger(-10);
+        sim.kesejahteraan.setHealth(15);
+        sim.kesejahteraan.setMood(15);
+        this.setRumah(sim.getcurrentRumah());
+        this.pindahRuangan(sim.getcurrentRuangan());
+        this.setPoint(sim.getPoint());
+        //set waktunya belum 
+    }
 }
