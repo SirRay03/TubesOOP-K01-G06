@@ -102,28 +102,23 @@ public class Sim {
         System.out.println("lalala"); // msh bingung cara nampilin satu2
     }
 
-    /*
-    buat method menulis
-        // Scanner scan = new Scanner(System.in);
-
-        // System.out.println("Masukkan kata atau kalimat yang ingin ditulis:");
-
-        // // String input
-        // String tulisan = scan.nextLine();
-        // // Output input by user
-        // System.out.println(tulisan);
-    */
-
     public void ngobrol(Sim sim){
         this.kesejahteraan.setHunger(-10);
         this.kesejahteraan.setHealth(15);
         this.kesejahteraan.setMood(15);
-        sim.kesejahteraan.setHunger(-10);
-        sim.kesejahteraan.setHealth(15);
-        sim.kesejahteraan.setMood(15);
-        this.setRumah(sim.getcurrentRumah());
-        this.pindahRuangan(sim.getcurrentRuangan());
+        this.kesejahteraan.setHunger(-10);
+        this.kesejahteraan.setHealth(15);
+        this.kesejahteraan.setMood(15);
+        this.setRumah(this.getcurrentRumah());
+        this.pindahRuangan(this.getcurrentRuangan());
         this.setPoint(sim.getPoint());
         //set waktunya belum 
+    }
+
+    public void ViewSimInfo() {
+        System.out.println("Nama sim : " + getFullName());
+        System.out.println("Pekerjaan sim : " + getPekerjaan());
+        System.out.println("Kesejahteraan sim : " + getKesejahteraan());
+        System.out.println("Jumlah uang sim : " + getMoney());
     }
 }
