@@ -1,18 +1,14 @@
 import java.util.ArrayList;
 
 public class Inventory {
-    private static ArrayList<String> objects;
+    private static ArrayList<Object> objects;
 
     public Inventory () {
-        objects = new ArrayList<String>();
+        objects = new ArrayList<Object>();
     }
 
-    public String melihatInventory () {
-        String output = "";
-        for (String objek : objects) {
-            output += objek + "\n";
-        }
-        return output;
+    public ArrayList<Object> getObjects() {
+        return objects;
     }
 
     public void addObjek (String objek) {
@@ -48,4 +44,13 @@ public class Inventory {
             objects.add(Integer.toString(jumlah));
         }
     }
+
+    public String melihatInventory () {
+        String output = "";
+        for (String objek : objects) {
+            output += objek + "\n";
+        }
+        return output;
+    }
 }
+
