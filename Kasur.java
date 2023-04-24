@@ -18,7 +18,7 @@ public class Kasur extends NonMakanan {
     public Kasur(tipeKasur tipe){
         super(tipe.harga, tipe.panjang, tipe.lebar);
     }
-    public void menulis(){
+    public void tidur(){
         //implementation code goes here
     }
 }
