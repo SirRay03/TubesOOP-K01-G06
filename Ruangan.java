@@ -38,6 +38,9 @@ public class Ruangan {
                     }
                 }
                 listBarang.add(barang);
+                while(barang.getPanjang()<0 || barang.getLebar()<0){
+                    rotateRight(barang);
+                }
             }
             else{
                 System.out.println("Ada objek lain");
@@ -55,5 +58,17 @@ public class Ruangan {
             System.out.println(a);
             i++;
         }
-    }      
+    }
+    public void rotateRight(NonMakanan barang){
+        int temp;
+        temp = barang.getLebar();
+        barang.setLebar(barang.getPanjang());
+        barang.setPanjang(temp*-1);
+    }   
+    public void rotateLeft(NonMakanan barang){
+        int temp;
+        temp = barang.getPanjang();
+        barang.setPanjang(barang.getLebar());
+        barang.setLebar(temp*-1);
+    }    
 }
