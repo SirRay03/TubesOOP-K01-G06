@@ -3,6 +3,7 @@ import java.util.*;
 public class Inventory {
     private Map<String, Integer> items;
 
+    // konstruktor
     public Inventory() {
         this.items = new HashMap<>();
     }
@@ -39,42 +40,42 @@ public class Inventory {
         }
     }
 
-    public static void main(String[] args) {
-        Inventory inventory = new Inventory();
-        Scanner scanner = new Scanner(System.in);
+    // public static void main(String[] args) {
+    //     Inventory inventory = new Inventory();
+    //     Scanner scanner = new Scanner(System.in);
 
-        while (true) {
-            System.out.println("Masukkan perintah (add/remove/exit):");
-            String command = scanner.next();
+    //     while (true) {
+    //         System.out.println("Masukkan perintah (add/remove/exit):");
+    //         String command = scanner.next();
 
-            if (command.equalsIgnoreCase("add")) {
-                System.out.println("Masukkan nama item:");
-                String itemName = scanner.next();
+    //         if (command.equalsIgnoreCase("add")) {
+    //             System.out.println("Masukkan nama item:");
+    //             String itemName = scanner.next();
 
-                System.out.println("Masukkan jumlah item:");
-                int quantity = scanner.nextInt();
+    //             System.out.println("Masukkan jumlah item:");
+    //             int quantity = scanner.nextInt();
 
-                inventory.addItem(itemName, quantity);
-                System.out.println("Item berhasil ditambahkan ke inventory.");
-            } else if (command.equalsIgnoreCase("remove")) {
-                System.out.println("Masukkan nama item:");
-                String itemName = scanner.next();
+    //             inventory.addItem(itemName, quantity);
+    //             System.out.println("Item berhasil ditambahkan ke inventory.");
+    //         } else if (command.equalsIgnoreCase("remove")) {
+    //             System.out.println("Masukkan nama item:");
+    //             String itemName = scanner.next();
 
-                System.out.println("Masukkan jumlah item:");
-                int quantity = scanner.nextInt();
+    //             System.out.println("Masukkan jumlah item:");
+    //             int quantity = scanner.nextInt();
 
-                inventory.removeItem(itemName, quantity);
-                System.out.println("Item berhasil dihapus dari inventory.");
-            } else if (command.equalsIgnoreCase("exit")) {
-                break;
-            } else {
-                System.out.println("Perintah tidak dikenali.");
-            }
+    //             inventory.removeItem(itemName, quantity);
+    //             System.out.println("Item berhasil dihapus dari inventory.");
+    //         } else if (command.equalsIgnoreCase("exit")) {
+    //             break;
+    //         } else {
+    //             System.out.println("Perintah tidak dikenali.");
+    //         }
             
-            System.out.println("Isi Inventory:");
-            inventory.displayInventory();
-            System.out.println();
-        }
-        scanner.close();
-    }
+    //         System.out.println("Isi Inventory:");
+    //         inventory.displayInventory();
+    //         System.out.println();
+    //     }
+    //     scanner.close();
+    // }
 }
