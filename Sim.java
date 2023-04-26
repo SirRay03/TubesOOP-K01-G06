@@ -9,7 +9,7 @@ public class Sim {
     Kesejahteraan kesejahteraan;
     private String status; 
     private Point point;
-    private Inventory<Item> inventory; 
+    private Inventory<Item> inventory;
     private Rumah currentRumah;
     private Ruangan currentRuangan;
 
