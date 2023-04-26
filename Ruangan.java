@@ -2,9 +2,13 @@
 // file sementara buat manggil ruangan di sim
 
 public class Ruangan {
-    private int namaruangan;
+    private String namaRuangan;
 
-    public Ruangan () {
+    public Ruangan(String namaRuangan) {
+        this.namaRuangan = namaRuangan;
+    }
 
+    public String getNamaRuangan() {
+        return namaRuangan;
     }
 }
