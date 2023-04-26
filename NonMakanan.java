@@ -1,5 +1,5 @@
 import java.util.Random;
-public abstract class NonMakanan implements Item{
+public abstract class NonMakanan implements Item, Actionable{
     protected int panjang; 
     protected int lebar; 
     protected int harga;

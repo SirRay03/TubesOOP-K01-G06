@@ -1,5 +1,6 @@
 public class Main{
     public static void main(String[] args){
-        System.out.println("Hello World!");
+        Kompor k1 = new Kompor(Kompor.tipeKompor.Gas);
+        k1.memasak("Nasi Ayam");
     }
 }
