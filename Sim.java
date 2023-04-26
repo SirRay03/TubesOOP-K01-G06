@@ -6,10 +6,10 @@ public class Sim {
     private String lastName;
     private String pekerjaan;
     private int uang;
-    private Kesejahteraan kesejahteraan;
+    Kesejahteraan kesejahteraan;
     private String status; 
     private Point point;
-    private Inventory inventory; 
+    private Inventory<Item> inventory; 
     private Rumah currentRumah;
     private Ruangan currentRuangan;
 
@@ -25,7 +25,7 @@ public class Sim {
         this.uang = 100;
         this.kesejahteraan = new Kesejahteraan();
         this.point = new Point(0,0);
-        this.inventory = new Inventory();
+        this.inventory = new Inventory<Item> ();
         this.status = "-";
     }
     public String getFirstName() {
@@ -94,7 +94,7 @@ public class Sim {
         this.currentRuangan = ruangan;
     }
 
-    public Inventory getInventory() {
+    public Inventory<Item> getInventory() {
         return inventory;
     }
 
