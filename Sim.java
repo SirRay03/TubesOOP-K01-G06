@@ -88,6 +88,10 @@ public class Sim {
     public Ruangan getcurrentRuangan() {
         return currentRuangan;
     }
+    
+    public void setcurrentRuangan(Ruangan ruangan){
+        this.currentRuangan = ruangan;
+    }
 
     public void pindahRuangan (Ruangan ruangan)
     {
