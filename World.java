@@ -2,7 +2,6 @@ public class World{
     public int height; //lebar
     public int width; //panjang
     private ArrayList<Point> listofRumah;
-    //private HashMap<x,y> listofRumah;
     private char[][] grid;
 
 
@@ -11,8 +10,6 @@ public class World{
         this.height = height;
         this.grid = new char[height][width];
         listofRumah = new ArrayList<Point>;
-        //listofRumah = new HashMap<x,y>();
-        //Map();
     }
 
     public void Map() {
@@ -21,9 +18,6 @@ public class World{
         }
     }
 
-    /* public void addEntity(int x, int y, char entity) {
-        grid[y][x] = entity;
-    } */
 
     public void addRumah(int x, int y) {
         grid[y][x] = ' ';
