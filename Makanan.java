@@ -1,9 +1,41 @@
-public abstract class Makanan {
+import java.util.*;
+
+public abstract class Makanan implements Item{
     protected String nama;
     protected int kekenyangan;
+    private long waktuPengantaran;
+    private long waktuMulai;
+
     public Makanan(String nama, int kekenyangan){
         this.nama = nama;
         this.kekenyangan = kekenyangan;
+        this.waktuPengantaran = 0;
+        this.waktuMulai = 0;
+    }
+
+    public long getWaktuPengantaran(){
+        return waktuPengantaran;
+    }
+    public long getWaktuMulai(){
+        return waktuMulai;
+    };
+    public void beliBarang(Sim sim){
+        Random random = new Random();
+        waktuPengantaran = (random.nextInt(4000) + 1000)*3000;
+        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran);       
+        new Thread(() -> {
+            try {
+                sim.addToListOnDelivery(this); 
+                waktuMulai = System.currentTimeMillis();
+                Thread.sleep(waktuPengantaran);
+                sim.deleteFromListOnDelivery(this);
+                waktuMulai = 0;
+            } catch (InterruptedException e) {
+                System.out.println("Aksi terganggu!");
+            }
+            sim.getInventory().addItem(this, 1);
+        }).start();
+
     }
 
 /**
