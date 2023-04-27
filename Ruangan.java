@@ -133,4 +133,17 @@ public class Ruangan {
         barang.setPanjang(barang.getLebar());
         barang.setLebar(temp*-1);
     }    
+
+// file sementara buat manggil ruangan di sim
+
+public class Ruangan {
+    private String namaRuangan;
+
+    public Ruangan(String namaRuangan) {
+        this.namaRuangan = namaRuangan;
+    }
+
+    public String getNamaRuangan() {
+        return namaRuangan;
+    }
 }
