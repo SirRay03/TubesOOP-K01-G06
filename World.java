@@ -1,20 +1,42 @@
-public class World {
-    private int Lebar = 16; //lebar
-    private int Panjang = 16; //panjang
-    private ArrayList<Rumah> listofRumah;
-    private static long = System.currentTimeMillis();
+public class World{
+    public int height; //lebar
+    public int width; //panjang
+    private ArrayList<Point> listofRumah;
+    private char[][] grid;
 
-    public World(Lebar lebar, Panjang panjang){
-        this.Lebar = lebar;
-        this.Panjang = panjang;
-        listofRumah = new ArrayList<Rumah>();
+
+    public World(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.grid = new char[height][width];
+        listofRumah = new ArrayList<Point>;
     }
 
-    public static void getTime(){ 
+    public void Map() {
+        for (int i = 0; i < height; i++) {
+            Arrays.fill(grid[i], '*');
+        }
+    }
+
+
+    public void addRumah(int x, int y) {
+        grid[y][x] = ' ';
+        //masukin point rumah ke listofRumah
+        listofRumah.add(x,y);
+
 
     }
 
-    public static void waktuPindah(Rumah rumah1, Rumah rumah2){
-
+    public void displayWorld() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                System.out.print(grid[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+    public void main(String[] args){
+        displayWorld();
     }
 }
+
