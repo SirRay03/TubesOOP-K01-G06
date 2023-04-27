@@ -11,6 +11,10 @@ public class Sim {
     private String status; 
     private Point point;
     private Inventory inventory; 
+    Kesejahteraan kesejahteraan;
+    private String status; 
+    private Point point;
+    private Inventory<Item> inventory;
     private Rumah currentRumah;
     private Ruangan currentRuangan;
 
@@ -27,6 +31,7 @@ public class Sim {
         this.kesejahteraan = new Kesejahteraan();
         this.point = new Point(0,0);
         this.inventory = new Inventory();
+        this.inventory = new Inventory<Item> ();
         this.status = "-";
     }
     public String getFirstName() {
@@ -45,6 +50,11 @@ public class Sim {
     }
 
     public void setMoney(int uang) {
+    public int getUang() {
+        return this.uang;
+    }
+
+    public void setUang(int uang) {
         this.uang = uang;
     }
 
@@ -89,6 +99,10 @@ public class Sim {
     public Ruangan getcurrentRuangan() {
         return currentRuangan;
     }
+    
+    public void setcurrentRuangan(Ruangan ruangan){
+        this.currentRuangan = ruangan;
+    }
 
     public void pindahRuangan (Ruangan ruangan)
     {
@@ -96,6 +110,8 @@ public class Sim {
     }
 
     public Inventory getInventory() {
+    public Inventory<Item> getInventory() {
+
         return inventory;
     }
 
@@ -143,12 +159,27 @@ public class Sim {
             default:
                 System.out.println("Merenunglah kembali!");
             }
-    }
 
     public void ViewSimInfo() {
         System.out.println("Nama sim : " + getFullName());
         System.out.println("Pekerjaan sim : " + getPekerjaan());
         System.out.println("Kesejahteraan sim : " + getKesejahteraan());
         System.out.println("Jumlah uang sim : " + getMoney());
+    }
+}      
+    public int getPosisiX() {
+        return this.point.getX();
+    }
+
+    public int getPosisiY() {
+        return this.point.getY();
+    }
+
+    public void setPosisiX(int x) {
+        this.point.setX(x);
+    }
+
+    public void setPosisiY(int y) {
+        this.point.setY(y);
     }
 }
