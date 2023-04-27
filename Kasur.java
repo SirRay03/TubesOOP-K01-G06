@@ -1,3 +1,5 @@
+import java.util.Scanner; 
+
 public class Kasur extends NonMakanan {
     public enum tipeKasur{
         Single(50, 4, 1),
@@ -25,9 +27,62 @@ public class Kasur extends NonMakanan {
         //misal: doAction(Sim sima, String contoh)
         //brarti cara akses parameter pertama nya : Sim sima = (Sim) args[0]
         //brarti cara akses parameter kedua nya : String contoh = (String) args[1]
+        Sim sim = (Sim) args[0];
+        sim.setStatus("Sim sedang tidur");
+        Scanner scan = new Scanner(System.in);
+        boolean valid = false;
+        int duration = 1;
+        while (!valid) 
+        {
+            try 
+            {
+                System.out.print("Masukkan durasi tidur (dalem detik dan kelipatan 240): ");
+                duration = scan.nextInt();
+                valid = true;
+            }
+            catch (Exception e)
+            {
+                System.out.println("Input tidak valid. Masukkan input berupa angka!");
+                scan.nextLine();
+            }
+        }
+        while (duration % 240 != 0)
+        {
+            System.out.println("Input harus berupa kelipatan 240! Silakan input ulang!");
+            valid = false;
+            while (!valid)
+            {
+                try 
+                {
+                    System.out.print("Masukkan durasi tidur (dalem detik dan kelipatan 240):");
+                    duration = scan.nextInt();
+                    valid = true;
+                }
+                catch (Exception e) 
+                {
+                    System.out.println("Input tidak valid. Masukkan input berupa angka!");
+                    scan.nextLine();
+                }
+            }
+        }
+        int totalDurasi = duration;
+        Thread t = new Thread(()->{
+        try{
+                Thread.sleep(totalDurasi * 1000); 
+                System.out.println("Bangun tidur");
+                sim.getKesejahteraan().setMood(20*(totalDurasi/240)); 
+                sim.getKesejahteraan().setHealth(30*(totalDurasi/240)); 
+                //world.addWaktu(totalDurasi)
+                sim.resetTimerBelumTidurAfterSleep();
+            }
+            catch(InterruptedException e){
+                System.out.println("Proses tidur terganggu");
+            }
+        });
+        System.out.println("Sim sedang tidur zzz...");
+        t.start();
     }
 }
-
 
 /**
 

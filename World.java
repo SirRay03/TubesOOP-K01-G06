@@ -1,42 +1,79 @@
+import java.util.ArrayList;
+
+
 public class World{
-    public int height; //lebar
-    public int width; //panjang
+    private int panjang;
+    private int lebar;
     private ArrayList<Point> listofRumah;
-    private char[][] grid;
+    private char[][] map; // declare a 2D char array to store the map
+    private long time;
+    private ArrayList<Sim> listofSims;
 
-
-    public World(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.grid = new char[height][width];
-        listofRumah = new ArrayList<Point>;
+    public World(int panjang, int lebar){
+        this.panjang = panjang;
+        this.lebar = lebar;
+        this.map = new char[lebar * 2 + 1][panjang * 2 + 1]; // initialize the map with the appropriate size
+        this.time = 720000;
     }
 
-    public void Map() {
-        for (int i = 0; i < height; i++) {
-            Arrays.fill(grid[i], '*');
+    public void createMap() {
+        for (int i = 0; i < lebar ; i++) {
+            for (int j = 0; j < panjang; j++) {
+                map[i][j] = '*';
+            }
         }
     }
 
+    public void addRumah(int x, int y){
+        //Validasi rumah melewati batas
+        if (x < 0 || x > lebar || y < 0 || y > panjang){
+            System.out.println("Rumah melewati batas");
+        }
 
-    public void addRumah(int x, int y) {
-        grid[y][x] = ' ';
-        //masukin point rumah ke listofRumah
-        listofRumah.add(x,y);
+        //Validasi apakah sudah ada rumah yang dibangun sebelumnya
 
-
+        for(int i = 0; i < lebar; i++ ){
+            for (int j = 0; j < panjang; j++){
+                if (map[i][j] == '0'){
+                    System.out.println("Rumah sudah ada");
+                }
+        }
     }
 
-    public void displayWorld() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                System.out.print(grid[i][j] + " ");
+        //Mengubah petak yang ada menjadi rumah
+        map[x][y] = '0';
+    }
+
+    public void addSim(Sim newSim){
+        listofSims.add(newSim);
+    }
+
+    public ArrayList<Sim> getlistofSim(){
+        return listofSims;
+    }
+    public ArrayList<Point> getlistofRumah(){
+        return listofRumah;
+    }
+
+    public void printMap() {
+         for (int i = 0; i < lebar * 2 + 1; i++) {
+            for (int j = 0; j < panjang * 2 + 1; j++) {
+                System.out.print(map[i][j] + " ");
+                //System.out.print(createMap());
             }
             System.out.println();
         }
-    }
-    public void main(String[] args){
-        displayWorld();
-    }
-}
+    } 
 
+    public Long getTime(){
+        return time;
+    }
+
+    public void setTime (Long time){
+        this.time -= time;
+        if(this.time >= 0){
+            this.time += 720000;
+        }
+    }
+
+}

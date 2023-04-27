@@ -19,7 +19,7 @@ public class Kaca extends NonMakanan {
         });
         t.start();
         try{
-            t.join();
+            t.join(); 
         }catch(InterruptedException e){
             System.out.println("Proses berkaca terganggu");
         }

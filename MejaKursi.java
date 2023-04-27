@@ -59,7 +59,25 @@ public class MejaKursi extends NonMakanan {
             System.out.println("Proses berdoa terganggu");
         }
     }
-    public void minum(){
-        //implementation code goes here
+    public void minum(Sim sim){
+        sim.setStatus("Sim sedang minum");
+        System.out.println("Sim sedang minum...");
+        Thread t = new Thread(()->{
+        try{
+                Thread.sleep(1000); //1 detik minum
+                sim.getKesejahteraan().setMood(1); //namabah mood 1
+                sim.getKesejahteraan().setHunger(-1); //ngurang kenyang 2
+                System.out.println("Proses minum selesai");
+            }
+            catch(InterruptedException e){
+                System.out.println("Proses minum terganggu");
+            }
+        });
+        t.start();
+        try{
+            t.join();
+        }catch(InterruptedException e){
+            System.out.println("Proses minum terganggu");
+        }
     }
 }

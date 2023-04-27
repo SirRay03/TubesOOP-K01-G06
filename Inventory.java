@@ -15,34 +15,38 @@ public class Inventory<T> {
         items.put(item, quantity);
     }
 
-    public void removeItem(T item, int quantity) {
-        if (items.containsKey(item)) {
-            int currentQuantity = items.get(item);
-            if (currentQuantity - quantity <= 0) {
-                items.remove(item);
-            } else {
-                items.put(item, currentQuantity - quantity);
-            }
-        }
-    }
-
-    public T getItem(String itemName, int quantity) {
+    public void removeItem(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
+        boolean ketemu = false;
         for (T item : items.keySet()) {
             if (item.toString().equals(itemName)) {
-                if (items.get(item) >= quantity) {
-                    return item;
+                int currentQuantity = items.get(item);
+                if (currentQuantity - quantity == 0) {
+                    items.remove(item);
+                } else {
+                    items.put(item, currentQuantity - quantity);
                 }
+            System.out.println("Item berhasil dihapus dari inventory");
+            ketemu = true;
+            }
+            }
+            if (ketemu == false){
+                System.out.println("Item tidak ditemukan di inventory");
             }
         }
-        if (items.containsKey(item)) {
-            int currentQuantity = items.get(item);
-            if (currentQuantity - quantity <= 0) {
-                items.remove(item);
-            } else {
-                items.put(item, currentQuantity - quantity);
+
+    public T getItemBahanMakanan(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
+        for (T item : items.keySet()) {
+            if (item.toString().equals(itemName)) {
+                int currentQuantity = items.get(item);
+                if (currentQuantity - quantity == 0) {
+                    items.remove(item);
+                } else {
+                    items.put(item, currentQuantity - quantity);
+                }
+            return item;
             }
         }
-        return item;
+        return null;
     }
 
     public void printInventory() {
@@ -50,6 +54,7 @@ public class Inventory<T> {
             System.out.println(item.toString() + ": " + items.get(item));
         }
     }
+}
 
     //  public static void main(String[] args) {
     //      Inventory<String> inventory = new Inventory<>();
@@ -94,4 +99,4 @@ public class Inventory<T> {
     //      }
     //  scanner.close();
     //  }
-}
+//}

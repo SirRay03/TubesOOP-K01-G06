@@ -1,25 +1,9 @@
-import java.util.Random;
-
-public abstract class Makanan implements Item{
+public abstract class Makanan {
     protected String nama;
     protected int kekenyangan;
     public Makanan(String nama, int kekenyangan){
         this.nama = nama;
         this.kekenyangan = kekenyangan;
-    }
-    public void beliBarang(Sim sim){
-        Random random = new Random();
-        int waktuPengantaran = (random.nextInt(4000) + 1000)*3000;
-        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran);        
-        new Thread(() -> {
-            try {
-                Thread.sleep(waktuPengantaran);
-            } catch (InterruptedException e) {
-                System.out.println("Aksi terganggu!");
-            }
-            sim.getInventory().tambahJumlahObjek(this, 1);
-        }).start();
-
     }
 
 /**

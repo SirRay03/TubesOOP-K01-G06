@@ -1,8 +1,13 @@
 public class Main{
-    public static void main(String[] args){
-        Kompor k1 = new Kompor(Kompor.tipeKompor.Gas);
-        k1.memasak("Nasi Ayam");
-        World now = new World();
-        now.start();
-    }
+	public static void main(String[] args) {
+
+        new MainMenu();
+        /*
+        World w = new World(3,3);
+        w.createMap();
+        w.addRumah(0, 0);
+        w.addRumah(0, 0);
+        w.printMap();
+        */
+	}
 }

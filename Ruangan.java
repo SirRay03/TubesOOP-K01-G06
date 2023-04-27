@@ -4,10 +4,12 @@ import java.util.List;
 public class Ruangan {
     private int panjang;
     private int lebar;
+    private String nama;
     private List<NonMakanan> listBarang;
     private NonMakanan[][] matriksPemetaan;
     
-    public Ruangan (){
+    public Ruangan (String nama){
+        this.nama = nama;
         this.panjang = 6;
         this.lebar = 6;
         this.listBarang = new ArrayList<>(); 
@@ -112,8 +114,41 @@ public class Ruangan {
             System.out.println("Objek melewati ruangan");
         }
     }
+    public void pindahBarang(NonMakanan barang,int x,int y,Sim sim){
+        boolean cekMatriks;
+        cekMatriks = true;
+        if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
+            for (int i = x; i < barang.getPanjang() + x; i++){
+                for(int j = y; j <barang.getLebar() + y ; j++){
+                    if( matriksPemetaan[i][j] != null ) {
+                        if(matriksPemetaan[i][j] != barang){
+                            cekMatriks = false;
+                        }
+                    }
+                }
+            }
+            if(cekMatriks){
+                for (int i = x; i < barang.getPanjang() + x; i++){
+                    for(int j = y; j <barang.getLebar() + y ; j++){
+                        if( matriksPemetaan[i][j] == barang ) {
+                            matriksPemetaan[i][j] = null;                
+                        }
+                    }
+                }
+                listBarang.remove(barang);
+                sim.getInventory().addItem(barang,1);
+                memasangBarang(barang, x, y,sim);
+            }
+            else{
+                System.out.println("Ada objek lain");
+            }
+        }
+        else{
+            System.out.println("Objek gagal dipindahkan karena melewati batas ruangan");
+        }
+    }
     
-    public void listObjek (){
+    public void getListObjek (){
         int i =1;
         for (NonMakanan a : listBarang){
             System.out.print(i + ". ");
@@ -133,4 +168,12 @@ public class Ruangan {
         barang.setPanjang(barang.getLebar());
         barang.setLebar(temp*-1);
     }    
+
+    public String getNamaRuangan(){
+        return nama;
+    }
+
+    public void setNamaRuangan(String nama){
+        this.nama = nama;
+    }
 }

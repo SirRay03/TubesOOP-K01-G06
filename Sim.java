@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.random.*;
 
 public class Sim {
     // deklarasi atribut
@@ -9,30 +8,39 @@ public class Sim {
     private int uang;
     private Kesejahteraan kesejahteraan;
     private String status; 
-    private Point poi<Item> t;
-    private Inventory inventory; 
-    Kesejahteraan kesejahteraan;
-    private String status; 
     private Point point;
-    private Inventory<Item> inventory;
+    private Inventory<Item> inventory; 
     private Rumah currentRumah;
     private Ruangan currentRuangan;
+    private List<Item> listOnDelivery;
+    public int timerNoSleep;
 
     /**
      * Konstruktor
      * @param namalengkap
      */
-    public Sim (String namaLengkap) {
-        String[] name = namaLengkap.split(" ");
-        this.firstName = name[0];
-        this.lastName = name[1];
+    public Sim (String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.pekerjaan = getRandomPekerjaan();
-        this.uang = 100;
+        this.uang = 100000;
         this.kesejahteraan = new Kesejahteraan();
         this.point = new Point(0,0);
-        this.inventory = new Inventory();
-        this.inventory = new Inventory<Item> ();
-        this.status = "-";
+        this.inventory = new Inventory<Item>();
+        this.status = "idle";
+        this.listOnDelivery = new ArrayList<>();
+        this.timerNoSleep = 0;
+        Thread t = new Thread(()->{
+        try{
+                Thread.sleep(600000); 
+                getKesejahteraan().setMood(-5);
+                getKesejahteraan().setHealth(-5);
+            }
+            catch(InterruptedException e){
+                System.out.println("Proses berkaca terganggu");
+            }
+        });
+        t.start();
     }
     public String getFirstName() {
         return this.firstName;
@@ -45,11 +53,6 @@ public class Sim {
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
-    public int getMoney() {
-        return this.uang;
-    }
-
-    public void setMoney(int uang) {
     public int getUang() {
         return this.uang;
     }
@@ -65,7 +68,15 @@ public class Sim {
     public void setStatus(String status) {
         this.status = status;
     }
-
+    public List<Item> getListOnDelivery(){
+        return listOnDelivery;
+    }
+    public void addToListOnDelivery(Item item){
+        listOnDelivery.add(item);
+    }
+    public void deleteFromListOnDelivery(Item item){
+        listOnDelivery.remove(item);
+    }
     private String getRandomPekerjaan() {
         String[] pekerjaan = {"Programmer", "Dokter", "Penulis", "Guru", "Insinyur", "Akuntan"};
         int randomIndex = new Random().nextInt(pekerjaan.length);
@@ -99,74 +110,57 @@ public class Sim {
     public Ruangan getcurrentRuangan() {
         return currentRuangan;
     }
-    
-    public void setcurrentRuangan(Ruangan ruangan){
-        this.currentRuangan = ruangan;
-    }
 
     public void pindahRuangan (Ruangan ruangan)
     {
         this.currentRuangan = ruangan;
     }
 
-    public Inventory getInventory() {
     public Inventory<Item> getInventory() {
-
         return inventory;
+    }
+
+    public int getTimerNoSleep () {
+        return timerNoSleep;
+    }
+
+    public void addTimerBelumTidur(int duration)
+    {
+        this.timerNoSleep += duration; // duration diambil dari durasi di method tidur
+    }
+
+    public void resetTimerBelumTidurAfterSleep()
+    {
+        timerNoSleep = 0;
+    }
+
+    public void resetTimerNoSleepAfterNoSleep(Sim sim)
+    {
+        if (timerNoSleep >= 600)
+        {
+            System.out.println("Waktu Tidur Anda kurang! Harus segera tidur");
+            timerNoSleep = 0;
+            sim.kesejahteraan.setHealth(-5);
+            sim.kesejahteraan.setMood(-5);
+        }
     }
 
     public void viewCurrentLocation () {
         System.out.println("lalala"); // msh bingung cara nampilin satu2
     }
-
-    public void merenung(Sim sim){
-        System.out.println("Tanyakan sesuatu untuk direnungkan! Kamu akan mendapatkan jawaban acak.");
-        Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
-        Random random = new Random();
-        int pilihanJawaban = (random.nextInt(10));
-        switch(pilihanJawaban){
-            case 0:
-                System.out.println("Semua akan baik-baik saja!");
-                break;
-            case 1:
-                System.out.println("Lakukan lebih baik!");
-                break;
-            case 2:
-                System.out.println("Semangat!");
-                break;
-            case 3:
-                System.out.println("Tidak perlu overthinking");
-                break;
-            case 4:
-                System.out.println("Just do it!");
-                break;
-            case 5:
-                System.out.println("Ayo, kamu pasti bisa!");
-                break;
-            case 6:
-                System.out.println("Yakin? Coba pikir lagi");
-                break;
-            case 7:
-                System.out.println("Hal itu terlalu rumit untuk direnungkan");
-                break;
-            case 8:
-                System.out.println("Hal yang sangat baik untuk direnungkan");
-                break;
-            case 9:
-                System.out.println("Itu ide yang sangat baik!");
-                break;
-            default:
-                System.out.println("Merenunglah kembali!");
-            }
-
-    public void ViewSimInfo() {
-        System.out.println("Nama sim : " + getFullName());
-        System.out.println("Pekerjaan sim : " + getPekerjaan());
-        System.out.println("Kesejahteraan sim : " + getKesejahteraan());
-        System.out.println("Jumlah uang sim : " + getMoney());
+    public void ngobrol(Sim sim){
+        this.kesejahteraan.setHunger(-10);
+        this.kesejahteraan.setHealth(15);
+        this.kesejahteraan.setMood(15);
+        sim.kesejahteraan.setHunger(-10);
+        sim.kesejahteraan.setHealth(15);
+        sim.kesejahteraan.setMood(15);
+        this.setRumah(sim.getcurrentRumah());
+        this.pindahRuangan(sim.getcurrentRuangan());
+        this.setPoint(sim.getPoint());
+        //set waktunya belum 
     }
-}      
+
     public int getPosisiX() {
         return this.point.getX();
     }

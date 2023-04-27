@@ -1,6 +1,6 @@
-public  class AddSim {
-    public static Sim addSim(String namaLengkap){
-        Sim newSim = new Sim(namaLengkap);
+public class AddSim {
+    public Sim addSim(String firstName, String lastName){
+        Sim newSim = new Sim(firstName, lastName);
         return newSim;
     }
 }

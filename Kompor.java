@@ -26,35 +26,34 @@ public class Kompor extends NonMakanan {
         switch(namaMasakan){
             case "Nasi Ayam":
                 builder.setKekenyangan(16);
-                builder.setNasi(nasi); //butuh getter nasi dari inventory
-                builder.setKentang(ayam); //butuh getter ayam dari inventory
+                builder.setNasi((BahanMakanan) sim.getInventory().getItemBahanMakanan("nasi", 1)); //butuh getter nasi dari inventory
+                builder.setKentang((BahanMakanan) sim.getInventory().getItemBahanMakanan("kentang", 1)); //butuh getter ayam dari inventory
                 break;
             case "Nasi Kari":
                 builder.setKekenyangan(30);
-                builder.setNasi(nasi); //butuh getter nasi dari inventory
-                builder.setKentang(kentang); //butuh getter dari inventory
-                builder.setWortel(wortel); //butuh getter dari inventory
-                builder.setSapi(sapi);//butuh getter dari inventory
+                builder.setNasi((BahanMakanan) sim.getInventory().getItemBahanMakanan("nasi", 1)); //butuh getter nasi dari inventory
+                builder.setKentang((BahanMakanan) sim.getInventory().getItemBahanMakanan("kentang", 1)); //butuh getter dari inventory
+                builder.setWortel((BahanMakanan) sim.getInventory().getItemBahanMakanan("wortel", 1)); //butuh getter dari inventory
+                builder.setSapi((BahanMakanan) sim.getInventory().getItemBahanMakanan("sapi", 1));//butuh getter dari inventory
                 break;
             case "Susu Kacang":
                 builder.setKekenyangan(5);
-                builder.setSusu(susu); //butuh getter nasi dari inventory
-                builder.setKacang(kacang); //butuh getter dari inventory
+                builder.setSusu((BahanMakanan) sim.getInventory().getItemBahanMakanan("susu", 1)); //butuh getter nasi dari inventory
+                builder.setKacang((BahanMakanan) sim.getInventory().getItemBahanMakanan("kacang", 1)); //butuh getter dari inventory
                 break;
             case "Tumis Sayur":
                 builder.setKekenyangan(5);
-                builder.setWortel(wortel); //butuh getter nasi dari inventory
-                builder.setBayam(bayam); //butuh getter dari inventory
+                builder.setWortel((BahanMakanan) sim.getInventory().getItemBahanMakanan("wortel", 1)); //butuh getter dari inventory
+                builder.setBayam((BahanMakanan) sim.getInventory().getItemBahanMakanan("bayam", 1)); //butuh getter dari inventory
                 break;
             case "Bistik":
                 builder.setKekenyangan(22);
-                builder.setKentang(kentang); //butuh getter dari inventory
-                builder.setSapi(sapi);//butuh getter dari inventory
-                break;
+                builder.setKentang((BahanMakanan) sim.getInventory().getItemBahanMakanan("kentang", 1)); //butuh getter dari inventory
+                builder.setSapi((BahanMakanan) sim.getInventory().getItemBahanMakanan("sapi", 1));//butuh getter dari inventory
             default:
                 builder.setKekenyangan(16);
-                builder.setNasi(nasi); //butuh getter nasi dari inventory
-                builder.setKentang(ayam); //butuh getter ayam dari inventory
+                builder.setNasi((BahanMakanan) sim.getInventory().getItemBahanMakanan("nasi", 1)); //butuh getter nasi dari inventory
+                builder.setKentang((BahanMakanan) sim.getInventory().getItemBahanMakanan("kentang", 1)); //butuh getter ayam dari inventory
         }
         Masakan masakan = builder.build();
         sim.setStatus("Sim sedang memasak");
@@ -79,8 +78,6 @@ public class Kompor extends NonMakanan {
 
     }
 }
-
-
 /**
 
  * CARA RUN DI MAIN*
