@@ -39,11 +39,11 @@ public class Sim {
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
-    public int getMoney() {
+    public int getUang() {
         return this.uang;
     }
 
-    public void setMoney(int uang) {
+    public void setUang(int uang) {
         this.uang = uang;
     }
 
@@ -124,5 +124,20 @@ public class Sim {
         System.out.println("Pekerjaan sim : " + getPekerjaan());
         System.out.println("Kesejahteraan sim : " + getKesejahteraan());
         System.out.println("Jumlah uang sim : " + getMoney());
+        
+    public int getPosisiX() {
+        return this.point.getX();
+    }
+
+    public int getPosisiY() {
+        return this.point.getY();
+    }
+
+    public void setPosisiX(int x) {
+        this.point.setX(x);
+    }
+
+    public void setPosisiY(int y) {
+        this.point.setY(y);
     }
 }
