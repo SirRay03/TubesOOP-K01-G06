@@ -1,3 +1,5 @@
+public interface Item {
+    public void beliBarang(Sim sim);
 public class Item {
 
     // Atribut
@@ -19,5 +21,4 @@ public class Item {
     public void setNamaItem(String namaItem) {
         this.namaItem = namaItem;
     }
-
 }
