@@ -1,34 +1,48 @@
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class World{
-    private int panjang;
-    private int lebar;
+    public int height; //lebar
+    public int width; //panjang
+    private ArrayList<Point> listofRumah;
+    //private HashMap<x,y> listofRumah;
+    private char[][] grid;
 
-    public World(int panjang, int lebar){
-        this.panjang = panjang;
-        this.lebar = lebar;
+
+    public World(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.grid = new char[height][width];
+        listofRumah = new ArrayList<Point>;
+        //listofRumah = new HashMap<x,y>();
+        //Map();
     }
-    public void Map(int panjang, int lebar) {
-        for (int i = 0; i < lebar * 2 + 1; i++) {
-            for (int j = 0; j < panjang * 2 + 1; j++) {
-                if (j % 2 == 0) {
-                    System.out.print("+ ");
-                } else {
-                    System.out.print("- ");
-                }
-            }
-            System.out.println();
-            if (i == lebar) break;
-            for (int j = 0; j < panjang * 2+1; j++) {
-                if (j % 2 == 0) {
-                    System.out.print("| ");
-                } else {
-                    System.out.print("x ");
-                }
+
+    public void Map() {
+        for (int i = 0; i < height; i++) {
+            Arrays.fill(grid[i], '*');
+        }
+    }
+
+    /* public void addEntity(int x, int y, char entity) {
+        grid[y][x] = entity;
+    } */
+
+    public void addRumah(int x, int y) {
+        grid[y][x] = ' ';
+        //masukin point rumah ke listofRumah
+        listofRumah.add(x,y);
+
+
+    }
+
+    public void displayWorld() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                System.out.print(grid[i][j] + " ");
             }
             System.out.println();
         }
-    }    
+    }
+    public void main(String[] args){
+        displayWorld();
+    }
 }
+
