@@ -22,6 +22,8 @@ public class Main1 {
                 
                 System.out.println("GAME START");
                 //generate world
+                World world = new World();
+                world.start();
                 //generate sim
                 //generate rumah dan ruangan
             }
