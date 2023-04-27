@@ -19,6 +19,7 @@ public abstract class Makanan implements Item{
             }
             sim.getInventory().tambahJumlahObjek(this, 1);
         }).start();
+
     }
 
 /**

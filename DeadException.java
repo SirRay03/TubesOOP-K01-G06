@@ -1,4 +1,4 @@
 public class DeadException extends Exception{
-    public DeadException (){
+    public DeadException () {
         super("Sim is dead.");
     }

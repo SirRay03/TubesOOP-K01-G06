@@ -10,4 +10,7 @@ public class BahanMakanan extends Makanan {
     public int getHarga(){
         return harga;
     }
+    public String getNama(){
+        return nama;
+    }
 }

@@ -9,7 +9,7 @@ public class Sim {
     private int uang;
     private Kesejahteraan kesejahteraan;
     private String status; 
-    private Point point;
+    private Point poi<Item> t;
     private Inventory inventory; 
     Kesejahteraan kesejahteraan;
     private String status; 
