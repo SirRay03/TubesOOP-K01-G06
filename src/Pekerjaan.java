@@ -2,7 +2,6 @@ package src;
 import java.util.*;
 
  public class Pekerjaan {
-    private Sim sim;
     private int gajiBadutSulap = 15;
     private int gajiKoki = 30;
     private int gajiPolisi = 35;
@@ -18,7 +17,11 @@ import java.util.*;
     public int biaya;
 
     public Pekerjaan(){
-        this.profesi = sim.getPekerjaan();
+            // private String getRandomPekerjaan() {
+    //     String[] pekerjaan = {"Programmer", "Dokter", "Penulis", "Guru", "Insinyur", "Akuntan"};
+    //     int randomIndex = new Random().nextInt(pekerjaan.length);
+    //     return pekerjaan[randomIndex];
+    // }
     }
 
     public int getGajiPekerjaanBaru(String newProfesi){
@@ -76,7 +79,7 @@ import java.util.*;
         }
     }
 
-    public void kerja(Sim sim, String profesi){
+    public void kerja(Sim sim){
 
         //Validasi input waktu kelipatan 120
         sim.setStatus("Sim sedang bekerja");

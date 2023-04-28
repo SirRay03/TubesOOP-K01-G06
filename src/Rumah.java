@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 public class Rumah{
     private Ruangan[][] denahRumah;
     private int roomCount;
+    private Sim owner = null;
     private int currX;
     private int currY;
     
@@ -29,6 +30,14 @@ public class Rumah{
             }
         }
         return roomNames;
+    }
+
+    public void setOwner(Sim owner){
+        this.owner = owner;
+    }
+
+    public Sim getOwner(){
+        return owner;
     }
 
     public int upgradeRumah(int uang){

@@ -1,7 +1,7 @@
 package gui;
 import javax.swing.*;
 
-import src.Sim;
+import src.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -19,9 +19,9 @@ public class SimMenu implements ActionListener{
     JButton upgradeHouse;
     JButton moveRoom;
     JButton backToMain;
+    JButton kerja;
+    JButton berkunjung;
     // JButton editRoom;
-    // JButton addSim;
-    // JButton changeSim;
     // JButton listObject;
     // JButton goToObject;
     // JButton action;
@@ -107,23 +107,23 @@ public class SimMenu implements ActionListener{
         backToMain.setFocusPainted(false);
         backToMain.addActionListener(this);
 
+        kerja = new JButton("Kerja");
+        kerja.setPreferredSize(new Dimension(300, 100));
+        kerja.setFont(buttonFont);
+        kerja.setFocusPainted(false);
+        kerja.addActionListener(this);
+
+        berkunjung = new JButton("Berkunjung");
+        berkunjung.setPreferredSize(new Dimension(300, 100));
+        berkunjung.setFont(buttonFont);
+        berkunjung.setFocusPainted(false);
+        berkunjung.addActionListener(this);
+
         // editRoom = new JButton("Edit Room");
         // editRoom.setPreferredSize(new Dimension(300, 100));
         // editRoom.setFont(buttonFont);
         // editRoom.setFocusPainted(false);
         // editRoom.addActionListener(this);
-
-        // addSim = new JButton("Add Sim");
-        // addSim.setPreferredSize(new Dimension(300, 100));
-        // addSim.setFont(buttonFont);
-        // addSim.setFocusPainted(false);
-        // addSim.addActionListener(this);
-
-        // changeSim = new JButton("Change Sim");
-        // changeSim.setPreferredSize(new Dimension(300, 100));
-        // changeSim.setFont(buttonFont);
-        // changeSim.setFocusPainted(false);
-        // changeSim.addActionListener(this);
 
         // listObject = new JButton("List Object");
         // listObject.setPreferredSize(new Dimension(300, 100));
@@ -152,6 +152,7 @@ public class SimMenu implements ActionListener{
         buttonPanel.add(upgradeHouse);
         buttonPanel.add(moveRoom);
         buttonPanel.add(backToMain);
+        buttonPanel.add(kerja);
         // buttonPanel.add(editRoom);
         // buttonPanel.add(addSim);
         // buttonPanel.add(changeSim);
@@ -190,6 +191,11 @@ public class SimMenu implements ActionListener{
             frame.dispose();
             new MainMenu();
         }
-
+        if (e.getSource() == kerja){
+            new Pekerjaan().kerja(sim);
+        }
+        if (e.getSource() == berkunjung){
+            sim.berkunjung();
+        }
     }
 }
