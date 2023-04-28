@@ -7,9 +7,9 @@ public class Rumah{
     private int currX;
     private int currY;
     
-    public Rumah(){
+    public Rumah(Sim sim){
         denahRumah = new Ruangan[21][21];
-        denahRumah[11][11] = new Ruangan("Kamar Utama");
+        denahRumah[11][11] = new Ruangan("Kamar Utama",sim);
         roomCount = 1;
         currX = 11;
         currY = 11;
@@ -29,7 +29,7 @@ public class Rumah{
         return roomNames;
     }
 
-    public int upgradeRumah(int uang){
+    public int upgradeRumah(int uang,Sim sim){
         Scanner input = new Scanner(System.in);
         if (uang >= 1500){
             int posX = 11;
@@ -106,7 +106,7 @@ public class Rumah{
             input.nextLine();
             
             if (pilihan == 1){
-                denahRumah[posX][posY] = new Ruangan(namaRuangan);
+                denahRumah[posX][posY] = new Ruangan(namaRuangan, sim);
                 roomCount++;
                 System.out.println("Ruangan " + namaRuangan + " berhasil ditambahkan!");
             }

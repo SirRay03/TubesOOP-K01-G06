@@ -11,7 +11,7 @@ public class Ruangan {
     private List<NonMakanan> listBarang;
     private NonMakanan[][] matriksPemetaan;
     
-    public Ruangan (String nama){
+    public Ruangan (String nama,Sim sim){
         this.nama = nama;
         this.panjang = 6;
         this.lebar = 6;
@@ -22,23 +22,40 @@ public class Ruangan {
                 matriksPemetaan[i][j] = null;
             }
         }
+        if(this.nama =="Kamar Utama"){
+            Kasur kasur = new Kasur(Kasur.tipeKasur.Single);
+            Kompor kompor = new Kompor(Kompor.tipeKompor.Gas);
+            MejaKursi mejaKursi = new MejaKursi();
+            Toilet toilet = new Toilet();
+            Jam jam =new Jam();
+            sim.getInventory().addItem(kasur, 1);
+            sim.getInventory().addItem(kompor, 1);
+            sim.getInventory().addItem(mejaKursi, 1);
+            sim.getInventory().addItem(toilet, 1);
+            sim.getInventory().addItem(jam, 1);
+            memasangBarang(kasur, 3, 1, sim);
+            memasangBarang(kompor, 1, 1, sim);
+            memasangBarang(mejaKursi, 1, 3, sim);
+            memasangBarang(toilet, 1, 6, sim);
+            memasangBarang(jam, 6, 1, sim);    
+        }
     }
     
     public void memasangBarang (NonMakanan barang,int x,int y,Sim sim){
         //Cek apakah melewati ruangan atau tidak
-        if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
+        if(barang.getPanjang() + x-1 <= 6 && barang.getPanjang() + x-1 >=0 && barang.getLebar()+y-1 <= 6 && barang.getLebar() + y-1 >=0){
             boolean cekMatriks;
             cekMatriks = true;
-            for (int i = x; i < barang.getPanjang() + x; i++){
-                for(int j = y; j <barang.getLebar() + y ; j++){
+            for (int i = x-1; i < barang.getPanjang() + x-1; i++){
+                for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
                     if( matriksPemetaan[i][j] != null) {
                         cekMatriks = false;
                     }
                 }
             }
             if(cekMatriks){
-                for (int i = x; i < barang.getPanjang() + x; i++){
-                    for(int j = y; j <barang.getLebar() + y ; j++){
+                for (int i = x-1; i < barang.getPanjang() + x-1; i++){
+                    for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
                         if(barang instanceof Jam){
                             Jam jam = (Jam) barang;
                             matriksPemetaan[i][j] = jam;
@@ -121,8 +138,8 @@ public class Ruangan {
         boolean cekMatriks;
         cekMatriks = true;
         if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
-            for (int i = x; i < barang.getPanjang() + x; i++){
-                for(int j = y; j <barang.getLebar() + y ; j++){
+            for (int i = x-1; i < barang.getPanjang() + x-1; i++){
+                for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
                     if( matriksPemetaan[i][j] != null ) {
                         if(matriksPemetaan[i][j] != barang){
                             cekMatriks = false;
@@ -131,8 +148,8 @@ public class Ruangan {
                 }
             }
             if(cekMatriks){
-                for (int i = x; i < barang.getPanjang() + x; i++){
-                    for(int j = y; j <barang.getLebar() + y ; j++){
+                for (int i = x-1; i < barang.getPanjang() + x-1; i++){
+                    for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
                         if( matriksPemetaan[i][j] == barang ) {
                             matriksPemetaan[i][j] = null;                
                         }

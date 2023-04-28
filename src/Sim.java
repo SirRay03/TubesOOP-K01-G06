@@ -32,7 +32,7 @@ public class Sim {
         this.status = "idle";
         this.listOnDelivery = new ArrayList<>();
         this.timerNoSleep = 0;
-        this.rumah = new Rumah();
+        this.rumah = new Rumah(this);
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(600000); 
