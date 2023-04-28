@@ -1,0 +1,48 @@
+
+    public Float getDistance(Rumah rumah1, Rumah rumah2){
+        int x1 = 0;
+        int y1 = 0;
+        for (int i = 0; i < panjang; i++){
+            for (int j = 0; j < lebar; j++){
+                if (mapRumah[i][j] == rumah1){
+                    x1 = i;
+                    y1 = j;
+                }
+            }
+        }
+        int x2 = 0;
+        int y2 = 0;
+        for (int i = 0; i < panjang; i++){
+            for (int j = 0; j < lebar; j++){
+                if (mapRumah[i][j] == rumah2){
+                    x2 = i;
+                    y2 = j;
+                }
+            }
+        }
+        return (float) Math.sqrt(Math.pow(x2-x1,2) + Math.pow(y2-y1,2));
+
+        Thread t = new Thread(()->{ 
+        // try{
+        //         Thread.sleep(600000); 
+        //         getKesejahteraan().setMood(-5);
+        //         getKesejahteraan().setHealth(-5);
+        //     }
+        //     catch(InterruptedException e){
+        //         System.out.println("Proses berkaca terganggu");
+        //     }
+        // });
+        // t.start();
+
+    // public void ngobrol(Sim sim){
+    //     this.kesejahteraan.setHunger(-10);
+    //     this.kesejahteraan.setHealth(15);
+    //     this.kesejahteraan.setMood(15);
+    //     sim.kesejahteraan.setHunger(-10);
+    //     sim.kesejahteraan.setHealth(15);
+    //     sim.kesejahteraan.setMood(15);
+    //     this.setRumah(sim.getcurrentRumah());
+    //     this.pindahRuangan(sim.getcurrentRuangan());
+    //     this.setPoint(sim.getPoint());
+    //     //set waktunya belum 
+    // }
