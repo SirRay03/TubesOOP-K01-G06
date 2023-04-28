@@ -1,6 +1,8 @@
 package gui;
-
 import javax.swing.*;
+
+import src.World;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -20,7 +22,7 @@ public class MainMenu implements ActionListener{
         frame = new JFrame();
         frame.setTitle("SimPlicity 5 - Main Menu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,600);
+        frame.setSize(1000,1000);
         frame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
         title = new JPanel();
@@ -34,6 +36,7 @@ public class MainMenu implements ActionListener{
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(1000, 700));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        //buttonPanel.setBackground(Color.black);
         
         newGame = new JButton("New Game");
         newGame.setPreferredSize(new Dimension(300, 100));
@@ -65,7 +68,6 @@ public class MainMenu implements ActionListener{
 
         buttonPanel.add(newGame);
         buttonPanel.add(loadGame);
-        buttonPanel.add(help);
         buttonPanel.add(exitGame);
 
         frame.add(title);
@@ -76,16 +78,19 @@ public class MainMenu implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == newGame){
+            if (World.getWorldCount() == 0){
+                World world = new World();
+                world.createNewGame();
+            }
             frame.dispose();
-            new NewGame();
         }
         if(e.getSource() == loadGame){
             frame.dispose();
-            new LoadGame();
+            System.out.println("new LoadGame()");
         }
         if(e.getSource() == help){
             frame.dispose();
-            System.out.println("new Help()");
+            new Help();
         }
         if(e.getSource() == exitGame){
             System.exit(0);

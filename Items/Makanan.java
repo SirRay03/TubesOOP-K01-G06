@@ -30,7 +30,7 @@ public abstract class Makanan implements Item{
             try {
                 sim.addToListOnDelivery(this); 
                 waktuMulai = System.currentTimeMillis();
-                Thread.sleep(10000);
+                Thread.sleep(waktuPengantaran);
                 sim.deleteFromListOnDelivery(this);
                 waktuMulai = 0;
             } catch (InterruptedException e) {
@@ -38,10 +38,7 @@ public abstract class Makanan implements Item{
             }
             sim.getInventory().addItem(this, 1);
         }).start();
-    }
 
-    public String getNama(){
-        return nama;
     }
 
 /**
