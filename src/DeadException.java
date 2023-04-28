@@ -1,4 +1,4 @@
-package essentials;
+package src;
 public class DeadException extends Exception{
     public DeadException () {
         super("Sim is dead.");

@@ -1,4 +1,4 @@
-package essentials;
+package src;
 import java.util.*;
 
 import Items.Item;
@@ -13,8 +13,7 @@ public class Sim {
     private String status; 
     private Point point;
     private Inventory<Item> inventory; 
-    private Rumah currentRumah;
-    private Ruangan currentRuangan;
+    private Rumah rumah;
     private List<Item> listOnDelivery;
     public int timerNoSleep;
 
@@ -33,6 +32,7 @@ public class Sim {
         this.status = "idle";
         this.listOnDelivery = new ArrayList<>();
         this.timerNoSleep = 0;
+        this.rumah = new Rumah();
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(600000); 
@@ -106,22 +106,26 @@ public class Sim {
        this.point = point;
     }
 
-    public Rumah getcurrentRumah () {
-        return currentRumah;
+    public Rumah getRumah(){
+        return this.rumah;
     }
 
-    public void setRumah (Rumah rumah) {
-        this.currentRumah = rumah;
-    }
+    // public Rumah getcurrentRumah () {
+    //     return currentRumah;
+    // }
 
-    public Ruangan getcurrentRuangan() {
-        return currentRuangan;
-    }
+    // public void setRumah (Rumah rumah) {
+    //     this.currentRumah = rumah;
+    // }
 
-    public void pindahRuangan (Ruangan ruangan)
-    {
-        this.currentRuangan = ruangan;
-    }
+    // public Ruangan getcurrentRuangan() {
+    //     return currentRuangan;
+    // }
+
+    // public void pindahRuangan (Ruangan ruangan)
+    // {
+    //     this.currentRuangan = ruangan;
+    //}
 
     public Inventory<Item> getInventory() {
         return inventory;
@@ -152,35 +156,36 @@ public class Sim {
         }
     }
 
-    public void viewCurrentLocation () {
-        System.out.println("lalala"); // msh bingung cara nampilin satu2
-    }
-    public void ngobrol(Sim sim){
-        this.kesejahteraan.setHunger(-10);
-        this.kesejahteraan.setHealth(15);
-        this.kesejahteraan.setMood(15);
-        sim.kesejahteraan.setHunger(-10);
-        sim.kesejahteraan.setHealth(15);
-        sim.kesejahteraan.setMood(15);
-        this.setRumah(sim.getcurrentRumah());
-        this.pindahRuangan(sim.getcurrentRuangan());
-        this.setPoint(sim.getPoint());
-        //set waktunya belum 
-    }
+    // public void viewCurrentLocation () {
+    //     System.out.println("lalala"); // msh bingung cara nampilin satu2
+    // }
+    
+    // public void ngobrol(Sim sim){
+    //     this.kesejahteraan.setHunger(-10);
+    //     this.kesejahteraan.setHealth(15);
+    //     this.kesejahteraan.setMood(15);
+    //     sim.kesejahteraan.setHunger(-10);
+    //     sim.kesejahteraan.setHealth(15);
+    //     sim.kesejahteraan.setMood(15);
+    //     this.setRumah(sim.getcurrentRumah());
+    //     this.pindahRuangan(sim.getcurrentRuangan());
+    //     this.setPoint(sim.getPoint());
+    //     //set waktunya belum 
+    // }
 
-    public int getPosisiX() {
-        return this.point.getX();
-    }
+    // public int getPosisiX() {
+    //     return this.point.getX();
+    // }
 
-    public int getPosisiY() {
-        return this.point.getY();
-    }
+    // public int getPosisiY() {
+    //     return this.point.getY();
+    // }
 
-    public void setPosisiX(int x) {
-        this.point.setX(x);
-    }
+    // public void setPosisiX(int x) {
+    //     this.point.setX(x);
+    // }
 
-    public void setPosisiY(int y) {
-        this.point.setY(y);
-    }
+    // public void setPosisiY(int y) {
+    //     this.point.setY(y);
+    // }
 }

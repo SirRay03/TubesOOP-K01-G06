@@ -2,7 +2,7 @@ package Items;
 import java.lang.Math;
 import java.sql.Time;
 
-import essentials.Sim;
+import src.Sim;
 
 public class MejaKursi extends NonMakanan {
     public MejaKursi(){
