@@ -10,9 +10,9 @@ public class Kesejahteraan{
     private boolean isBuangAir;
 
     public Kesejahteraan (){
-        this.mood = 100;
-        this.hunger =  100;
-        this.health = 100;
+        this.mood = 80;
+        this.hunger =  80;
+        this.health = 80;
         this.isSleep  = true;
         this.isBuangAir = true;
     }
