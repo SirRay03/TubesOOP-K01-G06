@@ -11,9 +11,6 @@ public class Kaca extends NonMakanan {
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(1000); //1 detik berkaca
-                sim.getKesejahteraan().setMood(1); //namabah mood 1
-                sim.getKesejahteraan().setHunger(-1); //ngurang kenyang 1
-                System.out.println("Proses berkaca selesai");
             }
             catch(InterruptedException e){
                 System.out.println("Proses berkaca terganggu");
@@ -22,6 +19,9 @@ public class Kaca extends NonMakanan {
         t.start();
         try{
             t.join(); 
+            sim.getKesejahteraan().setMood(1); //namabah mood 1
+            sim.getKesejahteraan().setHunger(-1); //ngurang kenyang 1
+            System.out.println("Proses berkaca selesai");
         }catch(InterruptedException e){
             System.out.println("Proses berkaca terganggu");
         }
