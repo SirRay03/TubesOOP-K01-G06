@@ -55,6 +55,9 @@ public class Inventory<T> {
             System.out.println(item.toString() + ": " + items.get(item));
         }
     }
+    public Map<T, Integer> getMap() {
+        return items;
+    }
 }
 
     //  public static void main(String[] args) {

@@ -1,4 +1,3 @@
-
 package Items;
 import src.Sim;
 public interface Item {

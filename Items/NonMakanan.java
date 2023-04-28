@@ -42,7 +42,7 @@ public abstract class NonMakanan implements Item, Actionable{
     };
     public void beliBarang(Sim sim){
         Random random = new Random();
-        waktuPengantaran = (random.nextInt(4000) + 1000)*30000;
+        waktuPengantaran = (random.nextInt(4000) + 1000)*30;
         System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
         new Thread(() -> {
             try {
