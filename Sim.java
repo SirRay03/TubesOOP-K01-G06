@@ -1,5 +1,4 @@
 import java.util.*;
-import java.util.random.*;
 
 public class Sim {
     // deklarasi atribut
@@ -40,11 +39,11 @@ public class Sim {
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
-    public int getMoney() {
+    public int getUang() {
         return this.uang;
     }
 
-    public void setMoney(int uang) {
+    public void setUang(int uang) {
         this.uang = uang;
     }
 
@@ -103,52 +102,44 @@ public class Sim {
         System.out.println("lalala"); // msh bingung cara nampilin satu2
     }
 
-    public void merenung(Sim sim){
-        System.out.println("Tanyakan sesuatu untuk direnungkan! Kamu akan mendapatkan jawaban acak.");
-        Scanner scan = new Scanner(System.in);
-        String input = scan.nextLine();
-        Random random = new Random();
-        int pilihanJawaban = (random.nextInt(10));
-        switch(pilihanJawaban){
-            case 0:
-                System.out.println("Semua akan baik-baik saja!");
-                break;
-            case 1:
-                System.out.println("Lakukan lebih baik!");
-                break;
-            case 2:
-                System.out.println("Semangat!");
-                break;
-            case 3:
-                System.out.println("Tidak perlu overthinking");
-                break;
-            case 4:
-                System.out.println("Just do it!");
-                break;
-            case 5:
-                System.out.println("Ayo, kamu pasti bisa!");
-                break;
-            case 6:
-                System.out.println("Yakin? Coba pikir lagi");
-                break;
-            case 7:
-                System.out.println("Hal itu terlalu rumit untuk direnungkan");
-                break;
-            case 8:
-                System.out.println("Hal yang sangat baik untuk direnungkan");
-                break;
-            case 9:
-                System.out.println("Itu ide yang sangat baik!");
-                break;
-            default:
-                System.out.println("Merenunglah kembali!");
-            }
+    /*
+    buat method menulis
+        // Scanner scan = new Scanner(System.in);
+
+        // System.out.println("Masukkan kata atau kalimat yang ingin ditulis:");
+
+        // // String input
+        // String tulisan = scan.nextLine();
+        // // Output input by user
+        // System.out.println(tulisan);
+    */
+
+    public void ngobrol(Sim sim){
+        this.kesejahteraan.setHunger(-10);
+        this.kesejahteraan.setHealth(15);
+        this.kesejahteraan.setMood(15);
+        sim.kesejahteraan.setHunger(-10);
+        sim.kesejahteraan.setHealth(15);
+        sim.kesejahteraan.setMood(15);
+        this.setRumah(sim.getcurrentRumah());
+        this.pindahRuangan(sim.getcurrentRuangan());
+        this.setPoint(sim.getPoint());
+        //set waktunya belum 
     }
 
-    public void ViewSimInfo() {
-        System.out.println("Nama sim : " + getFullName());
-        System.out.println("Pekerjaan sim : " + getPekerjaan());
-        System.out.println("Kesejahteraan sim : " + getKesejahteraan());
-        System.out.println("Jumlah uang sim : " + getMoney());
+    public int getPosisiX() {
+        return this.point.getX();
+    }
+
+    public int getPosisiY() {
+        return this.point.getY();
+    }
+
+    public void setPosisiX(int x) {
+        this.point.setX(x);
+    }
+
+    public void setPosisiY(int y) {
+        this.point.setY(y);
     }
 }
