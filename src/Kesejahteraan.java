@@ -84,12 +84,35 @@ public class Kesejahteraan{
         }
     }
 
-    public void olahRaga (Time time){
+   /*  public void olahRaga (Time time){
         long timeLong = time.getTime()/ 1000; 
         long pengali = Math.floorDiv(timeLong, 20);
         int pengaliInt = ((int)pengali);
         setMood(pengaliInt * 10);
         setHealth(pengaliInt * -5);
         setHealth(pengaliInt * 5);
+    } */
+
+    public void olahRaga(Sim sim){
+        sim.setStatus("Sim sedang olahraga");
+        System.out.println("Sim sedang olahraga...");
+        Thread t = new Thread(()->{
+        try{
+                Thread.sleep(20000); 
+                sim.getKesejahteraan().setMood(10);
+                sim.getKesejahteraan().setHunger(-5);
+                sim.getKesejahteraan().setHealth(5); 
+                System.out.println("Proses olahraga selesai");
+            }
+            catch(InterruptedException e){
+                System.out.println("Proses olahraga terganggu");
+            }
+        });
+        t.start();
+        try{
+            t.join();
+        }catch(InterruptedException e){
+            System.out.println("Proses olahraga terganggu");
+        }
     }
 }
