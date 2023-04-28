@@ -76,7 +76,7 @@ import java.util.*;
         }
     }
 
-    public void kerja(Sim sim, String profesi){
+    public void kerja(String profesi){
 
         //Validasi input waktu kelipatan 120
         sim.setStatus("Sim sedang bekerja");

@@ -1,13 +1,13 @@
 package src;
 import java.util.*;
 
-import Items.Item;
+import Items.*;
 
 public class Sim {
     // deklarasi atribut
     private String firstName;
     private String lastName;
-    private String pekerjaan;
+    private Pekerjaan pekerjaan;
     private int uang;
     private Kesejahteraan kesejahteraan;
     private String status; 
@@ -25,7 +25,7 @@ public class Sim {
     public Sim (String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.pekerjaan = getRandomPekerjaan();
+        this.pekerjaan = new Pekerjaan();
         this.uang = 100000;
         this.kesejahteraan = new Kesejahteraan();
         this.point = new Point(0,0);
@@ -33,7 +33,15 @@ public class Sim {
         this.status = "idle";
         this.listOnDelivery = new ArrayList<>();
         this.timerNoSleep = 0;
-        this.currRumah = new Rumah();
+        this.currRumah = null;
+        // //NANTI APUS
+        // Kaca kaca = new Kaca();
+        // BahanMakanan nasi = new BahanMakanan("Nasi", 5, 5);
+        // BahanMakanan ayam = new BahanMakanan("Ayam", 8, 10);
+        // Kasur queenBed = new Kasur(Kasur.tipeKasur.Queen);
+        // //BELI BARANG
+        // kaca.beliBarang(this);
+        // nasi.beliBarang(this);
     }
 
     // === GETTER ===
@@ -61,13 +69,13 @@ public class Sim {
             return listOnDelivery;
     }
 
-    private String getRandomPekerjaan() {
-        String[] pekerjaan = {"Programmer", "Dokter", "Penulis", "Guru", "Insinyur", "Akuntan"};
-        int randomIndex = new Random().nextInt(pekerjaan.length);
-        return pekerjaan[randomIndex];
-    }
+    // private String getRandomPekerjaan() {
+    //     String[] pekerjaan = {"Programmer", "Dokter", "Penulis", "Guru", "Insinyur", "Akuntan"};
+    //     int randomIndex = new Random().nextInt(pekerjaan.length);
+    //     return pekerjaan[randomIndex];
+    // }
 
-    public String getPekerjaan() {
+    public Pekerjaan getPekerjaan() {
         return this.pekerjaan;
     }
 
@@ -105,9 +113,9 @@ public class Sim {
         this.status = status;
     }
 
-    public void setPekerjaan(String pekerjaan){
-        this.pekerjaan = pekerjaan;
-    }
+    // public void setPekerjaan(String pekerjaan){
+    //     this.pekerjaan = pekerjaan;
+    // }
 
     public void setPoint(Point point) {
        this.point = point;
@@ -149,9 +157,10 @@ public class Sim {
     public void deleteFromListOnDelivery(Item item){
         listOnDelivery.remove(item);
     }
-    public void berkunjung (Scanner scan) {
+
+    public void berkunjung() {
         boolean isValid = false;
-        String opsi ;
+        String opsi = "";
         int i = 0;
         while (!isValid)
         {
@@ -189,30 +198,32 @@ public class Sim {
                 }
             }
         }
-        float waktuberkunjung = World.getDistance(); // gatau cara masukkin parameter rumah1, rumah2ny gmn
-        int totalWaktuBerkunjung = (int) (waktuberkunjung * 10);
-        Thread t = new Thread(()->{
-        try{
-                setRumah(getRumah());// get rumah sesuai opsi yang dipilih
-                Thread.sleep(totalWaktuBerkunjung*1000); 
-                getKesejahteraan().setMood(totalWaktuBerkunjung/30*10);
-                getKesejahteraan().setHunger(-(totalWaktuBerkunjung/30*10)); 
-                // World.addWaktu (totalWaktuBerkjung); nambahin waktu di world karean aksi aktif 
-                System.out.println("Proses berkunjung selesai");
-            }
-            catch(InterruptedException e){
-                System.out.println("Proses berkunjung terganggu");
-            }
-        });
-        t.start();
-        try{
-            t.join();
-        }catch(InterruptedException e){
-            System.out.println("Proses berkunjung terganggu");
-        }
     }
 
-    public void selesaiBerkjung () {
-        setRumah(currRumah);
-    }
+    //     float waktuberkunjung = World.getDistance(); // gatau cara masukkin parameter rumah1, rumah2ny gmn
+    //     int totalWaktuBerkunjung = (int) (waktuberkunjung * 10);
+    //     Thread t = new Thread(()->{
+    //     try{
+    //             setRumah(getRumah());// get rumah sesuai opsi yang dipilih
+    //             Thread.sleep(totalWaktuBerkunjung*1000); 
+    //             getKesejahteraan().setMood(totalWaktuBerkunjung/30*10);
+    //             getKesejahteraan().setHunger(-(totalWaktuBerkunjung/30*10)); 
+    //             // World.addWaktu (totalWaktuBerkjung); nambahin waktu di world karean aksi aktif 
+    //             System.out.println("Proses berkunjung selesai");
+    //         }
+    //         catch(InterruptedException e){
+    //             System.out.println("Proses berkunjung terganggu");
+    //         }
+    //     });
+    //     t.start();
+    //     try{
+    //         t.join();
+    //     }catch(InterruptedException e){
+    //         System.out.println("Proses berkunjung terganggu");
+    //     }
+    // }
+
+    // public void selesaiBerkjung () {
+    //     setRumah(currRumah);
+    // }
 }

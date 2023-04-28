@@ -9,21 +9,6 @@ public class Inventory<T> {
         items = new HashMap<>();
     }
 
-    public T getItemBahanMakanan(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
-        for (T item : items.keySet()) {
-            if (item.toString().equals(itemName)) {
-                int currentQuantity = items.get(item);
-                if (currentQuantity - quantity == 0) {
-                    items.remove(item);
-                } else {
-                    items.put(item, currentQuantity - quantity);
-                }
-            return item;
-            }
-        }
-        return null;
-    }
-
     public void addItem(T item, int quantity) {
         if (items.containsKey(item)) {
             quantity += items.get(item);
@@ -49,6 +34,21 @@ public class Inventory<T> {
                 System.out.println("Item tidak ditemukan di inventory");
             }
         }
+
+    public T getItemBahanMakanan(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
+        for (T item : items.keySet()) {
+            if (item.toString().equals(itemName)) {
+                int currentQuantity = items.get(item);
+                if (currentQuantity - quantity == 0) {
+                    items.remove(item);
+                } else {
+                    items.put(item, currentQuantity - quantity);
+                }
+            return item;
+            }
+        }
+        return null;
+    }
 
     public void printInventory() {
         for (T item : items.keySet()) {

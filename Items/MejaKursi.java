@@ -15,10 +15,7 @@ public class MejaKursi extends NonMakanan {
         //misal: doAction(Sim sima, String contoh)
         //brarti cara akses parameter pertama nya : Sim sima = (Sim) args[0]
         //brarti cara akses parameter kedua nya : String contoh = (String) args[1]
-        Sim sim = (Sim) args[0];
-        String masakan = (String) args[1];
-        sim.getInventory().removeItem(masakan, 1);
-        sim.setStatus("Sim sedang makan");
+
     }
     public void main(int waktu, Sim sim){//nerima waktu mau berapa lama
         sim.setStatus("Sim sedang main");
