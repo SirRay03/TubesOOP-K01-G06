@@ -1,8 +1,8 @@
-package essentials;
+package src;
 import java.util.ArrayList;
 
 
-public class World{
+public class World2{
     private int panjang;
     private int lebar;
     private ArrayList<Point> listofRumah;
@@ -10,7 +10,7 @@ public class World{
     private long time;
     private ArrayList<Sim> listofSims;
 
-    public World(int panjang, int lebar){
+    public World2(int panjang, int lebar){
         this.panjang = panjang;
         this.lebar = lebar;
         this.map = new char[lebar * 2 + 1][panjang * 2 + 1]; // initialize the map with the appropriate size

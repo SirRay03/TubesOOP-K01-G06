@@ -1,4 +1,4 @@
-package essentials;
+package src;
 public class Exit {
     public Exit(){
     System.out.println("Bye");

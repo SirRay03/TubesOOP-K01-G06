@@ -1,5 +1,5 @@
 package Items;
-import essentials.Sim;
+import src.Sim;
 public class Toilet extends NonMakanan {
     public Toilet(){
         super(50, 1, 1);

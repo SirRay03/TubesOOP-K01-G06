@@ -1,7 +1,7 @@
 package Items;
 import java.util.Scanner;
 
-import essentials.Sim; 
+import src.Sim; 
 
 public class Kasur extends NonMakanan {
     public enum tipeKasur{
