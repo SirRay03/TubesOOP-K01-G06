@@ -23,25 +23,41 @@ public class World{
             }
         }
     }
+    
+    public int getPanjangWorld(){
+        return panjang;
+    }
+
+    public int getLebarWorld(){
+        return lebar;
+    }
 
     public void addRumah(int x, int y){
         //Validasi rumah melewati batas
-        if (x < 0 || x > lebar || y < 0 || y > panjang){
+        if (x >= 0 && x <= getLebarWorld() && y >= 0 && y <= getPanjangWorld()){
+            boolean cekRumah = true;
+            //Validasi apakah sudah ada rumah yang dibangun sebelumnya
+            for(int i = 0; i < lebar; i++ ){
+                for (int j = 0; j < panjang; j++){
+                    if (map[i][j] == '0'){
+                        cekRumah = false;
+                    }
+                }
+            }
+            //Jika belum ada rumah yang dibangun
+            if (cekRumah){
+                //Mengubah petak yang ada menjadi rumah
+                map[x][y] = '0';
+                //Menambahkan rumah ke listofRumah
+                listofRumah.add(new Point(x,y));
+            }
+            else{
+                System.out.println("Rumah sudah ada");
+            }   
+        }
+        else{
             System.out.println("Rumah melewati batas");
         }
-
-        //Validasi apakah sudah ada rumah yang dibangun sebelumnya
-
-        for(int i = 0; i < lebar; i++ ){
-            for (int j = 0; j < panjang; j++){
-                if (map[i][j] == '0'){
-                    System.out.println("Rumah sudah ada");
-                }
-        }
-    }
-
-        //Mengubah petak yang ada menjadi rumah
-        map[x][y] = '0';
     }
 
     public void addSim(Sim newSim){
@@ -59,7 +75,6 @@ public class World{
          for (int i = 0; i < lebar * 2 + 1; i++) {
             for (int j = 0; j < panjang * 2 + 1; j++) {
                 System.out.print(map[i][j] + " ");
-                //System.out.print(createMap());
             }
             System.out.println();
         }

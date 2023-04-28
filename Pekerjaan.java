@@ -108,14 +108,14 @@ import java.util.List;
                 }
             }
             else if(waktuKerja > 240){ //360
-                //sim auto mati 
+                System.out.println("Sim akan langsung mati");
             }
         }
     }
 
     public void gantiPekerjaan(String pekerjaanBaru) {
        //Cek sim bekerja 3 hari (12 menit)
-       
+
 
        //Cek sim bayar 1/2 gaji harian pekerjaan baru
 

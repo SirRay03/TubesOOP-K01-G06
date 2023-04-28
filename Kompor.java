@@ -1,3 +1,4 @@
+import java.lang.Math;
 public class Kompor extends NonMakanan {
     public enum tipeKompor{
         Gas(100, 2, 1),
@@ -60,7 +61,7 @@ public class Kompor extends NonMakanan {
         System.out.println("Sim sedang memasak...");
         Thread t = new Thread(()->{
         try{
-                Thread.sleep(builder.getKekenyangan*1.5); 
+                Thread.sleep(builder.getKekenyangan()*1500); 
                 sim.getKesejahteraan().setMood(10); //namabah mood 10
                 System.out.println("Proses memasak selesai");
             }
@@ -74,7 +75,7 @@ public class Kompor extends NonMakanan {
         }catch(InterruptedException e){
             System.out.println("Proses memasak terganggu");
         }
-        sim.getInventory().addItem(masakan); //ini masukin ke inventory
+        sim.getInventory().addItem(masakan, 1); //ini masukin ke inventory
 
     }
 }

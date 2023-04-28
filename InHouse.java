@@ -4,9 +4,9 @@ import java.awt.event.*;
 
 public class InHouse{
     JFrame frame;
+    JPanel info;
     JPanel room;
     JPanel menu;
-    JPanel info;
     JPanel interact;
 
     public InHouse(){
@@ -15,14 +15,14 @@ public class InHouse{
         frame.setLayout(new BorderLayout(10, 5)); // 10 = horizontal gap, 5 = vertical gap
         frame.setVisible(true);
 
+        info = new JPanel();
         room = new JPanel();
         menu = new JPanel();
-        info = new JPanel();
         interact = new JPanel();
 
+        info.setPreferredSize(new Dimension(200, 400));
         room.setPreferredSize(new Dimension(400, 400));
         menu.setPreferredSize(new Dimension(400, 200));
-        info.setPreferredSize(new Dimension(200, 400));
         interact.setPreferredSize(new Dimension(200, 200));
     }   
 }

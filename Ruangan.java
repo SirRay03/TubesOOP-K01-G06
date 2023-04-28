@@ -69,7 +69,7 @@ public class Ruangan {
                 if(barang instanceof Jam){
                     Jam jam = (Jam) barang;
                     listBarang.add(jam);
-                    sim.getInventory().removeItem(jam.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItem(jam.getClass().getSimpleName(),1); //harus mastiin kalo barangnya emang ada di inventory sebelum dipanggil
                 }
                 else if(barang instanceof Kaca){
                     Kaca kaca = (Kaca) barang;

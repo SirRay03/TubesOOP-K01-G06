@@ -81,7 +81,9 @@ public class Kasur extends NonMakanan {
         });
         System.out.println("Sim sedang tidur zzz...");
         t.start();
+        scan.close();
     }
+    
 }
 
 /**

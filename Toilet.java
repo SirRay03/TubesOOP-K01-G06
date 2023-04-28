@@ -23,6 +23,11 @@ public class Toilet extends NonMakanan {
             System.out.println("Proses mandi terganggu");
         }
     }
+
+    public void buangAir(){
+
+    }
+
     public void doAction(Object... args){
         //implementation code goes here
         //Object... args artinya dia bisa nerima banyak argumen

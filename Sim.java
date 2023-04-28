@@ -87,6 +87,10 @@ public class Sim {
         return this.pekerjaan;
     }
 
+    public void setPekerjaan(String pekerjaan){
+        this.pekerjaan = pekerjaan;
+    }
+
     public Kesejahteraan getKesejahteraan() {
         return this.kesejahteraan;
     }
