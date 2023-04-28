@@ -1,5 +1,8 @@
 package gui;
 import javax.swing.*;
+
+import src.World;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -75,8 +78,11 @@ public class MainMenu implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == newGame){
+            if (World.getWorldCount() == 0){
+                World world = new World();
+                world.createNewGame();
+            }
             frame.dispose();
-            new NewGame();
         }
         if(e.getSource() == loadGame){
             frame.dispose();

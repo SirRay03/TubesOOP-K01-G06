@@ -1,7 +1,7 @@
 package Items;
 import java.lang.Math;
 
-import essentials.Sim;
+import src.Sim;
 public class Kompor extends NonMakanan {
     public enum tipeKompor{
         Gas(100, 2, 1),
