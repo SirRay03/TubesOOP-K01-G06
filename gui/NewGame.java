@@ -90,7 +90,8 @@ public class NewGame implements ActionListener{
             else{
                 //Create new sim
                 Sim sim = new Sim(firstName.getText(), lastName.getText());
-                World.addSim(sim);
+                Rumah rumah = new Rumah();
+                World.addSim(sim,rumah);
                 JOptionPane.showMessageDialog(null, "New sim created. Welcome to SimPlicity 5, " + firstName.getText() + " " + lastName.getText() + "!");
                 frame.dispose();
                 new SimMenu(sim);
