@@ -13,10 +13,34 @@ import java.util.List;
     public long start = System.currentTimeMillis();
     public double sec = 0.0;
     public String profesi;
+    public long elapsedProfesi;
+    public double secProfesi;
+    public int biaya;
 
 
     public Pekerjaan(){
         this.profesi = sim.getPekerjaan();
+    }
+
+    public int getGajiPekerjaanBaru(String newProfesi){
+        if(newProfesi.equals("Badut Sulap")){
+            return 15;
+        } 
+        else if(newProfesi.equals("Koki")){
+            return 30;
+        }
+        else if(newProfesi.equals("Polisi")){
+            return 35;
+        }
+        else if(newProfesi.equals("Dokter")){
+            return 50;
+        }
+        else if(newProfesi.equals("Programmer")){
+            return 45;
+        }
+        else{
+            return 0;
+        }
     }
 
     public int getGajiBadutSulap(){
@@ -114,14 +138,24 @@ import java.util.List;
     }
 
     public void gantiPekerjaan(String pekerjaanBaru) {
-       //Cek sim bekerja 3 hari (12 menit)
 
+       //Cek sim bekerja 1 hari (12 menit)
+        elapsedProfesi = System.currentTimeMillis() - start;
+        secProfesi = Math.floor(elapsedProfesi/1000);
 
+        if (secProfesi < 720.0){
+            System.out.println("Belum dapat mengganti pekerjaan");
+        }
        //Cek sim bayar 1/2 gaji harian pekerjaan baru
+        else{ // lolos cek kerja 12 menit
 
-       //Cek pekerjaan baru dikerjakan 1 hari setelah diubah
+            //bayar 1/2 biaya kerjaan baru
+            biaya = (-1)*(getGajiPekerjaanBaru(pekerjaanBaru))/2;
+            sim.setUang(biaya);
+
+            //dapat pekerjaan baru
+            sim.setPekerjaan(pekerjaanBaru);
+
+        }
     }
 }
-
-
-
