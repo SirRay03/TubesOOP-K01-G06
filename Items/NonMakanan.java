@@ -1,12 +1,20 @@
-import java.util.Random;
+package Items;
+import java.util.*;
+
+import essentials.Actionable;
+import essentials.Sim;
 public abstract class NonMakanan implements Item, Actionable{
     protected int panjang; 
     protected int lebar; 
     protected int harga;
+    protected long waktuPengantaran;
+    private long waktuMulai;
     public NonMakanan(int harga,int panjang, int lebar){
         this.harga = harga;
         this.lebar = lebar;
         this.panjang = panjang;
+        this.waktuPengantaran =0;
+        this.waktuMulai = 0;
     }
     public int getPanjang(){
         return panjang;
@@ -17,6 +25,9 @@ public abstract class NonMakanan implements Item, Actionable{
     public int getHarga(){
         return harga;
     }
+    public long getWaktuPengantaran(){
+        return waktuPengantaran;
+    }
     public void setPanjang(int panjang){
         this.panjang = panjang;
     }
@@ -26,17 +37,24 @@ public abstract class NonMakanan implements Item, Actionable{
     public void setHarga(int harga){
         this.harga = harga;
     }
+    public long getWaktuMulai(){
+        return waktuMulai;
+    };
     public void beliBarang(Sim sim){
         Random random = new Random();
-        int waktuPengantaran = (random.nextInt(4000) + 1000)*30000;
-        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran);
+        waktuPengantaran = (random.nextInt(4000) + 1000)*30000;
+        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
         new Thread(() -> {
             try {
+                sim.addToListOnDelivery(this); 
+                waktuMulai = System.currentTimeMillis();
                 Thread.sleep(waktuPengantaran);
+                sim.deleteFromListOnDelivery(this);
+                waktuMulai = 0;
             } catch (InterruptedException e) {
                 System.out.println("Aksi terganggu!");
             }
-            sim.getInventory().tambahJumlahObjek(this, 1);
+            sim.getInventory().addItem(this, 1);
         }).start();
     }
 }

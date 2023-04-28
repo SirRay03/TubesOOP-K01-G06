@@ -1,3 +1,5 @@
+package Items;
+import essentials.Sim;
 public class Kaca extends NonMakanan {
     public Kaca(){
         super(10, 2, 1);
@@ -19,7 +21,7 @@ public class Kaca extends NonMakanan {
         });
         t.start();
         try{
-            t.join();
+            t.join(); 
         }catch(InterruptedException e){
             System.out.println("Proses berkaca terganggu");
         }
