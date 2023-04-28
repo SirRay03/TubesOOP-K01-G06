@@ -1,5 +1,5 @@
 package Items;
-import essentials.*;
+import src.*;
 
 public class Time {
     private static Time instance = new Time();
@@ -17,8 +17,8 @@ public class Time {
 
     }
     
-    public void startStopTime(World world){
-        for(Sim a : world.getlistofSim()){
+    public void startStopTime(World2 world2){
+        for(Sim a : world2.getlistofSim()){
             if( a.getStatus() != "idle"){
                 start = true;
             }

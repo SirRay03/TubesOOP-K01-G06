@@ -7,9 +7,9 @@ public class Rumah{
     private int currX;
     private int currY;
     
-    public Rumah(Sim sim){
+    public Rumah(){
         denahRumah = new Ruangan[21][21];
-        denahRumah[11][11] = new Ruangan("Kamar Utama",sim);
+        denahRumah[11][11] = new Ruangan("Kamar Utama");
         roomCount = 1;
         currX = 11;
         currY = 11;
@@ -106,7 +106,7 @@ public class Rumah{
             input.nextLine();
             
             if (pilihan == 1){
-                denahRumah[posX][posY] = new Ruangan(namaRuangan, sim);
+                denahRumah[posX][posY] = new Ruangan(namaRuangan);
                 roomCount++;
                 System.out.println("Ruangan " + namaRuangan + " berhasil ditambahkan!");
             }

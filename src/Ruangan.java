@@ -11,7 +11,7 @@ public class Ruangan {
     private List<NonMakanan> listBarang;
     private NonMakanan[][] matriksPemetaan;
     
-    public Ruangan (String nama,Sim sim){
+    public Ruangan (String nama){
         this.nama = nama;
         this.panjang = 6;
         this.lebar = 6;
@@ -28,16 +28,97 @@ public class Ruangan {
             MejaKursi mejaKursi = new MejaKursi();
             Toilet toilet = new Toilet();
             Jam jam =new Jam();
-            sim.getInventory().addItem(kasur, 1);
-            sim.getInventory().addItem(kompor, 1);
-            sim.getInventory().addItem(mejaKursi, 1);
-            sim.getInventory().addItem(toilet, 1);
-            sim.getInventory().addItem(jam, 1);
-            memasangBarang(kasur, 3, 1, sim);
-            memasangBarang(kompor, 1, 1, sim);
-            memasangBarang(mejaKursi, 1, 3, sim);
-            memasangBarang(toilet, 1, 6, sim);
-            memasangBarang(jam, 6, 1, sim);    
+            memasangBarangAwal(kasur, 3, 1);
+            memasangBarangAwal(kompor, 1, 1);
+            memasangBarangAwal(mejaKursi, 1, 3);
+            memasangBarangAwal(toilet, 1, 6);
+            memasangBarangAwal(jam, 6, 1);    
+        }
+    }
+
+    private void memasangBarangAwal(NonMakanan barang, int x, int y){
+        if(barang.getPanjang() + x-1 <= 6 && barang.getPanjang() + x-1 >=0 && barang.getLebar()+y-1 <= 6 && barang.getLebar() + y-1 >=0){
+            boolean cekMatriks;
+            cekMatriks = true;
+            for (int i = x-1; i < barang.getPanjang() + x-1; i++){
+                for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
+                    if( matriksPemetaan[i][j] != null) {
+                        cekMatriks = false;
+                    }
+                }
+            }
+            if(cekMatriks){
+                for (int i = x-1; i < barang.getPanjang() + x-1; i++){
+                    for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
+                        if(barang instanceof Jam){
+                            Jam jam = (Jam) barang;
+                            matriksPemetaan[i][j] = jam;
+                        }
+                        else if(barang instanceof Kaca){
+                            Kaca kaca = (Kaca) barang;
+                            matriksPemetaan[i][j] = kaca;
+                        }
+                        else if(barang instanceof Kasur){
+                            Kasur kasur = (Kasur) barang;
+                            matriksPemetaan[i][j] = kasur;
+                        }
+                        else if(barang instanceof Kertas){
+                            Kertas kertas = (Kertas) barang;
+                            matriksPemetaan[i][j] = kertas;
+                        }
+                        else if(barang instanceof MejaKursi){
+                            MejaKursi mejaKursi = (MejaKursi) barang;
+                            matriksPemetaan[i][j] = mejaKursi;
+                        }
+                        else if(barang instanceof Toilet){
+                            Toilet toilet = (Toilet) barang;
+                            matriksPemetaan[i][j] = toilet;
+                        }
+                        else if(barang instanceof Kompor){
+                            Kompor kompor = (Kompor) barang;
+                            matriksPemetaan[i][j] = kompor;
+                        }
+                    }
+                }
+                if(barang instanceof Jam){
+                    Jam jam = (Jam) barang;
+                    listBarang.add(jam);
+                }
+                else if(barang instanceof Kaca){
+                    Kaca kaca = (Kaca) barang;
+                    listBarang.add(kaca);
+                }
+                else if(barang instanceof Kasur){
+                    Kasur kasur = (Kasur) barang;
+                    listBarang.add(kasur);
+                }
+                else if(barang instanceof Kertas){
+                    Kertas kertas = (Kertas) barang;
+                    listBarang.add(kertas);
+                }
+                else if(barang instanceof MejaKursi){
+                    MejaKursi mejaKursi = (MejaKursi) barang;
+                    listBarang.add(mejaKursi);
+                }
+                else if(barang instanceof Toilet){
+                    Toilet toilet = (Toilet) barang;
+                    listBarang.add(toilet);
+                }
+                else if(barang instanceof Kompor){
+                    Kompor kompor = (Kompor) barang;
+                    listBarang.add(kompor);
+                }
+
+                while(barang.getPanjang()<0 || barang.getLebar()<0){
+                    rotateRight(barang);
+                }
+            }
+            else{
+                System.out.println("Ada objek lain");
+            }
+        }
+        else{
+            System.out.println("Objek melewati ruangan");
         }
     }
     
