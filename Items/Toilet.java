@@ -10,8 +10,6 @@ public class Toilet extends NonMakanan {
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(10000); 
-                sim.getKesejahteraan().setMood(10);
-                sim.getKesejahteraan().setHunger(-5); 
                 System.out.println("Proses mandi selesai");
             }
             catch(InterruptedException e){
@@ -21,6 +19,8 @@ public class Toilet extends NonMakanan {
         t.start();
         try{
             t.join();
+            sim.getKesejahteraan().setMood(10);
+            sim.getKesejahteraan().setHunger(-5); 
         }catch(InterruptedException e){
             System.out.println("Proses mandi terganggu");
         }
@@ -39,8 +39,6 @@ public class Toilet extends NonMakanan {
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(10000); 
-                sim.getKesejahteraan().setMood(10);
-                sim.getKesejahteraan().setHunger(-20); 
                 System.out.println("Proses buang air selesai");
             }
             catch(InterruptedException e){
@@ -50,6 +48,8 @@ public class Toilet extends NonMakanan {
         t.start();
         try{
             t.join();
+            sim.getKesejahteraan().setMood(10);
+            sim.getKesejahteraan().setHunger(-20); 
         }catch(InterruptedException e){
             System.out.println("Proses buang air terganggu");
         }

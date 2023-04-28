@@ -8,16 +8,14 @@ public class MejaKursi extends NonMakanan {
     public MejaKursi(){
         super(50, 3, 3); //harga, panjang, lebar sudah ditetapkan
     }
-    public void doAction(Object... args){
+    public void doAction(Object... args){//belum divalidasi jadi harus divalidasi dari main \\ fungsi makan
         //implementation code goes here
         //Object... args artinya dia bisa nerima banyak argumen
         //akses argumen nya satu2, baru cast jadi yg sesuai
         //misal: doAction(Sim sima, String contoh)
         //brarti cara akses parameter pertama nya : Sim sima = (Sim) args[0]
         //brarti cara akses parameter kedua nya : String contoh = (String) args[1]
-    }
-    public void makan(){
-        //implementation code goes here
+
     }
     public void main(int waktu, Sim sim){//nerima waktu mau berapa lama
         sim.setStatus("Sim sedang main");

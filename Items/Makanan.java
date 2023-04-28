@@ -40,6 +40,9 @@ public abstract class Makanan implements Item{
         }).start();
 
     }
+    public String getNama(){
+        return this.nama;
+    }
 
 /**
  * MAIN BELI BARANG
