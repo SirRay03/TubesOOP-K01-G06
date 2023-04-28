@@ -17,7 +17,6 @@ import java.util.List;
     public double secProfesi;
     public int biaya;
 
-
     public Pekerjaan(){
         this.profesi = sim.getPekerjaan();
     }
@@ -75,14 +74,46 @@ import java.util.List;
         }
     }
 
-    public void kerja(int waktuKerja, String profesi){
-        //Validasi input waktu sebesar kelipatan 120
-        if(waktuKerja%120 != 0){
-            System.out.println("Masukkan waktu dalam kelipatan 120!");
+    public void kerja(String profesi){
+
+        //Validasi input waktu kelipatan 120
+        sim.setStatus("Sim sedang bekerja");
+        Scanner scan = new Scanner(System.in);
+        boolean valid = false;
+        int waktuKerja;
+        while(!valid){
+            try{
+                System.out.print("Masukkan durasi kerja: ");
+                waktuKerja = scan.nextInt();
+                valid = true;
+            }
+            catch (Exception e)
+            {
+                System.out.println("Input tidak valid. Masukkan input berupa angka!");
+                scan.nextLine();
+            }
         }
-        else{
+        while(waktuKerja % 120 != 0){
+            System.out.println("Input harus berupa kelipatan 120!");
+            valid = false;
+            while (!valid)
+            {
+                try 
+                {
+                    System.out.print("Masukkan durasi kerja (dalem detik dan kelipatan 240):");
+                    waktuKerja = scan.nextInt();
+                    valid = true;
+                }
+                catch (Exception e) 
+                {
+                    System.out.println("Input tidak valid. Masukkan input berupa angka!");
+                    scan.nextLine();
+                }
+            }
+        }
+        while(waktuKerja%120 == 0){
             if(waktuKerja == 120){ // kerja 2 menit (belom gajian)
-                System.out.println("Sim sedang bekerja ...");
+                System.out.println("Sim sedang bekerja...");
                 Thread t = new Thread (()->{
                 try{
                     Thread.sleep(120000); // 120 detik (1 siklus kerja)
@@ -107,11 +138,7 @@ import java.util.List;
                 }
             }
             else if (waktuKerja == 240){ // kerja 4 menit (langsung gajian)
-                //auto gajian
-                //-80 mood
-                //-80 kekenyangan
-
-                System.out.println("Sim sedang bekerja ...");
+                System.out.println("Sim sedang bekerja");
                 Thread t = new Thread (()->{
                 try{
                     Thread.sleep(240000); // 240 detik (1 siklus kerja)
@@ -156,3 +183,6 @@ import java.util.List;
         }
     }
 }
+
+
+
