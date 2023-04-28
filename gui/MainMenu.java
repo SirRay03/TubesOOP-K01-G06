@@ -1,7 +1,7 @@
 package gui;
 import javax.swing.*;
 
-import essentials.World;
+import src.World;
 
 import java.awt.*;
 import java.awt.event.*;

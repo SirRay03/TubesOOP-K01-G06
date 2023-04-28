@@ -1,8 +1,8 @@
 package Items;
 import java.util.concurrent.TimeUnit;
 
-import essentials.Sim;
-import essentials.World;
+import src.Sim;
+import src.World;
 
 public class Jam extends NonMakanan {
     public Jam(){

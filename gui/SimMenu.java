@@ -1,7 +1,8 @@
 package gui;
 import javax.swing.*;
 
-import essentials.Sim;
+import src.Sim;
+
 import java.awt.*;
 import java.awt.event.*;
 
