@@ -1,4 +1,9 @@
+package gui;
 import javax.swing.*;
+
+import AddSim;
+import Sim;
+
 import java.awt.*;
 import java.awt.event.*;
 

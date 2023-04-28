@@ -1,3 +1,4 @@
+package objects;
 public class Masakan extends Makanan{
     private final BahanMakanan nasi;
     private final BahanMakanan kentang;

@@ -1,4 +1,8 @@
+package objects;
 import java.util.concurrent.TimeUnit;
+
+import Sim;
+import World;
 
 public class Jam extends NonMakanan {
     public Jam(){
@@ -74,7 +78,7 @@ public class Jam extends NonMakanan {
                     second =  TimeUnit.MILLISECONDS.toSeconds(duration - TimeUnit.HOURS.toMillis(hour) - TimeUnit.MINUTES.toMillis(minute));
                     System.out.println(bahanMakanan.getNama().toUpperCase() + " ADALAH " + hour + " JAM " + + minute + " MENIT " + second +" DETIK.");
                 }
-            }
+            
         }
         
     }

@@ -1,9 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
  public class Pekerjaan {
     private Sim sim;
-     private int gajiBadutSulap = 15;
+    private int gajiBadutSulap = 15;
     private int gajiKoki = 30;
     private int gajiPolisi = 35;
     private int gajiProgrammer = 45;
@@ -186,6 +185,3 @@ import java.util.List;
         }
     }
 }
-
-
-

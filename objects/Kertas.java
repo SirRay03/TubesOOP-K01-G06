@@ -1,4 +1,7 @@
+package objects;
 import java.util.*;
+
+import Sim;
 
 public class Kertas extends NonMakanan {
     public Kertas(){

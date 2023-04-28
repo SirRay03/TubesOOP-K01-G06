@@ -1,3 +1,4 @@
+package objects;
 public class MasakanBuilder{
     private String nama;
     private int kekenyangan;

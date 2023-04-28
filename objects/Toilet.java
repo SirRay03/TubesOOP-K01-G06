@@ -1,3 +1,6 @@
+import Sim;
+
+package objects;
 public class Toilet extends NonMakanan {
     public Toilet(){
         super(50, 1, 1);

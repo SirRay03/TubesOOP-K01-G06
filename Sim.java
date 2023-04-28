@@ -1,5 +1,7 @@
 import java.util.*;
 
+import objects.Item;
+
 public class Sim {
     // deklarasi atribut
     private String firstName;

@@ -1,3 +1,4 @@
+package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,7 +14,7 @@ public class MainMenu implements ActionListener{
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     Font buttonFont = new Font("Times New Roman", Font.PLAIN, 30);
 
-    MainMenu(){
+    public MainMenu(){
         frame = new JFrame();
         frame.setTitle("SimPlicity 5 - Main Menu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

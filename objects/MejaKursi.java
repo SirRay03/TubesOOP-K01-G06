@@ -1,5 +1,8 @@
+package objects;
 import java.lang.Math;
 import java.sql.Time;
+
+import Sim;
 
 public class MejaKursi extends NonMakanan {
     public MejaKursi(){

@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import objects.*;
+
 public class Ruangan {
     private int panjang;
     private int lebar;
