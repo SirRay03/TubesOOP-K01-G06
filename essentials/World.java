@@ -33,22 +33,14 @@ public class World{
         return lebar;
     }
 
-    public void addRumah(int x, int y){
+    public void addRumah(int x, int y){//i kebawah (kordinat y) j kesamping (kordinat x)
         //Validasi rumah melewati batas
         if (x >= 0 && x <= getLebarWorld() && y >= 0 && y <= getPanjangWorld()){
-            boolean cekRumah = true;
             //Validasi apakah sudah ada rumah yang dibangun sebelumnya
-            for(int i = 0; i < lebar; i++ ){
-                for (int j = 0; j < panjang; j++){
-                    if (map[i][j] == '0'){
-                        cekRumah = false;
-                    }
-                }
-            }
             //Jika belum ada rumah yang dibangun
-            if (cekRumah){
+            if (map[y][x] != '0'){
                 //Mengubah petak yang ada menjadi rumah
-                map[x][y] = '0';
+                map[y][x] = '0';
                 //Menambahkan rumah ke listofRumah
                 listofRumah.add(new Point(x,y));
             }

@@ -1,4 +1,4 @@
-package objects;
+package Items;
 public class BahanMakanan extends Makanan{
     private int harga;
     public BahanMakanan(String nama, int kekenyangan, int harga){

@@ -1,4 +1,4 @@
-package objects;
+package Items;
 import java.util.Scanner;
 
 import essentials.Sim; 

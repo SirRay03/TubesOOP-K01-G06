@@ -2,7 +2,7 @@ package essentials;
 import java.util.ArrayList;
 import java.util.List;
 
-import objects.*;
+import Items.*;
 
 public class Ruangan {
     private int panjang;

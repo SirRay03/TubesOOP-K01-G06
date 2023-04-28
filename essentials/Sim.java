@@ -1,7 +1,7 @@
 package essentials;
 import java.util.*;
 
-import objects.Item;
+import Items.Item;
 
 public class Sim {
     // deklarasi atribut

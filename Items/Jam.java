@@ -1,4 +1,4 @@
-package objects;
+package Items;
 import java.util.concurrent.TimeUnit;
 
 import essentials.Sim;
@@ -82,4 +82,5 @@ public class Jam extends NonMakanan {
         }
         
     }
+}
 }

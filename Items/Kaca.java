@@ -1,6 +1,5 @@
+package Items;
 import essentials.Sim;
-
-package objects;
 public class Kaca extends NonMakanan {
     public Kaca(){
         super(10, 2, 1);
