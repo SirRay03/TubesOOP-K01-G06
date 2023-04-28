@@ -18,7 +18,6 @@ import java.util.*;
     public int biaya;
 
     public Pekerjaan(){
-        this.profesi = sim.getPekerjaan();
     }
 
     public int getGajiPekerjaanBaru(String newProfesi){

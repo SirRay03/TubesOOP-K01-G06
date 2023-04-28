@@ -65,7 +65,6 @@ public class Kompor extends NonMakanan {
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(builder.getKekenyangan()*1500); 
-                sim.getKesejahteraan().setMood(10); //namabah mood 10
                 System.out.println("Proses memasak selesai");
             }
             catch(InterruptedException e){
@@ -75,6 +74,7 @@ public class Kompor extends NonMakanan {
         t.start();
         try{
             t.join();
+            sim.getKesejahteraan().setMood(10); //namabah mood 10
         }catch(InterruptedException e){
             System.out.println("Proses memasak terganggu");
         }
