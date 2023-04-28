@@ -46,3 +46,15 @@
     //     this.setPoint(sim.getPoint());
     //     //set waktunya belum 
     // }
+
+
+        for (Item item: sim.getInventory().getMap().keySet()){
+            JButton tombol;
+            tombol = new JButton(item.getClass().getSimpleName() + " x" + sim.getInventory().getMap().get(item));
+            if(item.getClass().getSimpleName().equals("BahanMakanan")){
+                tombol = new JButton(((BahanMakanan) item).getNama() + " x" + sim.getInventory().getMap().get(item));
+            }
+            tombol.setPreferredSize(new Dimension(300, 100));
+            tombol.setFont(buttonFont);
+            inventoryPanel.add(tombol);
+        }

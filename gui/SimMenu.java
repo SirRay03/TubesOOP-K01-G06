@@ -51,7 +51,7 @@ public class SimMenu implements ActionListener{
         buttonPanel.setPreferredSize(new Dimension(500, 350));
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         //buttonPanel.setBackground(Color.black);
-        
+
         // start = new JButton("Start");
         // start.setPreferredSize(new Dimension(300, 100));
         // start.setFont(buttonFont);
@@ -101,6 +101,12 @@ public class SimMenu implements ActionListener{
         moveRoom.setFocusPainted(false);
         moveRoom.addActionListener(this);
 
+        backToMain = new JButton("Back to Main Menu");
+        backToMain.setPreferredSize(new Dimension(300, 100));
+        backToMain.setFont(buttonFont);
+        backToMain.setFocusPainted(false);
+        backToMain.addActionListener(this);
+
         // editRoom = new JButton("Edit Room");
         // editRoom.setPreferredSize(new Dimension(300, 100));
         // editRoom.setFont(buttonFont);
@@ -145,6 +151,7 @@ public class SimMenu implements ActionListener{
         buttonPanel.add(viewInventory);
         buttonPanel.add(upgradeHouse);
         buttonPanel.add(moveRoom);
+        buttonPanel.add(backToMain);
         // buttonPanel.add(editRoom);
         // buttonPanel.add(addSim);
         // buttonPanel.add(changeSim);
@@ -159,6 +166,13 @@ public class SimMenu implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == viewSimInfo){
+            JOptionPane.showMessageDialog(null, "Name: " + sim.getFullName() + "\nOccupation: " + sim.getPekerjaan() + "\nHealth: " + sim.getKesejahteraan().getHealth() + "\nHunger: " + sim.getKesejahteraan().getHunger() + "\nMood: " + sim.getKesejahteraan().getMood() + "\nMoney: " + sim.getUang());
+        }
+        if (e.getSource() == viewInventory){
+            frame.dispose();
+            new InventoryMenu(sim);
+        }
         if (e.getSource() == viewCurrentLocation){
             JOptionPane.showMessageDialog(null, sim.getRumah().currentLoc());
         }
@@ -172,5 +186,10 @@ public class SimMenu implements ActionListener{
             String room = (String) JOptionPane.showInputDialog(null, "Choose room", "Move Room", JOptionPane.QUESTION_MESSAGE, null, rooms, rooms[0]);
             sim.getRumah().moveRoom(room);
         }
+        if (e.getSource() == backToMain){
+            frame.dispose();
+            new MainMenu();
+        }
+
     }
 }

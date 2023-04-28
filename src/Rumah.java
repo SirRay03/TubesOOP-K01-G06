@@ -1,6 +1,8 @@
 package src;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 public class Rumah{
     private Ruangan[][] denahRumah;
     private int roomCount;
@@ -51,17 +53,13 @@ public class Rumah{
                     }
                 }
             }
-            System.out.println("Pilih arah ruangan yang ingin ditambahkan:");
-            System.out.println("1. Atas");
-            System.out.println("2. Bawah");
-            System.out.println("3. Kiri");
-            System.out.println("4. Kanan");
-            int opsiArah = input.nextInt();
-            input.nextLine();
-            System.out.println("Masukkan nama ruangan yang ingin ditambahkan:");
-            String namaRuangan = input.nextLine();
-            if (opsiArah == 1){
-                if (denahRumah[posX][posY+1] == null){
+            String[] opsiArah = {"Atas","Bawah","Kanan","Kiri"};
+            String arah = (String) JOptionPane.showInputDialog(null, "Choose room", "Move Room", JOptionPane.QUESTION_MESSAGE, null, opsiArah, opsiArah[0]);
+            
+            String namaRuangan = JOptionPane.showInputDialog("Nama ruangan?: ");
+            
+            if (arah.equals("Atas")){
+                if (denahRumah[posX][posY-1] == null){
                     posY++;
                     uang -= 1500;
                 }
@@ -69,8 +67,8 @@ public class Rumah{
                     System.out.println("Ruangan sudah ada!");
                 }
             }
-            else if (opsiArah == 2){
-                if (denahRumah[posX][posY-1] == null){
+            else if (arah.equals("Bawah")){
+                if (denahRumah[posX][posY+1] == null){
                     posY--;
                     uang -= 1500;
                 }
@@ -78,8 +76,8 @@ public class Rumah{
                     System.out.println("Ruangan sudah ada!");
                 }
             }
-            else if (opsiArah == 3){
-                if (denahRumah[posX-1][posY] == null){
+            else if (arah.equals("Kanan")){
+                if (denahRumah[posX+1][posY] == null){
                     posX--;
                     uang -= 1500;
                 }
@@ -87,8 +85,8 @@ public class Rumah{
                     System.out.println("Ruangan sudah ada!");
                 }
             }
-            else if (opsiArah == 4){
-                if (denahRumah[posX+1][posY] == null){
+            else if (arah.equals("Kiri")){
+                if (denahRumah[posX-1][posY] == null){
                     posX++;
                     uang -= 1500;
                 }
@@ -99,22 +97,15 @@ public class Rumah{
             else{
                 System.out.println("Input salah!");
             }
-            System.out.println("Apakah anda yakin ingin menambah ruangan " + namaRuangan + "? Proses ini akan memakan waktu 18 menit.");
-            System.out.println("1. Ya");
-            System.out.println("2. Tidak");
-            int pilihan = input.nextInt();
-            input.nextLine();
-            
-            if (pilihan == 1){
+
+            int pilihan = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin menambah ruangan " + namaRuangan + "? Proses ini akan memakan waktu 18 menit.", "This is my title", JOptionPane.YES_NO_OPTION);         
+            if (pilihan == 0){
                 denahRumah[posX][posY] = new Ruangan(namaRuangan);
                 roomCount++;
                 System.out.println("Ruangan " + namaRuangan + " berhasil ditambahkan!");
             }
-            else if (pilihan == 2){
+            else if (pilihan == 1){
                 System.out.println("Ruangan " + namaRuangan + " dibatalkan!");
-            }
-            else{
-                System.out.println("Input salah!");
             }
         }
         else {

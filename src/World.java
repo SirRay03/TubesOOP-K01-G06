@@ -7,6 +7,7 @@ public class World{
     private static int horizontal = 64;
     private static int vertical = 64;
     private static Sim[][] map = new Sim[horizontal-1][vertical-1];
+    private static Sim[] simList = new Sim[4096];
     private long time;
     
     // === CONSTRUCTOR ===
@@ -37,6 +38,10 @@ public class World{
         return map;
     }
 
+    public static Sim[] getSimList(){
+        return simList;
+    }
+
     // === SETTER ===
 
     public void setTime (Long time){
@@ -62,6 +67,11 @@ public class World{
             }
             map[horizontalAddr][verticalAddr] = sim;
         }
+        int i = 0;
+        while (simList[i] != null){
+            i++;
+        }
+        simList[i] = sim;
     }
 
     public <Map> float getDistance (Sim[][] rumah1, Sim[][] rumah2) {
