@@ -16,11 +16,6 @@ public class MejaKursi extends NonMakanan {
         //brarti cara akses parameter pertama nya : Sim sima = (Sim) args[0]
         //brarti cara akses parameter kedua nya : String contoh = (String) args[1]
     }
-    public void makan(Sim sim){
-        //implementation code goes here
-
-
-    }
     public void main(int waktu, Sim sim){//nerima waktu mau berapa lama
         sim.setStatus("Sim sedang main");
         System.out.println("Sim sedang main...");

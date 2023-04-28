@@ -21,6 +21,7 @@ import java.util.*;
     //     String[] pekerjaan = {"Programmer", "Dokter", "Penulis", "Guru", "Insinyur", "Akuntan"};
     //     int randomIndex = new Random().nextInt(pekerjaan.length);
     //     return pekerjaan[randomIndex];
+
     // }
     }
 
