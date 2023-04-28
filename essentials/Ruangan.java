@@ -1,17 +1,22 @@
+package essentials;
 import java.util.ArrayList;
 import java.util.List;
+
+import Items.*;
 
 public class Ruangan {
     private int panjang;
     private int lebar;
-    private List<String> listBarang;
-    private String[][] matriksPemetaan;
+    private String nama;
+    private List<NonMakanan> listBarang;
+    private NonMakanan[][] matriksPemetaan;
     
-    public Ruangan (){
+    public Ruangan (String nama){
+        this.nama = nama;
         this.panjang = 6;
         this.lebar = 6;
         this.listBarang = new ArrayList<>(); 
-        this.matriksPemetaan = new String [panjang][lebar];
+        this.matriksPemetaan = new NonMakanan [panjang][lebar];
         for(int i = 0; i < panjang; i++){
             for(int j = 0; j < lebar; j++){
                 matriksPemetaan[i][j] = null;
@@ -36,68 +41,68 @@ public class Ruangan {
                     for(int j = y; j <barang.getLebar() + y ; j++){
                         if(barang instanceof Jam){
                             Jam jam = (Jam) barang;
-                            matriksPemetaan[i][j] = jam.getClass().getSimpleName();
+                            matriksPemetaan[i][j] = jam;
                         }
                         else if(barang instanceof Kaca){
                             Kaca kaca = (Kaca) barang;
-                            matriksPemetaan[i][j] = kaca.getClass().getSimpleName();
+                            matriksPemetaan[i][j] = kaca;
                         }
                         else if(barang instanceof Kasur){
                             Kasur kasur = (Kasur) barang;
-                            matriksPemetaan[i][j] = kasur.getClass().getSimpleName();
+                            matriksPemetaan[i][j] = kasur;
                         }
                         else if(barang instanceof Kertas){
                             Kertas kertas = (Kertas) barang;
-                            matriksPemetaan[i][j] = kertas.getClass().getSimpleName();
+                            matriksPemetaan[i][j] = kertas;
                         }
                         else if(barang instanceof MejaKursi){
                             MejaKursi mejaKursi = (MejaKursi) barang;
-                            matriksPemetaan[i][j] = mejaKursi.getClass().getSimpleName();
+                            matriksPemetaan[i][j] = mejaKursi;
                         }
                         else if(barang instanceof Toilet){
                             Toilet toilet = (Toilet) barang;
-                            matriksPemetaan[i][j] = toilet.getClass().getSimpleName();
+                            matriksPemetaan[i][j] = toilet;
                         }
                         else if(barang instanceof Kompor){
                             Kompor kompor = (Kompor) barang;
-                            matriksPemetaan[i][j] = kompor.getClass().getSimpleName();
+                            matriksPemetaan[i][j] = kompor;
                         }
                     }
                 }
                 if(barang instanceof Jam){
                     Jam jam = (Jam) barang;
-                    listBarang.add(jam.getClass().getSimpleName());
-                    sim.getinventory().removeItem(jam.getClass().getSimpleName(),1);
+                    listBarang.add(jam);
+                    sim.getInventory().removeItem(jam.getClass().getSimpleName(),1); //harus mastiin kalo barangnya emang ada di inventory sebelum dipanggil
                 }
                 else if(barang instanceof Kaca){
                     Kaca kaca = (Kaca) barang;
-                    listBarang.add(kaca.getClass().getSimpleName());
-                    sim.getinventory().removeItem(kaca.getClass().getSimpleName(),1);
+                    listBarang.add(kaca);
+                    sim.getInventory().removeItem(kaca.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kasur){
                     Kasur kasur = (Kasur) barang;
-                    listBarang.add(kasur.getClass().getSimpleName());
-                    sim.getinventory().removeItem(kasur.getClass().getSimpleName(),1);
+                    listBarang.add(kasur);
+                    sim.getInventory().removeItem(kasur.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kertas){
                     Kertas kertas = (Kertas) barang;
-                    listBarang.add(kertas.getClass().getSimpleName());
-                    sim.getinventory().removeItem(kertas.getClass().getSimpleName(),1);
+                    listBarang.add(kertas);
+                    sim.getInventory().removeItem(kertas.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof MejaKursi){
                     MejaKursi mejaKursi = (MejaKursi) barang;
-                    listBarang.add(mejaKursi.getClass().getSimpleName());
-                    sim.getinventory().removeItem(mejaKursi.getClass().getSimpleName(),1);
+                    listBarang.add(mejaKursi);
+                    sim.getInventory().removeItem(mejaKursi.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Toilet){
                     Toilet toilet = (Toilet) barang;
-                    listBarang.add(toilet.getClass().getSimpleName());
-                    sim.getinventory().removeItem(toilet.getClass().getSimpleName(),1);
+                    listBarang.add(toilet);
+                    sim.getInventory().removeItem(toilet.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kompor){
                     Kompor kompor = (Kompor) barang;
-                    listBarang.add(kompor.getClass().getSimpleName());
-                    sim.getinventory().removeItem(kompor.getClass().getSimpleName(),1);
+                    listBarang.add(kompor);
+                    sim.getInventory().removeItem(kompor.getClass().getSimpleName(),1);
                 }
 
                 while(barang.getPanjang()<0 || barang.getLebar()<0){
@@ -112,12 +117,45 @@ public class Ruangan {
             System.out.println("Objek melewati ruangan");
         }
     }
+    public void pindahBarang(NonMakanan barang,int x,int y,Sim sim){
+        boolean cekMatriks;
+        cekMatriks = true;
+        if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
+            for (int i = x; i < barang.getPanjang() + x; i++){
+                for(int j = y; j <barang.getLebar() + y ; j++){
+                    if( matriksPemetaan[i][j] != null ) {
+                        if(matriksPemetaan[i][j] != barang){
+                            cekMatriks = false;
+                        }
+                    }
+                }
+            }
+            if(cekMatriks){
+                for (int i = x; i < barang.getPanjang() + x; i++){
+                    for(int j = y; j <barang.getLebar() + y ; j++){
+                        if( matriksPemetaan[i][j] == barang ) {
+                            matriksPemetaan[i][j] = null;                
+                        }
+                    }
+                }
+                listBarang.remove(barang);
+                sim.getInventory().addItem(barang,1);
+                memasangBarang(barang, x, y,sim);
+            }
+            else{
+                System.out.println("Ada objek lain");
+            }
+        }
+        else{
+            System.out.println("Objek gagal dipindahkan karena melewati batas ruangan");
+        }
+    }
     
-    public void listObjek (){
+    public void getListObjek (){
         int i =1;
-        for (String a : listBarang){
+        for (NonMakanan a : listBarang){
             System.out.print(i + ". ");
-            System.out.println(a);
+            System.out.println(a.getClass().getSimpleName());
             i++;
         }
     }
@@ -134,16 +172,11 @@ public class Ruangan {
         barang.setLebar(temp*-1);
     }    
 
-// file sementara buat manggil ruangan di sim
-
-public class Ruangan {
-    private String namaRuangan;
-
-    public Ruangan(String namaRuangan) {
-        this.namaRuangan = namaRuangan;
+    public String getNamaRuangan(){
+        return nama;
     }
 
-    public String getNamaRuangan() {
-        return namaRuangan;
+    public void setNamaRuangan(String nama){
+        this.nama = nama;
     }
 }

@@ -1,8 +1,9 @@
+package Items;
 public class MasakanBuilder{
     private String nama;
     private int kekenyangan;
-    private String nasi;
-    private String kentang;
+    private BahanMakanan nasi;
+    private BahanMakanan kentang;
     private BahanMakanan ayam;
     private BahanMakanan sapi;
     private BahanMakanan wortel;
@@ -17,11 +18,11 @@ public class MasakanBuilder{
         this.kekenyangan = kekenyangan;
         return this;
     }
-    public MasakanBuilder setNasi(String nasi){
+    public MasakanBuilder setNasi(BahanMakanan nasi){
         this.nasi = nasi;
         return this;
     }
-    public MasakanBuilder setKentang(String kentang){
+    public MasakanBuilder setKentang(BahanMakanan kentang){
         this.kentang = kentang;
         return this;
     }

@@ -1,4 +1,5 @@
-public class BahanMakanan extends Makanan {
+package Items;
+public class BahanMakanan extends Makanan{
     private int harga;
     public BahanMakanan(String nama, int kekenyangan, int harga){
         super(nama, kekenyangan);
@@ -10,4 +11,8 @@ public class BahanMakanan extends Makanan {
     public int getHarga(){
         return harga;
     }
+    public String getNama(){
+        return nama;
+    }
+    
 }

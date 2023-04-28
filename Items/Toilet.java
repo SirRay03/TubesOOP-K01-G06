@@ -1,3 +1,5 @@
+package Items;
+import essentials.Sim;
 public class Toilet extends NonMakanan {
     public Toilet(){
         super(50, 1, 1);
@@ -7,9 +9,9 @@ public class Toilet extends NonMakanan {
         System.out.println("Sim sedang mandi...");
         Thread t = new Thread(()->{
         try{
-                Thread.sleep(10000); //1 detik berkaca
-                sim.getKesejahteraan().setMood(10); //namabah mood 1
-                sim.getKesejahteraan().setHunger(-5); //ngurang kenyang 1
+                Thread.sleep(10000); 
+                sim.getKesejahteraan().setMood(10);
+                sim.getKesejahteraan().setHunger(-5); 
                 System.out.println("Proses mandi selesai");
             }
             catch(InterruptedException e){
@@ -23,6 +25,7 @@ public class Toilet extends NonMakanan {
             System.out.println("Proses mandi terganggu");
         }
     }
+
     public void doAction(Object... args){
         //implementation code goes here
         //Object... args artinya dia bisa nerima banyak argumen
@@ -30,5 +33,25 @@ public class Toilet extends NonMakanan {
         //misal: doAction(Sim sima, String contoh)
         //brarti cara akses parameter pertama nya : Sim sima = (Sim) args[0]
         //brarti cara akses parameter kedua nya : String contoh = (String) args[1]
+        Sim sim = (Sim) args[0];
+        sim.setStatus("Sim sedang buang air");
+        System.out.println("Sim sedang buang air...");
+        Thread t = new Thread(()->{
+        try{
+                Thread.sleep(10000); 
+                sim.getKesejahteraan().setMood(10);
+                sim.getKesejahteraan().setHunger(-20); 
+                System.out.println("Proses buang air selesai");
+            }
+            catch(InterruptedException e){
+                System.out.println("Proses buang air terganggu");
+            }
+        });
+        t.start();
+        try{
+            t.join();
+        }catch(InterruptedException e){
+            System.out.println("Proses buang air terganggu");
+        }
     }
     }
