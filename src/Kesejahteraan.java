@@ -1,3 +1,4 @@
+package src;
 import java.lang.Math;
 import java.sql.Time;
 
@@ -85,7 +86,7 @@ public class Kesejahteraan{
 
     public void olahRaga (Time time){
         long timeLong = time.getTime()/ 1000; 
-        long pengali = Math.floorDiv(timeLong, timeLong);
+        long pengali = Math.floorDiv(timeLong, 20);
         int pengaliInt = ((int)pengali);
         setMood(pengaliInt * 10);
         setHealth(pengaliInt * -5);
