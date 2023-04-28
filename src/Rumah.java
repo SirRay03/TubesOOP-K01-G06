@@ -134,6 +134,11 @@ public class Rumah{
             }
         }
     }
+
+    public String currentLoc(){
+        return ("Anda saat ini berada di ruangan " + denahRumah[currX][currY].getNamaRuangan());
+    }
+}
     
     // public void pindahRuangan(Sim s){
     //     System.out.println("Pilih ruangan yang ingin dipilih:");
@@ -159,10 +164,7 @@ public class Rumah{
     //     input.close();
     // }
 
-    public String currentLoc(){
-        return ("Anda saat ini berada di ruangan " + denahRumah[currX][currY].getNamaRuangan());
-    }
-}
+    
 //     //DRIVER
 //     public static void main(String[] args){
 //         Rumah r = new Rumah();

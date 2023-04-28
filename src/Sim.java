@@ -13,7 +13,8 @@ public class Sim {
     private String status; 
     private Point point;
     private Inventory<Item> inventory; 
-    private Rumah rumah;
+    private Rumah currRumah;
+    private Ruangan currRuangan;
     private List<Item> listOnDelivery;
     public int timerNoSleep;
 
@@ -32,19 +33,10 @@ public class Sim {
         this.status = "idle";
         this.listOnDelivery = new ArrayList<>();
         this.timerNoSleep = 0;
-        this.rumah = new Rumah();
-        Thread t = new Thread(()->{
-        try{
-                Thread.sleep(600000); 
-                getKesejahteraan().setMood(-5);
-                getKesejahteraan().setHealth(-5);
-            }
-            catch(InterruptedException e){
-                System.out.println("Proses berkaca terganggu");
-            }
-        });
-        t.start();
+        this.currRumah = new Rumah();
     }
+
+    // === GETTER ===
     public String getFirstName() {
         return this.firstName;
     }
@@ -56,76 +48,32 @@ public class Sim {
     public String getFullName() {
         return this.firstName + " " + this.lastName;
     }
+
     public int getUang() {
         return this.uang;
-    }
-
-    public void setUang(int uang) {
-        this.uang = uang;
     }
 
     public String getStatus() {
         return this.status;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
     public List<Item> getListOnDelivery(){
-        return listOnDelivery;
+            return listOnDelivery;
     }
-    public void addToListOnDelivery(Item item){
-        listOnDelivery.add(item);
-    }
-    public void deleteFromListOnDelivery(Item item){
-        listOnDelivery.remove(item);
-    }
+
     private String getRandomPekerjaan() {
         String[] pekerjaan = {"Programmer", "Dokter", "Penulis", "Guru", "Insinyur", "Akuntan"};
         int randomIndex = new Random().nextInt(pekerjaan.length);
         return pekerjaan[randomIndex];
     }
-    
+
     public String getPekerjaan() {
         return this.pekerjaan;
-    }
-
-    public void setPekerjaan(String pekerjaan){
-        this.pekerjaan = pekerjaan;
     }
 
     public Kesejahteraan getKesejahteraan() {
         return this.kesejahteraan;
     }
-
-    public Point getPoint() {
-        return this.point;
-    }
-
-    public void setPoint(Point point) {
-       this.point = point;
-    }
-
-    public Rumah getRumah(){
-        return this.rumah;
-    }
-
-    // public Rumah getcurrentRumah () {
-    //     return currentRumah;
-    // }
-
-    // public void setRumah (Rumah rumah) {
-    //     this.currentRumah = rumah;
-    // }
-
-    // public Ruangan getcurrentRuangan() {
-    //     return currentRuangan;
-    // }
-
-    // public void pindahRuangan (Ruangan ruangan)
-    // {
-    //     this.currentRuangan = ruangan;
-    //}
 
     public Inventory<Item> getInventory() {
         return inventory;
@@ -135,13 +83,55 @@ public class Sim {
         return timerNoSleep;
     }
 
-    public void addTimerBelumTidur(int duration)
-    {
+    public Rumah getRumah(){
+        return this.currRumah;
+    }
+
+    public Ruangan getRuangan(){
+        return this.currRuangan;
+    }
+
+    public Point getPoint() {
+        return this.point;
+    }
+
+    // === SETTER ===
+
+    public void setUang(int uang) {
+            this.uang = uang;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setPekerjaan(String pekerjaan){
+        this.pekerjaan = pekerjaan;
+    }
+
+    public void setPoint(Point point) {
+       this.point = point;
+    }
+
+    public void setRumah (Rumah rumah) {
+        this.currRumah = rumah;
+    }
+
+    public void pindahRuangan (Ruangan ruangan) {
+        this.currRuangan = ruangan;
+    }
+
+    // === METHOD ===
+
+    public void addTimerBelumTidur(int duration){
         this.timerNoSleep += duration; // duration diambil dari durasi di method tidur
     }
 
-    public void resetTimerBelumTidurAfterSleep()
-    {
+    public void addToListOnDelivery(Item item){
+        listOnDelivery.add(item);
+    }
+
+    public void resetTimerBelumTidurAfterSleep(){
         timerNoSleep = 0;
     }
 
@@ -156,36 +146,73 @@ public class Sim {
         }
     }
 
-    // public void viewCurrentLocation () {
-    //     System.out.println("lalala"); // msh bingung cara nampilin satu2
-    // }
-    
-    // public void ngobrol(Sim sim){
-    //     this.kesejahteraan.setHunger(-10);
-    //     this.kesejahteraan.setHealth(15);
-    //     this.kesejahteraan.setMood(15);
-    //     sim.kesejahteraan.setHunger(-10);
-    //     sim.kesejahteraan.setHealth(15);
-    //     sim.kesejahteraan.setMood(15);
-    //     this.setRumah(sim.getcurrentRumah());
-    //     this.pindahRuangan(sim.getcurrentRuangan());
-    //     this.setPoint(sim.getPoint());
-    //     //set waktunya belum 
-    // }
+    public void deleteFromListOnDelivery(Item item){
+        listOnDelivery.remove(item);
+    }
+    public void berkunjung (Scanner scan) {
+        boolean isValid = false;
+        String opsi ;
+        int i = 0;
+        while (!isValid)
+        {
+            try {
+                System.out.println("Daftar rumah yang ada di World : ");
+                for (int x = 0; x < 64; x++)
+                {
+                    for (int y = 0; y < 64; y++) 
+                    {
+                        if (World.getMap()[x][y] != null) 
+                        {
+                            System.out.println((i+1) + ". " + World.getMap()[x][y].getFullName());
+                        }
+                    }
+                }
+                System.out.print("Pilih rumah: ");
+                opsi = scan.nextLine(); // bingung nnt sim nya bakal milih dlm bentuk apa ??
+                isValid = true;
+            }
+            catch (Exception e) {
+                System.out.println("Input invalid, silahkan input angka!");
+                scan.nextLine();
+            }
+        }
+        for (int x = 0; x < 64; x++)
+        {
+            for (int y = 0; y < 64; y++) 
+            {
+                if (World.getMap()[x][y] == null) 
+                {
+                    System.out.println("Tidak ada rumah di lokasi tersebut, tidak bisa dikunjungi!");
+                }
+                else if (World.getMap()[x][y].getFullName().equals(getFullName())){
+                    System.out.println("Tidak bisa berkunjung ke rumah sendiri!");
+                }
+            }
+        }
+        float waktuberkunjung = World.getDistance(); // gatau cara masukkin parameter rumah1, rumah2ny gmn
+        int totalWaktuBerkunjung = (int) (waktuberkunjung * 10);
+        Thread t = new Thread(()->{
+        try{
+                setRumah(getRumah());// get rumah sesuai opsi yang dipilih
+                Thread.sleep(totalWaktuBerkunjung*1000); 
+                getKesejahteraan().setMood(totalWaktuBerkunjung/30*10);
+                getKesejahteraan().setHunger(-(totalWaktuBerkunjung/30*10)); 
+                // World.addWaktu (totalWaktuBerkjung); nambahin waktu di world karean aksi aktif 
+                System.out.println("Proses berkunjung selesai");
+            }
+            catch(InterruptedException e){
+                System.out.println("Proses berkunjung terganggu");
+            }
+        });
+        t.start();
+        try{
+            t.join();
+        }catch(InterruptedException e){
+            System.out.println("Proses berkunjung terganggu");
+        }
+    }
 
-    // public int getPosisiX() {
-    //     return this.point.getX();
-    // }
-
-    // public int getPosisiY() {
-    //     return this.point.getY();
-    // }
-
-    // public void setPosisiX(int x) {
-    //     this.point.setX(x);
-    // }
-
-    // public void setPosisiY(int y) {
-    //     this.point.setY(y);
-    // }
+    public void selesaiBerkjung () {
+        setRumah(currRumah);
+    }
 }

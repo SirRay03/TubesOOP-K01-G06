@@ -23,7 +23,24 @@ public class Ruangan {
             }
         }
     }
-    
+
+    public void getListObjek (){
+        int i =1;
+        for (NonMakanan a : listBarang){
+            System.out.print(i + ". ");
+            System.out.println(a.getClass().getSimpleName());
+            i++;
+        }
+    }
+
+    public String getNamaRuangan(){
+        return nama;
+    }
+
+    public void setNamaRuangan(String nama){
+        this.nama = nama;
+    }
+
     public void memasangBarang (NonMakanan barang,int x,int y,Sim sim){
         //Cek apakah melewati ruangan atau tidak
         if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
@@ -151,14 +168,7 @@ public class Ruangan {
         }
     }
     
-    public void getListObjek (){
-        int i =1;
-        for (NonMakanan a : listBarang){
-            System.out.print(i + ". ");
-            System.out.println(a.getClass().getSimpleName());
-            i++;
-        }
-    }
+
     public void rotateRight(NonMakanan barang){
         int temp;
         temp = barang.getLebar();
@@ -171,12 +181,4 @@ public class Ruangan {
         barang.setPanjang(barang.getLebar());
         barang.setLebar(temp*-1);
     }    
-
-    public String getNamaRuangan(){
-        return nama;
-    }
-
-    public void setNamaRuangan(String nama){
-        this.nama = nama;
-    }
 }
