@@ -9,6 +9,7 @@ public class MainMenu implements ActionListener{
     JPanel buttonPanel;
     JButton newGame;
     JButton loadGame;
+    JButton help;
     JButton exitGame;
     JLabel titleText;
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
@@ -48,6 +49,13 @@ public class MainMenu implements ActionListener{
         loadGame.setFocusPainted(false);
         loadGame.setBackground(Color.white);
 
+        help = new JButton("Help");
+        help.setPreferredSize(new Dimension(300, 100));
+        help.setFont(buttonFont);
+        help.addActionListener(this);
+        help.setFocusPainted(false);
+        help.setBackground(Color.white);
+
         exitGame = new JButton("Exit Game");
         exitGame.setPreferredSize(new Dimension(300, 100));
         exitGame.setFont(buttonFont);
@@ -73,6 +81,10 @@ public class MainMenu implements ActionListener{
         if(e.getSource() == loadGame){
             frame.dispose();
             System.out.println("new LoadGame()");
+        }
+        if(e.getSource() == help){
+            frame.dispose();
+            new Help();
         }
         if(e.getSource() == exitGame){
             System.exit(0);

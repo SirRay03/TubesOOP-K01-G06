@@ -1,3 +1,4 @@
+package essentials;
 public class AddSim {
     public Sim addSim(String firstName, String lastName){
         Sim newSim = new Sim(firstName, lastName);

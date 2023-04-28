@@ -1,4 +1,4 @@
-import Sim;
+import essentials.Sim;
 
 package objects;
 public class Kaca extends NonMakanan {

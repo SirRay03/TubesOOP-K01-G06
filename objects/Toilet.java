@@ -1,4 +1,4 @@
-import Sim;
+import essentials.Sim;
 
 package objects;
 public class Toilet extends NonMakanan {

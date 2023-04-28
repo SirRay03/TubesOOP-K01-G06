@@ -1,8 +1,8 @@
 package objects;
 import java.util.*;
 
-import Actionable;
-import Sim;
+import essentials.Actionable;
+import essentials.Sim;
 public abstract class NonMakanan implements Item, Actionable{
     protected int panjang; 
     protected int lebar; 

@@ -1,3 +1,4 @@
+package essentials;
 import java.util.*;
 
 public class Inventory<T> {

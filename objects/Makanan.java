@@ -1,7 +1,7 @@
 package objects;
 import java.util.*;
 
-import Sim;
+import essentials.Sim;
 
 public abstract class Makanan implements Item{
     protected String nama;
