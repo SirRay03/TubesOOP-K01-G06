@@ -40,8 +40,19 @@ public class Sim {
         this.listOnDelivery = new ArrayList<>();
         this.listUpgrade = new ArrayList<>(); 
         this.timerNoSleep = 0;
-        this.currRumah = null;
-        this.currRuangan = null;
+
+        this.currRumah = new Rumah();
+        Thread t = new Thread(()->{
+        try{
+                Thread.sleep(600000); 
+                getKesejahteraan().setMood(-5);
+                getKesejahteraan().setHealth(-5);
+            }
+            catch(InterruptedException e){
+                System.out.println("Proses berkaca terganggu");
+            }
+        });
+        t.start();
     }
 
     // === GETTER ===
@@ -119,12 +130,19 @@ public class Sim {
        this.point = point;
     }
 
+    public Rumah getcurrentRumah () {
+        return currRumah;
+    }
+
     public void setRumah (Rumah rumah) {
         this.currRumah = rumah;
     }
 
     public void setRuangan (Ruangan ruangan) {
         this.currRuangan = ruangan;
+
+    public Ruangan getcurrentRuangan() {
+        return currRuangan;
     }
 
     // === METHOD ===
@@ -441,6 +459,4 @@ public class Sim {
             setUang(pekerjaan.getGaji());
         }
     }
-
-    
 }
