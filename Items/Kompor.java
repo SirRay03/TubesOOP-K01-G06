@@ -33,12 +33,18 @@ public class Kompor extends NonMakanan {
         String namaMasakan = (String) JOptionPane.showInputDialog(null, "Makanan apa yang ingin dimasak?", "Masak", JOptionPane.QUESTION_MESSAGE, null, cookBook, cookBook[0]);
         MasakanBuilder builder = new MasakanBuilder();
         builder.setNama(namaMasakan);
+        boolean cukup = false;
         switch(namaMasakan){
             case "Nasi Ayam":
-                builder.setNama(namaMasakan);
-                builder.setKekenyangan(16);
-                builder.setNasi((BahanMakanan) sim.getInventory().getItemBahanMakanan("Nasi", 1)); //butuh getter nasi dari inventory
-                builder.setKentang((BahanMakanan) sim.getInventory().getItemBahanMakanan("Kentang", 1)); //butuh getter ayam dari inventory
+                if (sim.getInventory().getItemBahanMakanan("Nasi", 1) == null && sim.getInventory().getItemBahanMakanan("Ayam", 1) == null){
+                    JOptionPane.showMessageDialog(null, "Bahan makanan tidak cukup", "Gagal", JOptionPane.ERROR_MESSAGE);
+                }else{
+                    builder.setNama(namaMasakan);
+                    builder.setKekenyangan(16);
+                    builder.setNasi((BahanMakanan) sim.getInventory().getItemBahanMakanan("Nasi", 1)); //butuh getter nasi dari inventory
+                    builder.setAyam((BahanMakanan) sim.getInventory().getItemBahanMakanan("Ayam", 1)); //butuh getter ayam dari inventory
+                    cukup = true;
+                }
                 break;
             case "Nasi Kari":
                 builder.setNama(namaMasakan);
@@ -71,27 +77,28 @@ public class Kompor extends NonMakanan {
                 builder.setNasi((BahanMakanan) sim.getInventory().getItemBahanMakanan("Nasi", 1)); //butuh getter nasi dari inventory
                 builder.setKentang((BahanMakanan) sim.getInventory().getItemBahanMakanan("Kentang", 1)); //butuh getter ayam dari inventory
         }
-        Masakan masakan = builder.build();
-        sim.setStatus("Sim sedang memasak");
-        System.out.println("Sim sedang memasak...");
-        Thread t = new Thread(()->{
-        try{
-                Thread.sleep(builder.getKekenyangan()*1500); 
-            }
-            catch(InterruptedException e){
+        if (cukup){
+            Masakan masakan = builder.build();
+            sim.setStatus("Sim sedang memasak");
+            System.out.println("Sim sedang memasak...");
+            Thread t = new Thread(()->{
+            try{
+                    Thread.sleep(builder.getKekenyangan()*1500); 
+                }
+                catch(InterruptedException e){
+                    System.out.println("Proses memasak terganggu");
+                }
+            });
+            t.start();
+            try{
+                t.join();
+                sim.getKesejahteraan().setMood(10); //namabah mood 10
+                System.out.println("Proses memasak selesai");
+            }catch(InterruptedException e){
                 System.out.println("Proses memasak terganggu");
             }
-        });
-        t.start();
-        try{
-            t.join();
-            sim.getKesejahteraan().setMood(10); //namabah mood 10
-            System.out.println("Proses memasak selesai");
-        }catch(InterruptedException e){
-            System.out.println("Proses memasak terganggu");
+            sim.getInventory().addItem(masakan, 1); //ini masukin ke inventory
         }
-        sim.getInventory().addItem(masakan, 1); //ini masukin ke inventory
-
     }
 }
 /**

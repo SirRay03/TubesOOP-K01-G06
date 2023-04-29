@@ -4,89 +4,93 @@ import java.awt.*;
 import java.awt.event.*;
 import src.*;
 
-public class NewGame implements ActionListener{
+public class NewGame{
     MyFrame frame;
-    JTextField firstName;
-    JTextField lastName;
-    JLabel firstNameLabel;
-    JLabel lastNameLabel;
-    JButton submit;
-    JButton back;
 
     NewGame(){
-        frame = new MyFrame("New Game");
-        frame.setLayout(null);
+        frame = new MyFrame("New Game","Please enter your new sim's name:");
 
-        firstName = new JTextField();
-        firstName.setBounds(575, 200, 500, 50);
-        firstName.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        firstName.setHorizontalAlignment(JTextField.CENTER);
-        firstName.setBorder(BorderFactory.createBevelBorder(1));
+        JPanel firstName = new JPanel();
+        firstName.setPreferredSize(new Dimension(1500, 100));
+        firstName.setBackground(Color.DARK_GRAY);
+        frame.middlePanel.add(firstName);
 
-        lastName = new JTextField();
-        lastName.setBounds(575, 300, 500, 50);
-        lastName.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        lastName.setHorizontalAlignment(JTextField.CENTER);
-        lastName.setBorder(BorderFactory.createBevelBorder(1));
-
-        firstNameLabel = new JLabel("First Name:");
-        firstNameLabel.setBounds(425, 200, 200, 50);
+        JLabel firstNameLabel = new JLabel("First Name: ");
         firstNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+        firstNameLabel.setForeground(Color.white);
+        firstName.add(firstNameLabel);
 
-        lastNameLabel = new JLabel("Last Name:");
-        lastNameLabel.setBounds(425, 300, 200, 50);
+        JTextField firstNameField = new JTextField();
+        firstNameField.setPreferredSize(new Dimension(500, 50));
+        firstNameField.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+        firstNameField.setHorizontalAlignment(JTextField.CENTER);
+        firstNameField.setBorder(BorderFactory.createBevelBorder(1));
+        firstName.add(firstNameField);
+
+        JPanel lastName = new JPanel();
+        lastName.setPreferredSize(new Dimension(1500, 100));
+        lastName.setBackground(Color.DARK_GRAY);
+        frame.middlePanel.add(lastName);
+
+        JLabel lastNameLabel = new JLabel("Last Name: ");
         lastNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+        lastNameLabel.setForeground(Color.white);
+        lastName.add(lastNameLabel);
 
-        submit = new JButton("Submit");
-        submit.setBounds(650, 400, 200, 50);
-        submit.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        submit.setFocusPainted(false);
-        submit.setBackground(Color.white);
-        submit.addActionListener(this);
+        JTextField lastNameField = new JTextField();
+        lastNameField.setPreferredSize(new Dimension(500, 50));
+        lastNameField.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+        lastNameField.setHorizontalAlignment(JTextField.CENTER);
+        lastNameField.setBorder(BorderFactory.createBevelBorder(1));
+        lastName.add(lastNameField);
 
-        back = new JButton("Back");
-        back.setBounds(650, 500, 200, 50);
-        back.setFont(new Font("Times New Roman", Font.PLAIN, 30));
-        back.setFocusPainted(false);
-        back.setBackground(Color.white);
-        back.addActionListener(this);
+        JPanel submit = new JPanel();
+        submit.setPreferredSize(new Dimension(1500, 100));
+        submit.setBackground(Color.DARK_GRAY);
+        frame.middlePanel.add(submit);
 
-        frame.getRootPane().setDefaultButton(submit);
+        MyButton submitButton = new MyButton("Submit");
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String firstName = firstNameField.getText();
+                String lastName = lastNameField.getText();
+                if (firstName.isEmpty() || lastName.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Please fill in all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else if (!firstName.matches("[a-zA-Z]+") || !lastName.matches("[a-zA-Z]+")){
+                    JOptionPane.showMessageDialog(null, "Please enter a valid name!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else {
+                    //TO DO
+                    //CHECK IF SIM ALREADY EXISTS
+                    Sim sim = new Sim(firstName, lastName);
+                    Rumah rumah = new Rumah();
+                    World.addSim(sim,rumah);
+                    JOptionPane.showMessageDialog(null, "New sim created. Welcome to SimPlicity 5, " + firstName + " " + lastName + "!");
+                    frame.dispose();
+                    new HomePage(sim);
+                    frame.dispose();
+                }
+            }
+        });
+        submit.add(submitButton);
 
-        frame.add(firstNameLabel);
-        frame.add(firstName);
-        frame.add(lastNameLabel);
-        frame.add(lastName);
-        frame.add(submit);
-        frame.add(back);
+        JPanel back = new JPanel();
+        back.setPreferredSize(new Dimension(1500, 100));
+        back.setBackground(Color.DARK_GRAY);
+        frame.middlePanel.add(back);
+
+        MyButton backButton = new MyButton("Back");
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new MainMenu();
+            }
+        });
+        back.add(backButton);
+    
+        frame.getRootPane().setDefaultButton(submitButton);
 
         frame.setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == submit){
-            //Check if textfield is empty
-            if (firstName.getText().isEmpty() || lastName.getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, "Please fill in all fields.");
-            //Check if textfield contains only letters
-            } 
-            else if (!firstName.getText().matches("[a-zA-Z]+") || !lastName.getText().matches("[a-zA-Z]+")){
-                JOptionPane.showMessageDialog(null, "Please enter a valid name.");
-            }
-            else{
-                //Create new sim
-                Sim sim = new Sim(firstName.getText(), lastName.getText());
-                Rumah rumah = new Rumah();
-                World.addSim(sim,rumah);
-                JOptionPane.showMessageDialog(null, "New sim created. Welcome to SimPlicity 5, " + firstName.getText() + " " + lastName.getText() + "!");
-                frame.dispose();
-                new SimMenu(sim);
-            }
-        }
-        if(e.getSource() == back){
-            frame.dispose();
-            new MainMenu();
-        }
     }
 }

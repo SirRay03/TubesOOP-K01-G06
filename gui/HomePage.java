@@ -1,13 +1,13 @@
 package gui;
-import javax.swing.*;
 
 import Items.*;
 import src.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
-public class SimMenu implements ActionListener{
+public class HomePage implements ActionListener{
 
     Sim sim;
     JFrame frame;
@@ -30,7 +30,7 @@ public class SimMenu implements ActionListener{
     Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
     Font buttonFont = new Font("Times New Roman", Font.PLAIN, 30);
 
-    public SimMenu(Sim sim){
+    public HomePage(Sim sim){
         this.sim = sim;
 
         frame = new JFrame(sim.getFullName() + " - Menu");
@@ -151,7 +151,7 @@ public class SimMenu implements ActionListener{
         }
         if (e.getSource() == viewInventory){
             frame.dispose();
-            new InventoryMenu(sim);
+            new ViewInventory(sim);
         }
         if (e.getSource() == viewCurrentLocation){
             JOptionPane.showMessageDialog(null, "Current Location: " + sim.getRuangan().getNamaRuangan());
@@ -167,7 +167,7 @@ public class SimMenu implements ActionListener{
             Ruangan pindah = sim.getRumah().searchRuangan(room);
             sim.setRuangan(pindah);
             frame.dispose();
-            new SimMenu(sim);
+            new HomePage(sim);
         }
         if (e.getSource() == backToMain){
             frame.dispose();
@@ -188,7 +188,7 @@ public class SimMenu implements ActionListener{
         }
         if (e.getSource() == buyItem){
             frame.dispose();
-            new BuyItemGUI(sim);
+            new BuyItem(sim);
         }
         if (e.getSource() == olahraga){
             sim.olahraga();

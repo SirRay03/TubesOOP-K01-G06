@@ -9,7 +9,7 @@ import java.util.*;
 
 import src.*;
 
-public class BuyItemGUI {
+public class BuyItem {
     JFrame frame;
     JPanel title;
     JButton back;
@@ -57,7 +57,7 @@ public class BuyItemGUI {
         }
     }
 
-    BuyItemGUI(Sim sim){
+    BuyItem(Sim sim){
         MakananDB arrMakanan = new MakananDB();
         NonMakananDB arrNonMakanan = new NonMakananDB();
 
@@ -213,7 +213,7 @@ public class BuyItemGUI {
         back.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 frame.dispose();
-                new SimMenu(sim);
+                new HomePage(sim);
             }
         });
 
