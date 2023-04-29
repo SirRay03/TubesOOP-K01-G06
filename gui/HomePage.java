@@ -178,7 +178,7 @@ public class HomePage implements ActionListener{
         }
         if (e.getSource() == berkunjung){
             frame.dispose();
-            new BerkunjungGUI();
+            new BerkunjungGUI(sim);
         }
         if (e.getSource() == goToObject){
             String[] objects = sim.getRuangan().getObjekNames();
