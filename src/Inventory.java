@@ -1,5 +1,6 @@
 package src;
 import java.util.*;
+import Items.*;
 
 public class Inventory<T> {
 
@@ -34,7 +35,7 @@ public class Inventory<T> {
     public void removeItem(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
         boolean ketemu = false;
         for (T item : items.keySet()) {
-            if (item.toString().equals(itemName)) {
+            if (((Makanan) item).getNama().equals(itemName)) {
                 int currentQuantity = items.get(item);
                 if (currentQuantity - quantity == 0) {
                     items.remove(item);

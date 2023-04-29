@@ -56,7 +56,9 @@ public abstract class NonMakanan implements Item, Actionable{
             }
             sim.getInventory().addItem(this, 1);
         }).start();
+        //.....
     }
+    public abstract void printListAction();
 }
 
 /**

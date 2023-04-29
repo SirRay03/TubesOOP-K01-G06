@@ -40,9 +40,9 @@ public class InventoryMenu {
         makananText.setFont(titleFont);
         makanan.add(makananText);    
         for (Item item: sim.getInventory().getMap().keySet()){
-            if(item instanceof BahanMakanan){
+            if(item instanceof Makanan){
                 JButton tombol;
-                tombol = new JButton(((BahanMakanan) item).getNama() + " x" + sim.getInventory().getMap().get(item));
+                tombol = new JButton(((Makanan) item).getNama() + " x" + sim.getInventory().getMap().get(item));
                 tombol.setPreferredSize(new Dimension(300, 100));
                 tombol.setFont(buttonFont);
                 makanan.add(tombol);
@@ -57,13 +57,14 @@ public class InventoryMenu {
         nonMakananText.setFont(titleFont);
         nonMakanan.add(nonMakananText);
         for (Item item: sim.getInventory().getMap().keySet()){
-            JButton tombolNonMakanan;
-            tombolNonMakanan = new JButton(item.getClass().getSimpleName() + " x" + sim.getInventory().getMap().get(item));
-            tombolNonMakanan.setPreferredSize(new Dimension(300, 100));
-            tombolNonMakanan.setFont(buttonFont);
-            if(!item.getClass().getSimpleName().equals("BahanMakanan")){
+            if (!(item instanceof Makanan)){
+                JButton tombolNonMakanan;
+                tombolNonMakanan = new JButton(item.getClass().getSimpleName() + " x" + sim.getInventory().getMap().get(item));
+                tombolNonMakanan.setPreferredSize(new Dimension(300, 100));
+                tombolNonMakanan.setFont(buttonFont);
                 nonMakanan.add(tombolNonMakanan);
             }
+
         }
 
         back = new JButton("Back");

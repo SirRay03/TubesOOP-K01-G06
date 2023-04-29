@@ -93,26 +93,4 @@ public class Kesejahteraan{
         setHealth(pengaliInt * 5);
     } */
 
-    public void olahRaga(Sim sim){
-        sim.setStatus("Sim sedang olahraga");
-        System.out.println("Sim sedang olahraga...");
-        Thread t = new Thread(()->{
-        try{
-                Thread.sleep(20000); 
-                sim.getKesejahteraan().setMood(10);
-                sim.getKesejahteraan().setHunger(-5);
-                sim.getKesejahteraan().setHealth(5); 
-                System.out.println("Proses olahraga selesai");
-            }
-            catch(InterruptedException e){
-                System.out.println("Proses olahraga terganggu");
-            }
-        });
-        t.start();
-        try{
-            t.join();
-        }catch(InterruptedException e){
-            System.out.println("Proses olahraga terganggu");
-        }
-    }
 }

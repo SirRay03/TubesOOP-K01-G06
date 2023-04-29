@@ -2,6 +2,7 @@ package Items;
 import java.util.Scanner;
 
 import src.Sim; 
+import gui.SleepOverlay;
 
 public class Kasur extends NonMakanan {
     public enum tipeKasur{
@@ -23,6 +24,9 @@ public class Kasur extends NonMakanan {
     public Kasur(tipeKasur tipe){
         super(tipe.harga, tipe.panjang, tipe.lebar);
     }
+    public void printListAction(){
+        System.out.println("1. Tidur");
+    };
     public void doAction(Object... args){
         //implementation code goes here
         //Object... args artinya dia bisa nerima banyak argumen
@@ -64,26 +68,34 @@ public class Kasur extends NonMakanan {
                 catch (Exception e) 
                 {
                     System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                    scan.nextLine();
+                    //scan.nextLine();
                 }
             }
         }
+        SleepOverlay gif = new SleepOverlay();
         int totalDurasi = duration;
         Thread t = new Thread(()->{
         try{
-                Thread.sleep(totalDurasi * 1000); 
-                System.out.println("Bangun tidur");
-                sim.getKesejahteraan().setMood(20*(totalDurasi/240)); 
-                sim.getKesejahteraan().setHealth(30*(totalDurasi/240)); 
+                System.out.println("Sim sedang tidur zzz...");
+                Thread.sleep(5000); 
+                //gif.dispose();
                 //world.addWaktu(totalDurasi)
-                sim.resetTimerBelumTidurAfterSleep();
+                //sim.resetTimerBelumTidurAfterSleep();
             }
             catch(InterruptedException e){
                 System.out.println("Proses tidur terganggu");
             }
         });
-        System.out.println("Sim sedang tidur zzz...");
         t.start();
+        try{
+            t.join(); 
+            System.out.println("Bangun tidur");
+            sim.getKesejahteraan().setMood(20*(totalDurasi/240)); 
+            sim.getKesejahteraan().setHealth(30*(totalDurasi/240)); 
+            System.out.println("Proses tidur selesai");
+        }catch(InterruptedException e){
+            System.out.println("Proses tidur terganggu");
+        }
         scan.close();
     }
     

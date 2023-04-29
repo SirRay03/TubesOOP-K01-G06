@@ -4,13 +4,18 @@ public class Toilet extends NonMakanan {
     public Toilet(){
         super(50, 1, 1);
     }
+    public void printListAction(){
+        System.out.println("1. Mandi");
+        System.out.println("2. Buang Air");
+    };
+    
     public void mandi(Sim sim){
         sim.setStatus("Sim sedang mandi");
         System.out.println("Sim sedang mandi...");
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(10000); 
-                System.out.println("Proses mandi selesai");
+                
             }
             catch(InterruptedException e){
                 System.out.println("Proses mandi terganggu");
@@ -21,6 +26,7 @@ public class Toilet extends NonMakanan {
             t.join();
             sim.getKesejahteraan().setMood(10);
             sim.getKesejahteraan().setHunger(-5); 
+            System.out.println("Proses mandi selesai");
         }catch(InterruptedException e){
             System.out.println("Proses mandi terganggu");
         }
@@ -39,7 +45,7 @@ public class Toilet extends NonMakanan {
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(10000); 
-                System.out.println("Proses buang air selesai");
+                
             }
             catch(InterruptedException e){
                 System.out.println("Proses buang air terganggu");
@@ -50,6 +56,7 @@ public class Toilet extends NonMakanan {
             t.join();
             sim.getKesejahteraan().setMood(10);
             sim.getKesejahteraan().setHunger(-20); 
+            System.out.println("Proses buang air selesai");
         }catch(InterruptedException e){
             System.out.println("Proses buang air terganggu");
         }

@@ -5,8 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MainMenu implements ActionListener{
-    JFrame frame;
-    JPanel title;
+    MyFrame frame;
     JPanel buttonPanel;
     JButton newGame;
     JButton loadGame;
@@ -17,19 +16,7 @@ public class MainMenu implements ActionListener{
     Font buttonFont = new Font("Times New Roman", Font.PLAIN, 30);
 
     public MainMenu(){
-        frame = new JFrame();
-        frame.setTitle("SimPlicity 5 - Main Menu");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800,600);
-        frame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-
-        title = new JPanel();
-        title.setPreferredSize(new Dimension(1000, 300));
-        title.setBackground(Color.black);
-        titleText = new JLabel("SimPlicity 5");
-        titleText.setForeground(Color.white);
-        titleText.setFont(titleFont);
-        title.add(titleText);
+        frame = new MyFrame("Main Menu");
 
         buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(1000, 700));
@@ -68,7 +55,6 @@ public class MainMenu implements ActionListener{
         buttonPanel.add(help);
         buttonPanel.add(exitGame);
 
-        frame.add(title);
         frame.add(buttonPanel);
         frame.setVisible(true);
     }

@@ -1,13 +1,15 @@
 package Items;
 import java.util.concurrent.TimeUnit;
 
-import src.Sim;
-import src.World;
+import src.*;
 
 public class Jam extends NonMakanan {
     public Jam(){
         super(10, 1, 1);
     }
+    public void printListAction(){
+        System.out.println("1. Melihat Jam");
+    };
     public void doAction(Object... args){
         //implementation code goes here
         //Object... args artinya dia bisa nerima banyak argumen
@@ -81,6 +83,19 @@ public class Jam extends NonMakanan {
             
         }
         
+    }
+    System.out.println("SISA WAKTU UPGRADE RUMAH");
+    if(sim.getListUpgrade().isEmpty()){
+        System.out.println("Tidak ada rumah yang sedang diupgrade");
+    }
+    else{
+        for(Rumah rumah : sim.getListUpgrade()){
+            duration = rumah.getWaktuUpgrade() - (System.currentTimeMillis() - rumah.getWaktuMulai());
+            hour = TimeUnit.MILLISECONDS.toHours(duration);
+            minute = TimeUnit.MILLISECONDS.toMinutes(duration - TimeUnit.HOURS.toMillis(hour));
+            second =  TimeUnit.MILLISECONDS.toSeconds(duration - TimeUnit.HOURS.toMillis(hour) - TimeUnit.MINUTES.toMillis(minute));
+            System.out.println(rumah.getClass().getSimpleName().toUpperCase() + " ADALAH " + hour + " JAM " + minute + " MENIT " + second + " DETIK.");
+        }
     }
 }
 }
