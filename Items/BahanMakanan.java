@@ -16,3 +16,9 @@ public class BahanMakanan extends Makanan{
     }
     
 }
+/**
+ * print("Pilih mau beli barang apa")
+ * if (button Nasi clicked){
+ * BahanMakanan nasi = new BahanMakanan("nasi", 5, 5)
+ * }
+ */

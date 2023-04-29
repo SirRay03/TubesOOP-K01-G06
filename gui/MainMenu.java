@@ -1,100 +1,53 @@
 package gui;
-import javax.swing.*;
 
-import src.World;
-
-import java.awt.*;
 import java.awt.event.*;
 
-public class MainMenu implements ActionListener{
-    JFrame frame;
-    JPanel title;
-    JPanel buttonPanel;
-    JButton newGame;
-    JButton loadGame;
-    JButton help;
-    JButton exitGame;
-    JLabel titleText;
-    Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
-    Font buttonFont = new Font("Times New Roman", Font.PLAIN, 30);
+public class MainMenu{
+    MyFrame frame;
 
     public MainMenu(){
-        frame = new JFrame();
-        frame.setTitle("SimPlicity 5 - Main Menu");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000,1000);
-        frame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        String[] quotes = {"All hail Jim Pickens", "Technoblade never dies", "Juara 1 Speedrun Tubes", "Contains cordyceps","Young, Dumb, Stupid!","No Sana, No Life!","Github susah","Josua ngestan NewJeans sekarang"};
+        int random = (int)(Math.random() * 8);
 
-        title = new JPanel();
-        title.setPreferredSize(new Dimension(1000, 300));
-        title.setBackground(Color.black);
-        titleText = new JLabel("SimPlicity 5");
-        titleText.setForeground(Color.white);
-        titleText.setFont(titleFont);
-        title.add(titleText);
+        frame = new MyFrame("Main Menu", quotes[random]);
 
-        buttonPanel = new JPanel();
-        buttonPanel.setPreferredSize(new Dimension(1000, 700));
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        //buttonPanel.setBackground(Color.black);
-        
-        newGame = new JButton("New Game");
-        newGame.setPreferredSize(new Dimension(300, 100));
-        newGame.setFont(buttonFont);
-        newGame.addActionListener(this);
-        newGame.setFocusPainted(false);
-        newGame.setBackground(Color.white);
+        MyButton newGame = new MyButton("New Game");
+        newGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new NewGame();
+            }
+        });
 
-        loadGame = new JButton("Load Game");
-        loadGame.setPreferredSize(new Dimension(300, 100));
-        loadGame.setFont(buttonFont);
-        loadGame.addActionListener(this);
-        loadGame.setFocusPainted(false);
-        loadGame.setBackground(Color.white);
+        MyButton loadGame = new MyButton("Load Game");
+        loadGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new LoadGame();
+            }
+        });
 
-        help = new JButton("Help");
-        help.setPreferredSize(new Dimension(300, 100));
-        help.setFont(buttonFont);
-        help.addActionListener(this);
-        help.setFocusPainted(false);
-        help.setBackground(Color.white);
+        MyButton help = new MyButton("Help");
+        help.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Help();
+            }
+        });
 
-        exitGame = new JButton("Exit Game");
-        exitGame.setPreferredSize(new Dimension(300, 100));
-        exitGame.setFont(buttonFont);
-        exitGame.addActionListener(this);
-        exitGame.setFocusPainted(false);
-        exitGame.setBackground(Color.white);
+        MyButton exitGame = new MyButton("Exit Game");
+        exitGame.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                System.exit(0);
+            }
+        });
 
-        buttonPanel.add(newGame);
-        buttonPanel.add(loadGame);
-        buttonPanel.add(exitGame);
+        frame.middlePanel.add(newGame);
+        frame.middlePanel.add(loadGame);
+        frame.middlePanel.add(help);
+        frame.middlePanel.add(exitGame);
 
-        frame.add(title);
-        frame.add(buttonPanel);
         frame.setVisible(true);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == newGame){
-            if (World.getWorldCount() == 0){
-                World world = new World();
-                world.createNewGame();
-            }
-            frame.dispose();
-        }
-        if(e.getSource() == loadGame){
-            frame.dispose();
-            System.out.println("new LoadGame()");
-        }
-        if(e.getSource() == help){
-            frame.dispose();
-            new Help();
-        }
-        if(e.getSource() == exitGame){
-            System.exit(0);
-        }
-    }
-    
 }

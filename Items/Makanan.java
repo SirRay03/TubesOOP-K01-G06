@@ -24,21 +24,24 @@ public abstract class Makanan implements Item{
     };
     public void beliBarang(Sim sim){
         Random random = new Random();
-        waktuPengantaran = (random.nextInt(4000) + 1000)*3000;
+        waktuPengantaran = (random.nextInt(4000) + 1000)*30;
         System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran);       
         new Thread(() -> {
             try {
                 sim.addToListOnDelivery(this); 
                 waktuMulai = System.currentTimeMillis();
-                Thread.sleep(waktuPengantaran);
+                Thread.sleep(3000);
                 sim.deleteFromListOnDelivery(this);
                 waktuMulai = 0;
+                sim.getInventory().addItem(this, 1);
             } catch (InterruptedException e) {
                 System.out.println("Aksi terganggu!");
             }
-            sim.getInventory().addItem(this, 1);
         }).start();
 
+    }
+    public String getNama(){
+        return this.nama;
     }
 
 /**

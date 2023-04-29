@@ -1,5 +1,6 @@
 package src;
 import java.util.*;
+import Items.*;
 
 public class Inventory<T> {
 
@@ -7,6 +8,23 @@ public class Inventory<T> {
 
     public Inventory() {
         items = new HashMap<>();
+    }
+
+    public T getItemBahanMakanan(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
+        for (T item : items.keySet()) {
+            if (((Makanan) item).getNama().equals(itemName)) {
+                int currentQuantity = items.get(item);
+                if (currentQuantity - quantity == 0) {
+                    items.remove(item);
+                } else {
+                    items.put(item, currentQuantity - quantity);
+                }
+                System.out.println("Item berhasil dihapus dari inventory");
+            return item;
+            }
+        }
+        System.out.println("Item berhasil tidak dihapus dari inventory");
+        return null;
     }
 
     public void addItem(T item, int quantity) {
@@ -19,7 +37,7 @@ public class Inventory<T> {
     public void removeItem(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
         boolean ketemu = false;
         for (T item : items.keySet()) {
-            if (item.toString().equals(itemName)) {
+            if (((Makanan) item).getNama().equals(itemName)) {
                 int currentQuantity = items.get(item);
                 if (currentQuantity - quantity == 0) {
                     items.remove(item);
@@ -35,25 +53,14 @@ public class Inventory<T> {
             }
         }
 
-    public T getItemBahanMakanan(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
-        for (T item : items.keySet()) {
-            if (item.toString().equals(itemName)) {
-                int currentQuantity = items.get(item);
-                if (currentQuantity - quantity == 0) {
-                    items.remove(item);
-                } else {
-                    items.put(item, currentQuantity - quantity);
-                }
-            return item;
-            }
-        }
-        return null;
-    }
-
     public void printInventory() {
         for (T item : items.keySet()) {
             System.out.println(item.toString() + ": " + items.get(item));
         }
+    }
+
+    public Map<T, Integer> getMap() {
+        return items;
     }
 }
 

@@ -4,6 +4,9 @@ public class Kaca extends NonMakanan {
     public Kaca(){
         super(10, 2, 1);
     }
+    public void printListAction(){
+        System.out.println("1. Berkaca");
+    };
     public void doAction(Object... args){//doaction kaca cuma butuh 1 aja, yaitu sim
         Sim sim = (Sim) args[0];
         sim.setStatus("Sim sedang berkaca");
@@ -11,9 +14,6 @@ public class Kaca extends NonMakanan {
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(1000); //1 detik berkaca
-                sim.getKesejahteraan().setMood(1); //namabah mood 1
-                sim.getKesejahteraan().setHunger(-1); //ngurang kenyang 1
-                System.out.println("Proses berkaca selesai");
             }
             catch(InterruptedException e){
                 System.out.println("Proses berkaca terganggu");
@@ -22,6 +22,9 @@ public class Kaca extends NonMakanan {
         t.start();
         try{
             t.join(); 
+            sim.getKesejahteraan().setMood(1); //namabah mood 1
+            sim.getKesejahteraan().setHunger(-1); //ngurang kenyang 1
+            System.out.println("Proses berkaca selesai");
         }catch(InterruptedException e){
             System.out.println("Proses berkaca terganggu");
         }
