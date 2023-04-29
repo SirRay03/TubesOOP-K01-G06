@@ -7,14 +7,16 @@ public class World2{
     private int lebar;
     private ArrayList<Point> listofRumah;
     private char[][] map; // declare a 2D char array to store the map
-    private long time;
+    private static int waktu;
+    private static int day;
     private ArrayList<Sim> listofSims;
 
     public World2(int panjang, int lebar){
         this.panjang = panjang;
         this.lebar = lebar;
         this.map = new char[lebar * 2 + 1][panjang * 2 + 1]; // initialize the map with the appropriate size
-        this.time = 720000;
+        waktu = 0; //milisekon
+        day = 1; //hari ke-... 
     }
 
     public void createMap() {
@@ -73,15 +75,40 @@ public class World2{
         }
     } 
 
-    public Long getTime(){
-        return time;
+    public static int getWaktu(){
+        return waktu;
+    }
+    public static int getDay() {
+        return day;
     }
 
-    public void setTime (Long time){
-        this.time -= time;
-        if(this.time >= 0){
-            this.time += 720000;
+    public static void addDay() {
+        day++;
+    }
+
+    public static void addWaktu(int time) {
+        if (waktu + time >= 720000) 
+        {
+            addDay();
+            waktu = waktu + time - 720000;
+        }
+        else 
+        {
+            waktu += time;
         }
     }
-
 }
+// /**
+//  package src;
+// import java.util.ArrayList;
+
+
+// public class World2{
+//    private static World2 instance = new World2();
+//    private World2(){}
+//    public static World2 getInstance(){
+//     return instance;
+//    }
+// }
+
+//  */

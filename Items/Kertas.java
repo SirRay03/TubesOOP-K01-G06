@@ -7,6 +7,9 @@ public class Kertas extends NonMakanan {
     public Kertas(){
         super(1, 1, 1);
     }
+    public void printListAction(){
+        System.out.println("1. Menulis");
+    };
     public void doAction(Object... args){//menulis memang bukan aksi aktif jd ga makan wKtu
         //implementation code goes hereSystem.out.println("Masukkan kata atau kalimat yang ingin ditulis:");
         Sim sim = (Sim) args[0];
