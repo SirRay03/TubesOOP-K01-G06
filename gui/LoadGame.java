@@ -12,18 +12,18 @@ public class LoadGame {
         frame = new MyFrame("Load Game", "Select one of the existing sims to play!");
         frame.middlePanel.setLayout(new GridLayout(5,5,5,5));
 
-        if (World.getSimList()[0] == null){
+        if (World.getInstance().getSimList()[0] == null){
             MyButton tombol = new MyButton("No existing sims!");
             frame.middlePanel.add(tombol);
         }
         else{
-            for (Sim sim: World.getSimList()){
+            for (Sim sim: World.getInstance().getSimList()){
                 if (sim == null) break;
                 MyButton tombol = new MyButton(sim.getFullName());
                 tombol.addActionListener(new ActionListener(){
                      public void actionPerformed(ActionEvent e){
                         frame.dispose();
-                        new HomePage(sim);
+                        new HomePage1(sim);
                      }
                  });
                 frame.middlePanel.add(tombol);
@@ -60,7 +60,7 @@ public class LoadGame {
         // simListPanel.setPreferredSize(new Dimension(1000, 700));
         // simListPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
-        // for (Sim sim: World.getSimList()){
+        // for (Sim sim: World.getInstance().getSimList()){
         //     if (sim == null) break;
         //     JButton tombol = new JButton(sim.getFullName());
         //     tombol.addActionListener(new ActionListener(){

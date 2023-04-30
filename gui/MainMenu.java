@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.event.*;
+import src.*;
 
 public class MainMenu{
     MyFrame frame;
@@ -9,7 +10,7 @@ public class MainMenu{
         String[] quotes = {"All hail Jim Pickens", "Technoblade never dies", "Juara 1 Speedrun Tubes", "Contains cordyceps","Young, Dumb, Stupid!","No Sana, No Life!","Github susah","Josua ngestan NewJeans sekarang"};
         int random = (int)(Math.random() * 8);
 
-        frame = new MyFrame("Main Menu", quotes[random]);
+        frame = new MyFrame("Main Menu1", quotes[random]);
 
         MyButton newGame = new MyButton("New Game");
         newGame.addActionListener(new ActionListener() {

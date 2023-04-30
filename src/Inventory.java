@@ -27,6 +27,37 @@ public class Inventory<T> {
         return null;
     }
 
+<<<<<<< Updated upstream
+=======
+    public T getItemNonMakanan(String itemName, int quantity){
+        for (T item : items.keySet()) {
+            if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)) {
+                int currentQuantity = items.get(item);
+                if (currentQuantity - quantity == 0) {
+                    items.remove(item);
+                } else {
+                    items.put(item, currentQuantity - quantity);
+                }
+            System.out.println("Item berhasil dihapus dari inventory");
+            return item;
+            }
+        }
+        System.out.println("Item berhasil tidak dihapus dari inventory");
+        return null;
+    }
+
+    public boolean checkerItemBahanMakanan(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
+        for (T item : items.keySet()) {
+            if (((Makanan) item).getNama().equals(itemName)) {
+                System.out.println("Item ada");
+            return false;
+            }
+        }
+        System.out.println("Item tidak ada");
+        return true;
+    }
+
+>>>>>>> Stashed changes
     public void addItem(T item, int quantity) {
         if (items.containsKey(item)) {
             quantity += items.get(item);

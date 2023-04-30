@@ -8,12 +8,13 @@ public class World{
     private static int vertical = 64;
     private static Rumah[][] map = new Rumah[horizontal][vertical];
     private static Sim[] simList = new Sim[4096];
-    private long time;
+    private static long time;
+    private static int day;
     
     // === CONSTRUCTOR ===
 
     private World(){
-        this.time = 720000;
+        time = 720000;
     }
 
     // === GETTER ===
@@ -37,11 +38,11 @@ public class World{
         return time;
     }
 
-    public static Rumah[][] getMap(){
+    public Rumah[][] getMap(){
         return map;
     }
 
-    public static Sim[] getSimList(){
+    public Sim[] getSimList(){
         return simList;
     }
 
@@ -99,15 +100,15 @@ public class World{
     }
 
     public void setTime (Long time){
-        this.time -= time;
-        if(this.time >= 0){
-            this.time += 720000;
+        time -= time;
+        if(time >= 0){
+            time += 720000;
         }
     }
 
     // === METHOD ===
 
-    public static void addSim(Sim sim, Rumah rumah){
+    public void addSim(Sim sim, Rumah rumah){
         int horizontalAddr = (int)((Math.random() * horizontal)-1);
         int verticalAddr = (int)((Math.random() * vertical)-1);
 
@@ -134,6 +135,35 @@ public class World{
         simList[i] = sim;
         sim.setRumah(rumah);
         sim.setRuangan(rumah.searchRuangan("Kamar Utama"));
+    }
+
+    public String displayTime() {
+        return day + " day, " + (time/1000/60) + "minute";
+    }
+
+    public void checkSimTime(int duration)
+    {
+        for (Sim sim : simList)
+        {
+            sim.tambahWaktuBelumTidur(duration);
+            sim.resetWaktuTidurAfterNoSleep();
+            sim.tambahWaktuBelumBAB(duration);
+            sim.resetTimerBelumBab();
+        }
+    }
+    public void addDay() {
+        day++;
+    }
+    public void addWaktu(int timeinput) {
+        if (time + timeinput >= 720000) 
+        {
+            addDay();
+            time = time + timeinput - 720000;
+        }
+        else 
+        {
+            time += timeinput;
+        }
     }
 
     // public <Map> float getDistance (Sim[][] rumah1, Sim[][] rumah2) {

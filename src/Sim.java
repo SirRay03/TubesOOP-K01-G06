@@ -18,10 +18,17 @@ public class Sim {
     private Ruangan currRuangan;
     private List<Item> listOnDelivery;
     private List<Rumah> listUpgrade;
+<<<<<<< Updated upstream
     public int timerNoSleep;
     public long startKerja = System.currentTimeMillis();
     public long elapsedTimeKerja;
     public double secKerja;
+=======
+    private int timerNoSleep;
+    private int timerNoBab;
+    private boolean isBab;
+    
+>>>>>>> Stashed changes
 
     /**
      * Konstruktor
@@ -40,6 +47,7 @@ public class Sim {
         this.listOnDelivery = new ArrayList<>();
         this.listUpgrade = new ArrayList<>(); 
         this.timerNoSleep = 0;
+<<<<<<< Updated upstream
 
         this.currRumah = new Rumah();
         Thread t = new Thread(()->{
@@ -53,6 +61,13 @@ public class Sim {
             }
         });
         t.start();
+=======
+        this.currRumah = null;
+        this.currRuangan = null;
+        isBab = false;
+        timerNoSleep = 0;
+        timerNoBab= 0;
+>>>>>>> Stashed changes
     }
 
     // === GETTER ===
@@ -147,7 +162,7 @@ public class Sim {
 
     // === METHOD ===
 
-    public void addTimerBelumTidur(int duration){
+    public void tambahWaktuBelumTidur(int duration){
         this.timerNoSleep += duration; // duration diambil dari durasi di method tidur
     }
 
@@ -159,18 +174,18 @@ public class Sim {
         listUpgrade.add(rumah);
     }
 
-    public void resetTimerBelumTidurAfterSleep(){
+    public void resetTimerBelumTidurSetelahTidur(){
         timerNoSleep = 0;
     }
 
-    public void resetTimerNoSleepAfterNoSleep(Sim sim)
+    public void resetWaktuTidurAfterNoSleep()
     {
-        if (timerNoSleep >= 600)
+        if (timerNoSleep >= 600000) // tidak tidur > 10 menit
         {
             System.out.println("Waktu Tidur Anda kurang! Harus segera tidur");
             timerNoSleep = 0;
-            sim.kesejahteraan.setHealth(-5);
-            sim.kesejahteraan.setMood(-5);
+            kesejahteraan.setHealth(-5);
+            kesejahteraan.setMood(-5);
         }
     }
 
@@ -182,6 +197,28 @@ public class Sim {
         listUpgrade.remove(rumah);
     }
 
+    public void resetTimerBelumBab () {
+        if (timerNoBab > 240 & isBab) {
+            System.out.println("Anda belum BAB, segera buang air!");
+            timerNoBab = 0;
+            getKesejahteraan().setHealth(-5);
+            getKesejahteraan().setMood(-5);
+        }
+    }
+
+    public void tambahWaktuBelumBAB (int duration) {
+        if (isBab) {
+            timerNoBab += duration;
+        }
+    }
+
+    public void resetTimerBabAfterBab() {
+        timerNoBab = 0;
+    }
+
+    public void setStatusBab(boolean isBab){
+        this.isBab = isBab;
+    }
     public void berkunjung (Scanner scan) {
         boolean isValid = false;
         String opsi ;
@@ -194,9 +231,13 @@ public class Sim {
                 {
                     for (int y = 0; y < 64; y++) 
                     {
-                        if (World.getMap()[x][y] != null) 
+                        if (World.getInstance().getMap()[x][y] != null) 
                         {
+<<<<<<< Updated upstream
                             System.out.println((i+1) + ". " + World.getMap()[x][y].getFullName());
+=======
+                            System.out.println((i+1) + ". " + World.getInstance().getSimList()[i].getFirstName());
+>>>>>>> Stashed changes
                         }
                     }
                 }
@@ -213,16 +254,21 @@ public class Sim {
         {
             for (int y = 0; y < 64; y++) 
             {
-                if (World.getMap()[x][y] == null) 
+                if (World.getInstance().getMap()[x][y] == null) 
                 {
                     System.out.println("Tidak ada rumah di lokasi tersebut, tidak bisa dikunjungi!");
                 }
-                else if (World.getMap()[x][y].getOwner().getFullName().equals(getFullName())){
+                else if (World.getInstance().getMap()[x][y].getOwner().getFullName().equals(getFullName())){
                     System.out.println("Tidak bisa berkunjung ke rumah sendiri!");
                 }
             }
         }
+<<<<<<< Updated upstream
         float waktuberkunjung = World.getDistance(); // gatau cara masukkin parameter rumah1, rumah2ny gmn
+=======
+        //float waktuberkunjung = World.getInstance().getDistance(); // gatau cara masukkin parameter rumah1, rumah2ny gmn
+        float waktuberkunjung = 30;
+>>>>>>> Stashed changes
         int totalWaktuBerkunjung = (int) (waktuberkunjung * 10);
         Thread t = new Thread(()->{
         try{
@@ -230,7 +276,7 @@ public class Sim {
                 Thread.sleep(totalWaktuBerkunjung*1000); 
                 getKesejahteraan().setMood(totalWaktuBerkunjung/30*10);
                 getKesejahteraan().setHunger(-(totalWaktuBerkunjung/30*10)); 
-                // World.addWaktu (totalWaktuBerkjung); nambahin waktu di world karean aksi aktif 
+                // World.getInstance().addWaktu (totalWaktuBerkjung); nambahin waktu di world karean aksi aktif 
                 System.out.println("Proses berkunjung selesai");
             }
             catch(InterruptedException e){
@@ -248,24 +294,7 @@ public class Sim {
     public void selesaiBerkjung () {
         setRumah(currRumah);
     }
-
-    /*
-     *     public String[] getRoomNames(){
-        String[] roomNames = new String[roomCount];
-        int i = 0;
-        for (int j = 0; j < 21; j++){
-            for (int k = 0; k < 21; k++){
-                if (denahRumah[j][k] != null){
-                    roomNames[i] = denahRumah[j][k].getNamaRuangan();
-                    i++;
-                }
-            }
-        }
-        return roomNames;
-    }
-     */
     public void merenung(){
-
         System.out.println("Tanyakan sesuatu untuk direnungkan! Kamu akan mendapatkan jawaban acak.");
         Scanner scan = new Scanner(System.in);
         String input = scan.nextLine();
@@ -317,6 +346,7 @@ public class Sim {
                 getKesejahteraan().setHunger(-5);
                 getKesejahteraan().setHealth(5); 
                 System.out.println("Proses olahraga selesai");
+                World.getInstance().setTime(60000L);
             }
             catch(InterruptedException e){
                 System.out.println("Proses olahraga terganggu");
@@ -373,6 +403,10 @@ public class Sim {
         setStatus("Sim sedang bekerja");
         Scanner scan = new Scanner(System.in);
         boolean valid = false;
+<<<<<<< Updated upstream
+=======
+        double sec = 0;
+>>>>>>> Stashed changes
         int waktuKerja = 0;
         while(!valid){
             try{
@@ -404,7 +438,7 @@ public class Sim {
                 }
             }
         }
-        if(waktuKerja%120 == 0){
+        while(waktuKerja%120 == 0){
             if(waktuKerja == 120){ // kerja 2 menit (belom gajian)
                 System.out.println("Sim sedang bekerja...");
                 Thread t = new Thread (()->{
@@ -417,6 +451,7 @@ public class Sim {
                 t.start();
                 try{
                     t.join();
+<<<<<<< Updated upstream
                     getKesejahteraan().setMood(-40);
                     getKesejahteraan().setHunger(-40);
                     System.out.println("Proses bekerja selesai");
@@ -425,12 +460,32 @@ public class Sim {
                     System.out.println("Proses bekerja terganggu");
                 }
                 gajian();
+=======
+                    long  elapsedTime = System.currentTimeMillis() - start; //120000
+                    sec = sec + Math.floor(elapsedTime/1000); // 120 detik = 2 menit
+                    //getGaji();
+                    getKesejahteraan().setMood(-40);
+                    getKesejahteraan().setHunger(-40);
+                }catch(InterruptedException e){
+                    System.out.println("Proses bekerja terganggu");
+                }
+
+                if (sec == 240.0){
+                    setUang(pekerjaan.getGaji());
+                }
+>>>>>>> Stashed changes
             }
             else if (waktuKerja == 240){ // kerja 4 menit (langsung gajian)
                 System.out.println("Sim sedang bekerja");
                 Thread t = new Thread (()->{
                 try{
                     Thread.sleep(240000); // 240 detik (1 siklus kerja)
+<<<<<<< Updated upstream
+=======
+                    //setUang(getGaji());
+                    getKesejahteraan().setMood(-80);
+                    getKesejahteraan().setHunger(-80);
+>>>>>>> Stashed changes
                 } catch(InterruptedException e){
                     System.out.println("Proses bekerja terganggu");
                 }
@@ -438,10 +493,13 @@ public class Sim {
                 t.start();
                 try{
                     t.join();
+<<<<<<< Updated upstream
                     System.out.println("Proses bekerja selesai");
                     getKesejahteraan().setMood(-80);
                     getKesejahteraan().setHunger(-80);
                     gajian();
+=======
+>>>>>>> Stashed changes
                 }catch(InterruptedException e){
                     System.out.println("Proses bekerja terganggu");
                 }
@@ -451,6 +509,8 @@ public class Sim {
             }
         }
         scan.close();
+
+
     }
     public void gajian(){
         elapsedTimeKerja = System.currentTimeMillis() - startKerja;

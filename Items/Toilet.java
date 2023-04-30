@@ -1,5 +1,5 @@
 package Items;
-import src.Sim;
+import src.*;
 public class Toilet extends NonMakanan {
     public Toilet(){
         super(50, 1, 1);
@@ -41,24 +41,24 @@ public class Toilet extends NonMakanan {
         //brarti cara akses parameter kedua nya : String contoh = (String) args[1]
         Sim sim = (Sim) args[0];
         sim.setStatus("Sim sedang buang air");
-        System.out.println("Sim sedang buang air...");
-        Thread t = new Thread(()->{
-        try{
-                Thread.sleep(10000); 
-                
-            }
-            catch(InterruptedException e){
-                System.out.println("Proses buang air terganggu");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(10000); // waktu buang air 10 detik
+                    System.out.println("Proses buang air selesai");
+                    sim.getKesejahteraan().setHunger(-20);
+                    sim.getKesejahteraan().setMood(10);
+                    World.getInstance().addWaktu(10);
+                    sim.setStatusBab(false);
+                    sim.resetTimerBabAfterBab();
+                    //World.checkAllSimTimer(10, scan);
+                } catch (InterruptedException e) {
+                    return;
+                }
             }
         });
-        t.start();
-        try{
-            t.join();
-            sim.getKesejahteraan().setMood(10);
-            sim.getKesejahteraan().setHunger(-20); 
-            System.out.println("Proses buang air selesai");
-        }catch(InterruptedException e){
-            System.out.println("Proses buang air terganggu");
-        }
+        System.out.println("Sim sedang buang air...");
+        thread.start();
     }
     }

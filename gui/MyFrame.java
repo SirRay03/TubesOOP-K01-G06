@@ -10,8 +10,14 @@ public class MyFrame extends JFrame {
         this.setTitle("SimplyCity 5 - TubesOOP-K01-G06");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1500,1075);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+        this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
+
+        JPanel introGroup = new JPanel();
+        introGroup.setPreferredSize(new Dimension(1500, 150));
+        introGroup.setBackground(Color.black);
+        introGroup.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.add(introGroup, BorderLayout.NORTH);
         
         JPanel intro = new JPanel();
         JLabel titleText = new JLabel(title);
@@ -20,6 +26,7 @@ public class MyFrame extends JFrame {
         intro.add(titleText);
         intro.setPreferredSize(new Dimension(1500, 100));
         intro.setBackground(Color.black);
+        introGroup.add(intro);
 
         JPanel subIntro = new JPanel();
         JLabel subtitleText = new JLabel(subtitle);
@@ -28,6 +35,7 @@ public class MyFrame extends JFrame {
         subIntro.add(subtitleText);
         subIntro.setPreferredSize(new Dimension(1500, 50));
         subIntro.setBackground(Color.black);
+        introGroup.add(subIntro);
 
         middlePanel = new JPanel();
         middlePanel.setPreferredSize(new Dimension(1500, 750));
@@ -37,10 +45,9 @@ public class MyFrame extends JFrame {
         bottomPanel.setPreferredSize(new Dimension(1500, 150));
         bottomPanel.setBackground(Color.GRAY);
 
-        this.add(intro);
-        this.add(subIntro);
-        this.add(middlePanel);
-        this.add(bottomPanel);
+        this.add(introGroup, BorderLayout.NORTH);        
+        this.add(middlePanel, BorderLayout.CENTER);
+        this.add(bottomPanel, BorderLayout.SOUTH);
         this.setVisible(true);
     } 
 }

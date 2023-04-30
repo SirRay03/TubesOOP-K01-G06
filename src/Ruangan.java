@@ -11,7 +11,7 @@ public class Ruangan {
     private String nama;
     private List<NonMakanan> listBarang;
     private NonMakanan[][] matriksPemetaan;
-    
+
     public Ruangan (String nama){
         this.nama = nama;
         this.panjang = 6;
@@ -123,17 +123,24 @@ public class Ruangan {
         }
     }
 
-    public void printListObjek (){
-        int i =1;
-        for (NonMakanan a : listBarang){
-            System.out.print(i + ". ");
-            System.out.println(a.getClass().getSimpleName());
-            i++;
+    public NonMakanan[] toPropArray(){
+        NonMakanan[] prop = new NonMakanan[36];
+        int k = 0;
+        for (int i = 0; i < 6; i++){
+            for (int j = 0; j < 6; j++){
+                prop[k] = matriksPemetaan[i][j];
+                k++;
+            }
         }
+        return prop;
     }
 
     public List<NonMakanan> getListObjek(){
         return listBarang;
+    }
+
+    public NonMakanan[][] getMatriksPemetaan(){
+        return matriksPemetaan;
     }
 
     public String getNamaRuangan(){
@@ -311,7 +318,7 @@ public class Ruangan {
         String input ="";
         sim.getInventory().addItem(kasurTes, 1); 
         //Memasang barang
-        NonMakanan barang = ((NonMakanan)sim.getInventory().getItemBahanMakanan("Kasur", 1));
+        NonMakanan barang = ((NonMakanan)sim.getInventory().getItemNonMakanan("Kasur", 1));
         boolean sukses = ruangan.memasangBarang(barang, 1, 1, sim);//rentang kordinatnya 1-6;
         while(!sukses && !input.equals("Gak Jadi") ){
             input = scan.nextLine();

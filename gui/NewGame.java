@@ -65,10 +65,10 @@ public class NewGame{
                     //CHECK IF SIM ALREADY EXISTS
                     Sim sim = new Sim(firstName, lastName);
                     Rumah rumah = new Rumah();
-                    World.addSim(sim,rumah);
+                    World.getInstance().addSim(sim,rumah);
                     JOptionPane.showMessageDialog(null, "New sim created. Welcome to SimPlicity 5, " + firstName + " " + lastName + "!");
                     frame.dispose();
-                    new HomePage(sim);
+                    new HomePage1(sim);
                     frame.dispose();
                 }
             }

@@ -1,8 +1,15 @@
 package Items;
 import java.util.Scanner;
 
+<<<<<<< Updated upstream
 import src.Sim; 
 import gui.SleepOverlay;
+=======
+import src.Sim;
+import src.World;
+//import gui.SleepOverlay;
+//import src.World2;
+>>>>>>> Stashed changes
 
 public class Kasur extends NonMakanan {
     public enum tipeKasur{
@@ -27,6 +34,7 @@ public class Kasur extends NonMakanan {
     public void printListAction(){
         System.out.println("1. Tidur");
     };
+
     public void doAction(Object... args){
         //implementation code goes here
         //Object... args artinya dia bisa nerima banyak argumen
@@ -68,37 +76,31 @@ public class Kasur extends NonMakanan {
                 catch (Exception e) 
                 {
                     System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                    //scan.nextLine();
+                    scan.nextLine();
                 }
             }
         }
         SleepOverlay gif = new SleepOverlay();
         int totalDurasi = duration;
-        Thread t = new Thread(()->{
-        try{
-                System.out.println("Sim sedang tidur zzz...");
-                Thread.sleep(5000); 
-                //gif.dispose();
-                //world.addWaktu(totalDurasi)
-                //sim.resetTimerBelumTidurAfterSleep();
-            }
-            catch(InterruptedException e){
-                System.out.println("Proses tidur terganggu");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(totalDurasi * 1000);
+                    System.out.println("Tidur selesai!");
+                    sim.getKesejahteraan().setHealth(30 * (totalDurasi / 240));
+                    sim.getKesejahteraan().setHealth(30 * (totalDurasi / 240));
+                    World.getInstance().addWaktu(totalDurasi);
+                    World.getInstance().checkSimTime(totalDurasi);
+                } catch (InterruptedException e) {
+                    return;
+                }
             }
         });
-        t.start();
-        try{
-            t.join(); 
-            System.out.println("Bangun tidur");
-            sim.getKesejahteraan().setMood(20*(totalDurasi/240)); 
-            sim.getKesejahteraan().setHealth(30*(totalDurasi/240)); 
-            System.out.println("Proses tidur selesai");
-        }catch(InterruptedException e){
-            System.out.println("Proses tidur terganggu");
-        }
+        System.out.println("Sedang tidur...");
+        thread.start();
         scan.close();
     }
-    
 }
 
 /**
