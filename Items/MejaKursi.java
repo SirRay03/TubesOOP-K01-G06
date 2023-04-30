@@ -1,14 +1,21 @@
 package Items;
 
 import javax.swing.JOptionPane;
-import Items.*;
 import src.Sim;
 import java.util.List;
 import java.util.ArrayList;
+import src.World;
 
 public class MejaKursi extends NonMakanan {
+
+    private int durasiMakan;
+
     public MejaKursi(){
         super(50, 3, 3); //harga, panjang, lebar sudah ditetapkan
+    }
+
+    public int getdurasiMakan(){
+        return durasiMakan;
     }
 
     public void printListAction(){
@@ -26,15 +33,17 @@ public class MejaKursi extends NonMakanan {
                 currMasakanInv.add(((Makanan) item).getNama());
             }
         }
-        String[] arrCurrString= currMasakanInv.toArray(new String[0]);
-        String namaMasakan = (String) JOptionPane.showInputDialog(null, "Masakan apa yang ingin dimakan?", "Makan", JOptionPane.QUESTION_MESSAGE, null, arrCurrString, arrCurrString[0]);
-        sim.getInventory().removeItem(namaMasakan, 1);
-        
-        Thread t = new Thread(()->{
+        String[] arrCurrString = currMasakanInv.toArray(new String[0]);
+        String namaMasakan = (String) JOptionPane.showInputDialog(null, "Apa yang ingin dimakan", "Makan", JOptionPane.QUESTION_MESSAGE, null, arrCurrString, arrCurrString[0]);
+        if (namaMasakan == null) {
+                 JOptionPane.showMessageDialog(null, "You have cancelled this action.", "Makan", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            int durasiMakan = 30;
+            Thread t = new Thread(()->{
             try{
                     sim.setStatus("Sim sedang makan");
                     System.out.println("Sim sedang makan...");
-                    Thread.sleep(10000); //1 detik main
+                    Thread.sleep(durasiMakan*1000); //30 detik
                 }
                 catch(InterruptedException e){
                     System.out.println("Proses makan terganggu");
@@ -45,10 +54,19 @@ public class MejaKursi extends NonMakanan {
                 t.join();
                 sim.getKesejahteraan().setMood(1*2); //namabah mood waktu*2
                 sim.getKesejahteraan().setHunger(1); //ngurang kenyang waktu
+                sim.getInventory().removeItem(namaMasakan, 1);
+                World.getInstance().addWaktu(durasiMakan);
+                // World.getInstance().checkSimTime(durasiMakan);
+                sim.tambahWaktuBelumTidur(durasiMakan);
+                sim.tambahWaktuBelumBAB(durasiMakan);
+                sim.resetTimerBelumBab();
+                sim.resetWaktuTidurAfterNoSleep(); 
                 System.out.println("Proses makan selesai");
             }catch(InterruptedException e){
                 System.out.println("Proses makan terganggu");
             }
+                }
+        
         }
 
     public void main(int waktu, Sim sim){//nerima waktu mau berapa lama
@@ -56,7 +74,7 @@ public class MejaKursi extends NonMakanan {
         System.out.println("Sim sedang main...");
         Thread t = new Thread(()->{
         try{
-                Thread.sleep(waktu); //1 detik main
+                Thread.sleep(waktu*1000); //1 detik main
             }
             catch(InterruptedException e){
                 System.out.println("Proses main terganggu");
@@ -68,17 +86,23 @@ public class MejaKursi extends NonMakanan {
             sim.getKesejahteraan().setMood(waktu*2); //namabah mood waktu*2
             sim.getKesejahteraan().setHunger(waktu); //ngurang kenyang waktu
             System.out.println("Proses main selesai");
+            World.getInstance().addWaktu(710000);
+            // World.getInstance().checkSimTime(waktu);
+            sim.tambahWaktuBelumTidur(waktu);
+            sim.tambahWaktuBelumBAB(waktu); 
+            sim.resetTimerBelumBab();
+            sim.resetWaktuTidurAfterNoSleep();
         }catch(InterruptedException e){
             System.out.println("Proses main terganggu");
         }
     }
         
-    public void berdoa(int waktu, Sim sim){
+    public void berdoa(Sim sim){
         sim.setStatus("Sim sedang berdoa");
         System.out.println("Sim sedang berdoa...");
         Thread t = new Thread(()->{
         try{
-                Thread.sleep(waktu); //1 detik berdoa
+                Thread.sleep(10000); //1 detik berdoa
             }
             catch(InterruptedException e){
                 System.out.println("Proses berdoa terganggu");
@@ -87,8 +111,8 @@ public class MejaKursi extends NonMakanan {
         t.start();
         try{
             t.join();
-            sim.getKesejahteraan().setMood(waktu*3); //namabah mood waktu*3
-            sim.getKesejahteraan().setHunger(waktu); //ngurang kenyang sebanyak waktu
+            sim.getKesejahteraan().setMood(10*3); //namabah mood 10*3
+            sim.getKesejahteraan().setHunger(10); //ngurang kenyang sebanyak waktu
             System.out.println("Proses berdoa selesai");
         }catch(InterruptedException e){
             System.out.println("Proses berdoa terganggu");

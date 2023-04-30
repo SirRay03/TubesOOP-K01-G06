@@ -37,6 +37,10 @@ import java.util.*;
         return this.gaji;
     }
     public void setPekerjaan(String profesi){
+
+        
+
+
         this.profesi = profesi;
         if(this.profesi == "Badut Sulap"){
             this.gaji = 15;

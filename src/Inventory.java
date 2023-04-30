@@ -27,8 +27,6 @@ public class Inventory<T> {
         return null;
     }
 
-<<<<<<< Updated upstream
-=======
     public T getItemNonMakanan(String itemName, int quantity){
         for (T item : items.keySet()) {
             if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)) {
@@ -57,7 +55,6 @@ public class Inventory<T> {
         return true;
     }
 
->>>>>>> Stashed changes
     public void addItem(T item, int quantity) {
         if (items.containsKey(item)) {
             quantity += items.get(item);

@@ -1,6 +1,4 @@
 package src;
-import java.lang.Math;
-import java.sql.Time;
 
 public class Kesejahteraan{
     private int mood;

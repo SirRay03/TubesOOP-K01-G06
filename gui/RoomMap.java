@@ -9,8 +9,6 @@ import Items.*;
 
 public class RoomMap {
     RoomMap(Sim sim){
-        NonMakanan[][] ruangan = sim.getRuangan().getMatriksPemetaan();
-
         MyFrame frame = new MyFrame("You are now in " + sim.getFirstName() + "'s house", sim.getRuangan().getNamaRuangan() + " Room");
         
         JPanel gap = new JPanel();
@@ -21,16 +19,43 @@ public class RoomMap {
         JPanel map = new JPanel();
         map.setLayout(new GridLayout(6,6));
         map.setBackground(Color.BLUE);
-        map.setPreferredSize(new Dimension(660,660));
+        map.setPreferredSize(new Dimension(600,600));
         frame.middlePanel.add(map);
 
         for (Object any: sim.getRuangan().toPropArray()){
             if (any != null){
-                MyButton prop = new MyButton(any.getClass().getSimpleName());
+                JButton prop = new JButton(any.getClass().getSimpleName());
+                prop.setFont(new Font("Arial", Font.PLAIN, 10));
                 prop.setPreferredSize(new Dimension(50,50));
                 prop.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        ((NonMakanan) any).doAction(sim);
+                        if (any.getClass().getSimpleName().equals("MejaKursi")){
+                            String[] actionNames = {"Main", "Makan", "Minum", "Berdoa"};
+                            String selectedAction = (String) JOptionPane.showInputDialog(null, "Pilih aksi:", "Aksi Meja Kursi", JOptionPane.QUESTION_MESSAGE, null, actionNames, actionNames[0]);
+                            switch (selectedAction){
+                                case "Main":
+                                    try {
+                                            int number = Integer.parseInt((String) JOptionPane.showInputDialog("Lama waktu main?: "));
+                                            ((MejaKursi) any).main(number, sim);
+                                        } 
+                                    catch (NumberFormatException ex) {
+                                            JOptionPane.showMessageDialog(null, "Input harus berupa angka!", "Gagal", JOptionPane.ERROR_MESSAGE);
+                                        }
+                                        break;
+                                case "Berdoa":
+                                    ((MejaKursi) any).berdoa(sim);
+                                    break;
+                                case "Minum":
+                                    ((MejaKursi) any).minum(sim);
+                                    break;
+                                default:
+                                    ((MejaKursi) any).doAction(sim);
+                                    break;
+                            }
+                        }
+                        else{
+                            ((NonMakanan) any).doAction(sim);
+                        }
                     }
                 });
                 map.add(prop);
@@ -39,9 +64,10 @@ public class RoomMap {
                 JLabel prop = new JLabel();
                 prop.setPreferredSize(new Dimension(50,50));
                 prop.setOpaque(true);
-                prop.setBackground(Color.BLUE);
+                prop.setBackground(Color.WHITE);
                 prop.setHorizontalAlignment(JLabel.CENTER);
                 prop.setVerticalAlignment(JLabel.CENTER);
+                prop.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                 map.add(prop);
             }
         }
@@ -50,7 +76,7 @@ public class RoomMap {
         back.setPreferredSize(new Dimension(100, 50));
         back.addActionListener(e -> {
             frame.dispose();
-            new HomePage1(sim);
+            new LandingPage(sim);
         });
         frame.bottomPanel.setLayout(new BorderLayout());
         frame.bottomPanel.add(back, BorderLayout.WEST);
@@ -68,12 +94,5 @@ public class RoomMap {
         frame.bottomPanel.add(moveRoom, BorderLayout.EAST);
 
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        Sim sim = new Sim("John", "Doe");
-        Rumah rumah = new Rumah();
-        World.getInstance().addSim(sim,rumah);
-        new RoomMap(sim);
     }
 }

@@ -25,10 +25,8 @@ public class Jam extends NonMakanan {
         long second;
         long duration;
 
-        duration = world.getTime();
-        hour = TimeUnit.MILLISECONDS.toHours(duration);
-        minute = TimeUnit.MILLISECONDS.toMinutes(duration - TimeUnit.HOURS.toMillis(hour));
-        second =  TimeUnit.MILLISECONDS.toSeconds(duration - TimeUnit.HOURS.toMillis(hour) - TimeUnit.MINUTES.toMillis(minute));
+        minute = (720000 - world.getTime()) / 60000;
+        second =  (720000 - world.getTime()) % 60000;
         System.out.println("SISA WAKTU HARI INI ADALAH " + minute + " MENIT " + second +" second.");
 
         System.out.println("SISA WAKTU PENGIRIMAN ITEM");

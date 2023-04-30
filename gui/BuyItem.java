@@ -10,19 +10,6 @@ import java.util.*;
 import src.*;
 
 public class BuyItem {
-    JFrame frame;
-    JPanel title;
-    JButton back;
-    JLabel titleText;
-    Font titleFont = new Font("Times New Roman", Font.PLAIN, 90);
-    Font buttonFont = new Font("Times New Roman", Font.PLAIN, 30);
-    JPanel makanan;
-    JPanel nonMakanan;
-    JPanel makananButton;
-    JPanel nonMakananButton;
-    JLabel makananText;
-    JLabel nonMakananText;
-
     private class MakananDB{
         private Map<String, Integer> items;
         
@@ -61,42 +48,28 @@ public class BuyItem {
         MakananDB arrMakanan = new MakananDB();
         NonMakananDB arrNonMakanan = new NonMakananDB();
 
-        frame = new JFrame();
-        frame.setTitle("SimPlicity 5 - Buy Items");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1500,1000);
-        frame.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        MyFrame frame = new MyFrame("Welcome to Nook's Cranny", "Give up your money to the almighty Tom Nook!");
 
-        title = new JPanel();
-        title.setPreferredSize(new Dimension(1500, 300));
-        title.setBackground(Color.black);
-        titleText = new JLabel("Welcome to Nook's Cranny");
-        titleText.setForeground(Color.white);
-        titleText.setFont(titleFont);
-        title.add(titleText);
+        JPanel makananTitle = new JPanel();
+        makananTitle.setPreferredSize(new Dimension(1200, 75));
+        makananTitle.setBackground(Color.green);
+        JLabel makananTitleText = new JLabel("Makanan");
+        makananTitleText.setForeground(Color.black);
+        makananTitleText.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+        makananTitle.add(makananTitleText);
+        frame.middlePanel.add(makananTitle);
 
-        makanan = new JPanel();
-        makanan.setPreferredSize(new Dimension(1500, 100));
+        JPanel makanan = new JPanel();
+        makanan.setLayout(new GridLayout(2, 7));
+        makanan.setPreferredSize(new Dimension(1200, 200));
         makanan.setBackground(Color.green);
-        makananText = new JLabel("Makanan");
-        makananText.setForeground(Color.black);
-        makananText.setFont(titleFont);
-        makanan.add(makananText);
-
-        makananButton = new JPanel();
-        makananButton.setPreferredSize(new Dimension(1500, 300));
-        makananButton.setBackground(Color.green);
-        makananButton.setLayout(new GridLayout(2, 4));
-        for (Map.Entry<String, Integer> map : arrMakanan.items.entrySet()){
-            JButton tombol;
-            tombol = new JButton(map.getKey() + ", $" + map.getValue());
-            tombol.setActionCommand(map.getKey());
-            tombol.setPreferredSize(new Dimension(300, 100));
-            tombol.setFont(buttonFont);
-            makananButton.add(tombol);
+        for (Map.Entry<String,Integer> item : arrMakanan.items.entrySet()){
+            MyButton tombol = new MyButton(item.getKey() + ", $" + item.getValue());
+            tombol.setActionCommand(item.getKey());
             tombol.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    if (sim.getUang() >= map.getValue()){
+                    if (sim.getUang() >= item.getValue()){
+                        sim.setUang(sim.getUang() - item.getValue());
                         switch (e.getActionCommand()){
                         case "Nasi":
                             BahanMakanan Nasi = new BahanMakanan("Nasi", 5, 5);
@@ -133,96 +106,91 @@ public class BuyItem {
                         }   
                     }
                     else{
-                        JOptionPane.showMessageDialog(null, "Maaf, uang anda tidak cukup! Anda butuh $" + (map.getValue()-sim.getUang()) + " lagi untuk membeli " + map.getKey() + "!", "Uang tidak cukup", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Maaf, uang anda tidak cukup! Anda butuh $" + (item.getValue()-sim.getUang()) + " lagi untuk membeli " + item.getKey() + "!", "Uang tidak cukup", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
+            makanan.add(tombol);
         }
+        frame.middlePanel.add(makanan);
 
-        nonMakanan = new JPanel();
-        nonMakanan.setPreferredSize(new Dimension(1500, 100));
+        JPanel nonMakananTitle = new JPanel();
+        nonMakananTitle.setPreferredSize(new Dimension(1200, 75));
+        nonMakananTitle.setBackground(Color.blue);
+        JLabel nonMakananTitleText = new JLabel("Non-Makanan");
+        nonMakananTitleText.setForeground(Color.black);
+        nonMakananTitleText.setFont(new Font("Times New Roman", Font.PLAIN, 40));
+        nonMakananTitle.add(nonMakananTitleText);
+        frame.middlePanel.add(nonMakananTitle);
+
+        JPanel nonMakanan = new JPanel();
+        nonMakanan.setLayout(new GridLayout(2, 7));
+        nonMakanan.setPreferredSize(new Dimension(1200, 200));
         nonMakanan.setBackground(Color.blue);
-        nonMakananText = new JLabel("Non-Makanan");
-        nonMakananText.setForeground(Color.black);
-        nonMakananText.setFont(titleFont);
-        nonMakanan.add(nonMakananText);
-
-        nonMakananButton = new JPanel();
-        nonMakananButton.setPreferredSize(new Dimension(1500, 300));
-        nonMakananButton.setBackground(Color.blue);
-        nonMakananButton.setLayout(new GridLayout(2, 4));
         for (Map.Entry<String, Integer> map : arrNonMakanan.items.entrySet()){
-            JButton tombol;
-            tombol = new JButton(map.getKey() + ", $" + map.getValue());
-            tombol.setActionCommand(map.getKey());
-            tombol.setToolTipText("Harga: $" + map.getValue());
-            tombol.setPreferredSize(new Dimension(300, 100));
-            tombol.setFont(buttonFont);
-            nonMakananButton.add(tombol);
-            tombol.addActionListener(new ActionListener(){
-                public void actionPerformed(ActionEvent e){
-                    if (sim.getUang() >= map.getValue()){
-                        switch (e.getActionCommand()){
-                        case "Jam":
-                            Jam jam = new Jam();
-                            jam.beliBarang(sim);
-                            break;
-                        case "Kaca":
-                            Kaca kaca = new Kaca();
-                            kaca.beliBarang(sim);
-                            break;
-                        case "Kasur King Size":
-                            Kasur kasurKing = new Kasur(Kasur.tipeKasur.King);
-                            kasurKing.beliBarang(sim);
-                            break;
-                        case "Kasur Queen Size":
-                            Kasur kasurQueen = new Kasur(Kasur.tipeKasur.Queen);
-                            kasurQueen.beliBarang(sim);
-                            break;
-                        case "Kasur Single Size":
-                            Kasur kasurSingle = new Kasur(Kasur.tipeKasur.Single);
-                            kasurSingle.beliBarang(sim);
-                            break;
-                        case "Kertas"://kertas kompor meja toilet
-                            Kertas kertas = new Kertas();
-                            kertas.beliBarang(sim);
-                            break;
-                        case "Kompor Gas":
-                            Kompor komporGas = new Kompor(Kompor.tipeKompor.Gas);
-                            komporGas.beliBarang(sim);
-                            break;
-                        case "MejaKursi":
-                            MejaKursi mejaKursi = new MejaKursi();
-                            mejaKursi.beliBarang(sim);
-                            break;
-                        case "Toilet":
-                            Toilet toilet = new Toilet();
-                            toilet.beliBarang(sim);
-                            break;
+            MyButton button = new MyButton(map.getKey() + ", $" + map.getValue());
+            button.setActionCommand(map.getKey());
+            button.setToolTipText("Harga: $" + map.getValue());
+            button.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if (sim.getUang() >= map.getValue()){
+                    sim.setUang(sim.getUang() - map.getValue());
+                    switch (e.getActionCommand()){
+                    case "Jam":
+                        Jam jam = new Jam();
+                        jam.beliBarang(sim);
+                        break;
+                    case "Kaca":
+                        Kaca kaca = new Kaca();
+                        kaca.beliBarang(sim);
+                        break;
+                    case "Kasur King Size":
+                        Kasur kasurKing = new Kasur(Kasur.tipeKasur.Besar);
+                        kasurKing.beliBarang(sim);
+                        break;
+                    case "Kasur Queen Size":
+                        Kasur kasurQueen = new Kasur(Kasur.tipeKasur.Sedang);
+                        kasurQueen.beliBarang(sim);
+                        break;
+                    case "Kasur Single Size":
+                        Kasur kasurSingle = new Kasur(Kasur.tipeKasur.Kecil);
+                        kasurSingle.beliBarang(sim);
+                        break;
+                    case "Kertas"://kertas kompor meja toilet
+                        Kertas kertas = new Kertas();
+                        kertas.beliBarang(sim);
+                        break;
+                    case "Kompor Gas":
+                        Kompor komporGas = new Kompor(Kompor.tipeKompor.Gas);
+                        komporGas.beliBarang(sim);
+                        break;
+                    case "MejaKursi":
+                        MejaKursi mejaKursi = new MejaKursi();
+                        mejaKursi.beliBarang(sim);
+                        break;
+                    case "Toilet":
+                        Toilet toilet = new Toilet();
+                        toilet.beliBarang(sim);
+                        break;
                     }
                     }else{
                          JOptionPane.showMessageDialog(null, "Maaf, uang anda tidak cukup! Anda butuh $" + (map.getValue()-sim.getUang()) + " lagi untuk membeli " + map.getKey() + "!", "Uang tidak cukup", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             });
+            nonMakanan.add(button);
         }
+        frame.middlePanel.add(nonMakanan);
 
-        back = new JButton("Back");
-        back.setPreferredSize(new Dimension(300, 100));
-        back.setFont(buttonFont);
-        back.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                frame.dispose();
-                new HomePage(sim);
-            }
+        MyButton back = new MyButton("Back");
+        back.setPreferredSize(new Dimension(100, 50));
+        back.addActionListener(e -> {
+            frame.dispose();
+            new LandingPage(sim);
         });
-
-        frame.add(title);
-        frame.add(makanan);
-        frame.add(makananButton);
-        frame.add(nonMakanan);
-        frame.add(nonMakananButton);
-        title.add(back);
-        frame.setVisible(true);
+        frame.bottomPanel.setLayout(new BorderLayout());
+        frame.bottomPanel.add(back, BorderLayout.WEST);
     }
 }
+
+

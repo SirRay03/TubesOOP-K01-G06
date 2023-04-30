@@ -23,7 +23,7 @@ public class LoadGame {
                 tombol.addActionListener(new ActionListener(){
                      public void actionPerformed(ActionEvent e){
                         frame.dispose();
-                        new HomePage1(sim);
+                        new LandingPage(sim);
                      }
                  });
                 frame.middlePanel.add(tombol);

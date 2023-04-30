@@ -14,7 +14,7 @@ public class World{
     // === CONSTRUCTOR ===
 
     private World(){
-        time = 720000;
+        time = 0;
     }
 
     // === GETTER ===
@@ -29,9 +29,6 @@ public class World{
 
     public int getVertical(){
         return vertical;
-    }
-    public static Sim[][] getMap(){
-        return map;
     }
 
     public Long getTime(){
@@ -71,33 +68,30 @@ public class World{
     // }
 
     // === SETTER ===
-    public <Map> float getDistance (Sim[][] rumah1, Sim[][] rumah2) {
-        int x1 = 0;
-        int y1 = 0;
-        for (int i = 0; i < horizontal; i++) {
-            for (int j = 0; j < vertical; j++) {
-                if (getMap() == rumah1) {
-                    x1 = i;
-                    y1 = j;
-                }
-            }
-        }
-        int x2 = 0;
-        int y2 = 0;
-        for (int i = 0; i < horizontal; i++) {
-            for (int j = 0; j < vertical; j++) {
-                if (getMap() == rumah2) {
-                    x2 = i;
-                    y2 = j;
-                }
-            }
-        }
-        return (float) Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2));
-    }
+    // public <Map> float getDistance (Sim[][] rumah1, Sim[][] rumah2) {
+    //     int x1 = 0;
+    //     int y1 = 0;
+    //     for (int i = 0; i < horizontal; i++) {
+    //         for (int j = 0; j < vertical; j++) {
+    //             if (getMap() == rumah1) {
+    //                 x1 = i;
+    //                 y1 = j;
+    //             }
+    //         }
+    //     }
+    //     int x2 = 0;
+    //     int y2 = 0;
+    //     for (int i = 0; i < horizontal; i++) {
+    //         for (int j = 0; j < vertical; j++) {
+    //             if (getMap() == rumah2) {
+    //                 x2 = i;
+    //                 y2 = j;
+    //             }
+    //         }
+    //     }
+    //     return (float) Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2));
+    // }
 
-    public Long getTime(){
-        return time;
-    }
 
     public void setTime (Long time){
         time -= time;
@@ -141,16 +135,16 @@ public class World{
         return day + " day, " + (time/1000/60) + "minute";
     }
 
-    public void checkSimTime(int duration)
-    {
-        for (Sim sim : simList)
-        {
-            sim.tambahWaktuBelumTidur(duration);
-            sim.resetWaktuTidurAfterNoSleep();
-            sim.tambahWaktuBelumBAB(duration);
-            sim.resetTimerBelumBab();
-        }
-    }
+    // public void checkSimTime(int duration)
+    // {
+    //     for (Sim sim : simList)
+    //     {
+    //         sim.tambahWaktuBelumTidur(duration);
+    //         sim.resetWaktuTidurAfterNoSleep();
+    //         sim.tambahWaktuBelumBAB(duration);
+    //         sim.resetTimerBelumBab();
+    //     }
+    // }
     public void addDay() {
         day++;
     }

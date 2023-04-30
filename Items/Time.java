@@ -17,8 +17,8 @@ public class Time {
 
     }
     
-    public void startStopTime(World2 world2){
-        for(Sim a : world2.getlistofSim()){
+    public void startStopTime(World world){
+        for(Sim a : world.getSimList()){
             if( a.getStatus() != "idle"){
                 start = true;
             }

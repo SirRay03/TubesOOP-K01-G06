@@ -24,7 +24,7 @@ public class Ruangan {
             }
         }
         if(this.nama =="Kamar Utama"){
-            Kasur kasur = new Kasur(Kasur.tipeKasur.Single);
+            Kasur kasur = new Kasur(Kasur.tipeKasur.Kecil);
             Kompor kompor = new Kompor(Kompor.tipeKompor.Gas);
             MejaKursi mejaKursi = new MejaKursi();
             Toilet toilet = new Toilet();
@@ -154,7 +154,17 @@ public class Ruangan {
     public boolean memasangBarang (NonMakanan barang,int x,int y,Sim sim){
         //Cek apakah melewati ruangan atau tidak
         boolean isPlaced = false;
-        if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
+        boolean cek = false;
+
+        for(NonMakanan any : listBarang){
+            if(any.getClass().getSimpleName().equals(barang.getClass().getSimpleName())){
+                cek = true;
+            }
+        }
+        if(cek){
+            System.out.println("Sudah ada furniture yang sama di ruangan ini");
+        }
+        else if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
             boolean cekMatriks;
             cekMatriks = true;
             for (int i = x; i < barang.getPanjang() + x; i++){
@@ -200,30 +210,37 @@ public class Ruangan {
                 if(barang instanceof Jam){
                     Jam jam = (Jam) barang;
                     listBarang.add(jam);
+                    sim.getInventory().removeItem(jam.getClass().getSimpleName(),1); 
                 }
                 else if(barang instanceof Kaca){
                     Kaca kaca = (Kaca) barang;
                     listBarang.add(kaca);
+                    sim.getInventory().removeItem(kaca.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kasur){
                     Kasur kasur = (Kasur) barang;
                     listBarang.add(kasur);
+                    sim.getInventory().removeItem(kasur.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kertas){
                     Kertas kertas = (Kertas) barang;
                     listBarang.add(kertas);
+                    sim.getInventory().removeItem(kertas.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof MejaKursi){
                     MejaKursi mejaKursi = (MejaKursi) barang;
                     listBarang.add(mejaKursi);
+                    sim.getInventory().removeItem(mejaKursi.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Toilet){
                     Toilet toilet = (Toilet) barang;
                     listBarang.add(toilet);
+                    sim.getInventory().removeItem(toilet.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kompor){
                     Kompor kompor = (Kompor) barang;
                     listBarang.add(kompor);
+                    sim.getInventory().removeItem(kompor.getClass().getSimpleName(),1);
                 }
 
                 while(barang.getPanjang()<0 || barang.getLebar()<0){
@@ -246,9 +263,9 @@ public class Ruangan {
 
         cekMatriks = true;
         isPlaced = false;
-        if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
-            for (int i = x; i < barang.getPanjang() + x; i++){
-                for(int j = y; j <barang.getLebar() + y ; j++){
+        if(barang.getPanjang() + x-1 <= 6 && barang.getPanjang() + x-1 >=0 && barang.getLebar() + y-1 <= 6 && barang.getLebar() + y -1 >=0){
+            for (int i = x-1; i < barang.getPanjang() + x-1; i++){
+                for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
                     if( matriksPemetaan[i][j] != null ) {
                         if(matriksPemetaan[i][j] != barang){
                             cekMatriks = false;
@@ -257,8 +274,8 @@ public class Ruangan {
                 }
             }
             if(cekMatriks){
-                for (int i = x; i < barang.getPanjang() + x; i++){
-                    for(int j = y; j <barang.getLebar() + y ; j++){
+                for (int i = x-1; i < barang.getPanjang() + x-1; i++){
+                    for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
                         if( matriksPemetaan[i][j] == barang ) {
                             matriksPemetaan[i][j] = null;                
                         }
@@ -270,7 +287,7 @@ public class Ruangan {
                 memasangBarang(barang, x, y,sim);
             }
             else{
-                System.out.println("Ada objek lain");
+                System.out.println("Objek gagal dipindahkan karena ada objek lain");
             }
         }
         else{
@@ -311,65 +328,70 @@ public class Ruangan {
         return objek;
     }
     public static void main(String[] args){
-        Sim sim = new Sim("Ayam", "Goreng");
-        Kasur kasurTes = new Kasur(Kasur.tipeKasur.Single);
-        Scanner scan =new  Scanner(System.in);  
-        Ruangan ruangan = new Ruangan("Kamar");
-        String input ="";
-        sim.getInventory().addItem(kasurTes, 1); 
+     Sim sim = new Sim("Ayam", "Goreng");
+     Kasur kasurTes = new Kasur(Kasur.tipeKasur.Kecil);
+     Scanner scan =new   Scanner(System.in);  
+     Ruangan ruangan = new Ruangan("Kamar");
+     String input ="";
+     sim.getInventory().addItem(kasurTes, 1); 
         //Memasang barang
-        NonMakanan barang = ((NonMakanan)sim.getInventory().getItemNonMakanan("Kasur", 1));
-        boolean sukses = ruangan.memasangBarang(barang, 1, 1, sim);//rentang kordinatnya 1-6;
-        while(!sukses && !input.equals("Gak Jadi") ){
-            input = scan.nextLine();
-            if(input.equals("Gak Jadi")){
-                while(barang.getPanjang()<0 || barang.getLebar()<0){
-                    ruangan.rotateRight(barang);
-                }
-                if(barang instanceof Jam){
-                    Jam jam = (Jam) barang;
-                    sim.getInventory().addItem(jam, 1);
-                }
-                else if(barang instanceof Kaca){
-                    Kaca kaca = (Kaca) barang;
-                    sim.getInventory().addItem(kaca, 1);
-                }
-                else if(barang instanceof Kasur){
-                    Kasur kasur = (Kasur) barang;
-                    sim.getInventory().addItem(kasur, 1);
-                }
-                else if(barang instanceof Kertas){
-                    Kertas kertas = (Kertas) barang;
-                    sim.getInventory().addItem(kertas, 1);
-                }
-                else if(barang instanceof MejaKursi){
-                    MejaKursi mejaKursi = (MejaKursi) barang;
-                    sim.getInventory().addItem(mejaKursi, 1);
-                }
-                else if(barang instanceof Toilet){
-                    Toilet toilet = (Toilet) barang;
-                    sim.getInventory().addItem(toilet, 1);
-                }
-                else if(barang instanceof Kompor){
-                    Kompor kompor = (Kompor) barang;
-                    sim.getInventory().addItem(kompor, 1);
-                }
-            }
-            else if(input.equals("rotate kanan")){
-                ruangan.rotateRight(barang);
-                sukses = ruangan.memasangBarang(barang, 1, 1, sim);
-            }
-            else if(input.equals("rotate kiri")){
-                ruangan.rotateLeft(barang);
-                sukses = ruangan.memasangBarang(barang, 1, 1, sim);
-            }
-        }
-        //Pindah barang
-        sukses = ruangan.pindahBarang(barang, 2,2 , sim);
+     NonMakanan barang = ((NonMakanan)sim.getInventory().getItemNonMakanan("Kasur", 1));
+     boolean sukses = ruangan.memasangBarang(barang, 1, 1, sim);//rentang kordinatnya 1-6;
+     while(!sukses && !input.equals("Gak Jadi") ){
+         input = scan.nextLine();
+         if(input.equals("Gak Jadi")){
+             while(barang.getPanjang()<0 || barang.getLebar()<0){
+                 ruangan.rotateRight(barang);
+             }
+             if(barang instanceof Jam){
+                 Jam jam = (Jam) barang;
+                 sim.getInventory().addItem(jam, 1);
+             }
+             else if(barang instanceof Kaca){
+                 Kaca kaca = (Kaca) barang;
+                 sim.getInventory().addItem(kaca, 1);
+             }
+             else if(barang instanceof Kasur){
+                 Kasur kasur = (Kasur) barang;
+                 sim.getInventory().addItem(kasur, 1);
+             }
+             else if(barang instanceof Kertas){
+                 Kertas kertas = (Kertas) barang;
+                 sim.getInventory().addItem(kertas, 1);
+             }
+             else if(barang instanceof MejaKursi){
+                 MejaKursi mejaKursi = (MejaKursi) barang;
+                 sim.getInventory().addItem(mejaKursi, 1);
+             }
+             else if(barang instanceof Toilet){
+                 Toilet toilet = (Toilet) barang;
+                 sim.getInventory().addItem(toilet, 1);
+             }
+             else if(barang instanceof Kompor){
+                 Kompor kompor = (Kompor) barang;
+                 sim.getInventory().addItem(kompor, 1);
+             }
+         }
+         else if(input.equals("rotate kanan")){
+             ruangan.rotateRight(barang);
+             sukses = ruangan.memasangBarang(barang, 1, 1, sim);
+         }
+         else if(input.equals("rotate kiri")){
+             ruangan.rotateLeft(barang);
+             sukses = ruangan.memasangBarang(barang, 1, 1, sim);
+         }
+     }
+    //Pindah barang
+    // misal pakke inputan yg sebelumnya kasur 
+    NonMakanan barang2 = ruangan.searchObjek("Kasur");
+    sukses = ruangan.pindahBarang(barang2, 2,2 , sim);
+    
+    if(sukses){
+        System.out.println("Berhasil dipindahkan");
+    }
+    scan.close();
         
-        scan.close();
-        
-    }  
+ }  
 }
 
        

@@ -61,15 +61,27 @@ public class NewGame{
                     JOptionPane.showMessageDialog(null, "Please enter a valid name!", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else {
-                    //TO DO
-                    //CHECK IF SIM ALREADY EXISTS
-                    Sim sim = new Sim(firstName, lastName);
-                    Rumah rumah = new Rumah();
-                    World.getInstance().addSim(sim,rumah);
-                    JOptionPane.showMessageDialog(null, "New sim created. Welcome to SimPlicity 5, " + firstName + " " + lastName + "!");
-                    frame.dispose();
-                    new HomePage1(sim);
-                    frame.dispose();
+                    boolean unique = true;
+                    if (World.getInstance().getSimList()[0] != null){
+                        for (Sim sim: World.getInstance().getSimList()){
+                            if (sim instanceof Sim){
+                                if (sim.getFirstName().equals(firstName) && sim.getLastName().equals(lastName)){
+                                    JOptionPane.showMessageDialog(null, "Sim already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+                                    unique = false;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                        if (unique){
+                            Sim sim = new Sim(firstName, lastName);
+                            Rumah rumah = new Rumah();
+                            World.getInstance().addSim(sim,rumah);
+                            JOptionPane.showMessageDialog(null, "New sim created. Welcome to SimPlicity 5, " + firstName + " " + lastName + "!");
+                            frame.dispose();
+                            new LandingPage(sim);
+                            frame.dispose();
+                         }
                 }
             }
         });

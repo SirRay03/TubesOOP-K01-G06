@@ -6,7 +6,7 @@ public class MyButton extends JButton{
     MyButton(String name){
         this.setText(name);
         this.setPreferredSize(new Dimension(300, 100));
-        this.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+        this.setFont(new Font("Times New Roman", Font.PLAIN, 25));
         this.setFocusPainted(false);
         this.setBackground(Color.white);
     }

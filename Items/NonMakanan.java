@@ -48,7 +48,8 @@ public abstract class NonMakanan implements Item, Actionable{
             try {
                 sim.addToListOnDelivery(this); 
                 waktuMulai = System.currentTimeMillis();
-                Thread.sleep(waktuPengantaran);
+                Thread.sleep(3000);
+                //Thread.sleep(waktuPengantaran);
                 sim.deleteFromListOnDelivery(this);
                 waktuMulai = 0;
             } catch (InterruptedException e) {

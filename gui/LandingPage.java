@@ -5,12 +5,20 @@ import javax.swing.*;
 
 import src.*;
 
-public class HomePage1 {
+public class LandingPage {
     String[] welcome = {"Hi there, ", "Welcome, ", "Willkomen, ", "Annyeong, ", "Bonjour, ", "Hola, ", "Ciao, ", "Konnichiwa, ", "Ni hao, ", "Sawasdee, ", "Namaste, ", "Merhaba, ", "Salam, ", "Szia, ", "Sveiki, ", "Saluton, ", "Hej, ", "Hallo, ", "Hei, ", "Ahoj, ", "Hoi, ", "Halo, "};
     int random = (int)(Math.random() * 22);
 
-    HomePage1(Sim sim){
+    LandingPage(Sim sim){
         MyFrame frame = new MyFrame("Sim Interaction Menu", welcome[random] + sim.getFirstName() + "!");
+
+        MyButton viewSimInfo = new MyButton("View Sim Info");
+        viewSimInfo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new SimInfo(sim);
+            }
+        });
+        frame.middlePanel.add(viewSimInfo);
 
         MyButton goToWorld = new MyButton("Go to World");
         goToWorld.addActionListener(new ActionListener() {
@@ -42,14 +50,12 @@ public class HomePage1 {
         MyButton exercise = new MyButton("Exercise");
         exercise.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                OverlayOlahraga overlayOlahraga = new OverlayOlahraga();
                 int confirm = (int) JOptionPane.showConfirmDialog(null, "Are you sure you want to exercise?", "Exercise", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    sim.olahraga();
-                    overlayOlahraga.frame.close();
+                    int duration = Integer.parseInt(JOptionPane.showInputDialog("How long do you want to exercise?"));
+                    sim.olahraga(duration);
                 } else {
                     JOptionPane.showMessageDialog(null, "You have cancelled the exercise.", "Exercise", JOptionPane.INFORMATION_MESSAGE);
-                    overlayOlahraga.frame.close();
                 }
             }
         });
@@ -76,9 +82,7 @@ public class HomePage1 {
                 //OverlayDaydream overlayDaydream = new OverlayDaydream();
                 int confirm = (int) JOptionPane.showConfirmDialog(null, "Are you sure you want to daydream?", "Daydream", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    JOptionPane.showMessageDialog(null, "This feature is coming soon.", "Coming Soon", JOptionPane.INFORMATION_MESSAGE);
-                    //sim.daydream();
-                    //overlayDaydream.frame.close();
+                    new OverlayMerenung(sim);
                 } else {
                     JOptionPane.showMessageDialog(null, "You have cancelled daydreaming.", "Daydream", JOptionPane.INFORMATION_MESSAGE);
                     //overlayDaydream.frame.close();
@@ -104,16 +108,16 @@ public class HomePage1 {
                 new RoomMap(sim);
             }
         });
-        frame.middlePanel.add(goToHouse);
 
-        MyButton viewSimInfo = new MyButton("View Sim Info");
-        viewSimInfo.addActionListener(new ActionListener() {
+        MyButton berkunjung = new MyButton("Berkunjung");
+        berkunjung.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null, "This feature is coming soon.", "Coming Soon", JOptionPane.INFORMATION_MESSAGE);
                 // frame.dispose();
-                // new SimInfo(sim);
+                // new BerkunjungGUI(sim);
             }
         });
+        frame.middlePanel.add(berkunjung);
 
         MyButton returnToMain = new MyButton("Return to Main Menu");
         returnToMain.addActionListener(new ActionListener() {

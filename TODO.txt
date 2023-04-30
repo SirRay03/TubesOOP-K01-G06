@@ -1,0 +1,25 @@
+1. Berkunjung
+2. Standard Overlay
+3. Overlay (Main, Tidur, Makan, Minum, Berdoa, Masak, Kerja, Olahraga, Merenung)
+4. Sim gabisa mati
+5. Infinite NonMakanan glitch
+6. Percantik GUI
+7. Rotate Properti
+8. Booklet
+9. Susun file
+10. Bikin README.md
+11. Bikin cara cepet deploy and run
+12. Ngecek waktu
+13. Aksi pasif
+14. Bangunin Willy
+15. GOTOWORLD -> GOTOHOUSE
+16. Help benerin
+17. Bisa mandi di toilet ternyata
+18. Blm bisa mati
+19. Inventory masih dobel"
+20. Back button gua mana anjir (inventory)
+21. pasang barang -1
+22. rotate barang blom dicoba
+23. pindahin juga
+24. jangan copas (olahraga)
+25. canda
