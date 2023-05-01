@@ -1,6 +1,7 @@
 package src;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import Items.*;
 
@@ -249,7 +250,7 @@ public class Ruangan {
         }
     }
     
-    public void getListObjek (){
+    public void printListObjek (){
         int i =1;
         for (NonMakanan a : listBarang){
             System.out.print(i + ". ");
@@ -257,6 +258,11 @@ public class Ruangan {
             i++;
         }
     }
+
+    public List<NonMakanan> getListObjek(){
+        return listBarang;
+    }
+
     public void rotateRight(NonMakanan barang){
         int temp;
         temp = barang.getLebar();
@@ -277,4 +283,10 @@ public class Ruangan {
     public void setNamaRuangan(String nama){
         this.nama = nama;
     }
+
+    public static void main(String[] args){
+        Ruangan ruangan = new Ruangan("Kamar Utama");
+        ruangan.printListObjek();
+    }
 }
+
