@@ -9,12 +9,12 @@ public class MyFrame extends JFrame {
     public MyFrame(String title, String subtitle){
         this.setTitle("SimplyCity 5 - TubesOOP-K01-G06");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1200, 925);
+        this.setSize(1200, 800);
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
 
         JPanel introGroup = new JPanel();
-        introGroup.setPreferredSize(new Dimension(1200, 120));
+        introGroup.setPreferredSize(new Dimension(1200,100));
         introGroup.setBackground(Color.black);
         introGroup.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(introGroup, BorderLayout.NORTH);
@@ -24,7 +24,7 @@ public class MyFrame extends JFrame {
         titleText.setFont(new Font("Times New Roman", Font.PLAIN, 50));
         titleText.setForeground(Color.white);
         intro.add(titleText);
-        intro.setPreferredSize(new Dimension(1200, 70));
+        intro.setPreferredSize(new Dimension(1200,60));
         intro.setBackground(Color.black);
         introGroup.add(intro);
 
@@ -42,7 +42,7 @@ public class MyFrame extends JFrame {
         middlePanel.setBackground(Color.DARK_GRAY);
 
         bottomPanel = new JPanel();
-        bottomPanel.setPreferredSize(new Dimension(1200, 75));
+        bottomPanel.setPreferredSize(new Dimension(1200, 50));
         bottomPanel.setBackground(Color.GRAY);
 
         this.add(introGroup, BorderLayout.NORTH);        

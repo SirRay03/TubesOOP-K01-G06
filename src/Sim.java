@@ -326,62 +326,20 @@ public class Sim {
     public void selesaiBerkjung () {
         setRumah(currRumah);
     }
-    public void merenung(){
-        Random random = new Random();
-        int pilihanJawaban = (random.nextInt(10));
-        switch(pilihanJawaban){
-            case 0:
-                System.out.println("Semua akan baik-baik saja!");
-                break;
-            case 1:
-                System.out.println("Lakukan lebih baik!");
-                break;
-            case 2:
-                System.out.println("Semangat!");
-                break;
-            case 3:
-                System.out.println("Tidak perlu overthinking");
-                break;
-            case 4:
-                System.out.println("Just do it!");
-                break;
-            case 5:
-                System.out.println("Ayo, kamu pasti bisa!");
-                break;
-            case 6:
-                System.out.println("Yakin? Coba pikir lagi");
-                break;
-            case 7:
-                System.out.println("Hal itu terlalu rumit untuk direnungkan");
-                break;
-            case 8:
-                System.out.println("Hal yang sangat baik untuk direnungkan");
-                break;
-            case 9:
-                System.out.println("Itu ide yang sangat baik!");
-                break;
-            default:
-                System.out.println("Merenunglah kembali!");
-        }
-    }
 
     public void olahraga(int waktuOlahraga){
         setStatus("Sim sedang olahraga");
-        Scanner scan = new Scanner(System.in);
         boolean valid = false;
         //Validasi input
         while (!valid) 
         {
             try 
             {
-                System.out.print("Masukkan durasi tidur (dalem detik dan kelipatan 240): ");
-                waktuOlahraga = scan.nextInt();
                 valid = true;
             }
             catch (Exception e)
             {
                 System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                scan.nextLine();
             }
         }
         while (waktuOlahraga % 20 != 0)
@@ -393,13 +351,11 @@ public class Sim {
                 try 
                 {
                     System.out.print("Masukkan durasi tidur (dalem detik dan kelipatan 240):");
-                    waktuOlahraga = scan.nextInt();
                     valid = true;
                 }
                 catch (Exception e) 
                 {
                     System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                    scan.nextLine();
                 }
             }
         }
@@ -429,7 +385,6 @@ public class Sim {
         }catch(InterruptedException e){
             System.out.println("Proses olahraga terganggu");
         }
-        scan.close();
     }
 
     public void goToObject(String objek){

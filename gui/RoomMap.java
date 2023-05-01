@@ -10,11 +10,6 @@ import Items.*;
 public class RoomMap {
     RoomMap(Sim sim){
         MyFrame frame = new MyFrame("You are now in " + sim.getFirstName() + "'s house", sim.getRuangan().getNamaRuangan() + " Room");
-        
-        JPanel gap = new JPanel();
-        gap.setPreferredSize(new Dimension(1500, 10));
-        gap.setBackground(Color.DARK_GRAY);
-        frame.middlePanel.add(gap, BorderLayout.NORTH);
 
         JPanel map = new JPanel();
         map.setLayout(new GridLayout(6,6));

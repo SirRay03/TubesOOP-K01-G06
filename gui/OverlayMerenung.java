@@ -1,36 +1,44 @@
 package gui;
 
+import java.util.Random;
 import javax.swing.*;
+import java.awt.*;
 
 import src.Sim;
 
 public class OverlayMerenung{
-    MyOverlay overlay;
+    MyOverlay frame;
+
     public OverlayMerenung(Sim sim){
-        overlay = new MyOverlay("I am the magic conch shell");
-
-        JPanel panel = new JPanel();
-        panel.add(new JLabel("Ask me a question and I will answer!"));
-        panel.add(new JTextField(20));
-        panel.add(new JButton("Ask"));
-        overlay.middlePanel.add(panel);
-
-        JTextField answer = new JTextField(20);
-        panel = new JPanel();
-        panel.add(new JLabel("Answer:"));
-        panel.add(answer);
-        overlay.middlePanel.add(panel);
-
-        MyButton submit = new MyButton("Submit");
-        submit.addActionListener(e -> {
-            String question = answer.getText();
-            if (question.isEmpty()){
-                JOptionPane.showMessageDialog(null, "Please ask a question!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else{
-                sim.merenung();
-            }
+        frame = new MyOverlay("I am the magic conch shell", "Ïnsert your question here, my child");
+        
+        JTextField textField = new JTextField();
+        textField.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        textField.setPreferredSize(new Dimension(1000, 50));
+        textField.setForeground(Color.GRAY); // Set the text color to gray
+        frame.interactionBar.add(textField);
+        
+        MyButton button = new MyButton("Ask");
+        button.setPreferredSize(new Dimension(100, 50));
+        button.addActionListener(e -> {
+            textField.setEditable(false);
+            button.setEnabled(false);
+            int pilihanJawaban = new Random().nextInt(11);
+            String[] jawaban = new String[11];
+            jawaban[0] = "Semua akan baik-baik saja!";
+            jawaban[1] = "Lakukan lebih baik!";
+            jawaban[2] = "Semangat!";
+            jawaban[3] = "Tidak perlu overthinking";
+            jawaban[4] = "Just do it!";
+            jawaban[5] = "Ayo, kamu pasti bisa!";
+            jawaban[6] = "Yakin? Coba pikir lagi";
+            jawaban[7] = "Hal itu terlalu rumit untuk direnungkan";
+            jawaban[8] = "Hal yang sangat baik untuk direnungkan";
+            jawaban[9] = "Jangan terlalu dipikirkan";
+            jawaban[10] = "Merenunglah kembali";
+            JOptionPane.showMessageDialog(null,jawaban[pilihanJawaban], "Merenung", JOptionPane.INFORMATION_MESSAGE);
+            frame.dispose();
         });
-        overlay.middlePanel.add(submit);
+        frame.interactionBar.add(button);
     }
 }

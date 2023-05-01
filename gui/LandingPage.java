@@ -52,8 +52,7 @@ public class LandingPage {
             public void actionPerformed(ActionEvent e) {
                 int confirm = (int) JOptionPane.showConfirmDialog(null, "Are you sure you want to exercise?", "Exercise", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    int duration = Integer.parseInt(JOptionPane.showInputDialog("How long do you want to exercise?"));
-                    sim.olahraga(duration);
+                    new OverlayOlahraga(sim);
                 } else {
                     JOptionPane.showMessageDialog(null, "You have cancelled the exercise.", "Exercise", JOptionPane.INFORMATION_MESSAGE);
                 }
