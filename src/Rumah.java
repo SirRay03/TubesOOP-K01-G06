@@ -153,20 +153,42 @@ public class Rumah{
                     final int h = horizontal;
                     final int v = vertical;
                     final String nama = namaRuangan;
-                    new Thread(() -> {
-                        try {
+                    long finalTime = World.getInstance().getTime() + 1080000;
+                    Runnable r = () -> {
+                        while (World.getInstance().getTime() <  finalTime){
+                                try {
+                                    //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+                                    Thread.sleep(1000);
+                                    //Thread.sleep(waktuPengantaran*1000);
+                                } catch (InterruptedException e) {
+                                    System.out.println("Aksi terganggu!");
+                                }
+                        } 
                             owner.addToListUpgrade(this); 
-                            waktuMulai = System.currentTimeMillis();
+                            //waktuMulai = System.currentTimeMillis();
                             owner.deleteFromListUpgrade(this);
-                            Thread.sleep(10000);
-                            waktuMulai = 0;
+                            //waktuMulai = 0;
                             denahRumah[h][v] = new Ruangan(nama);
                             roomCount++;
+                            //JANGAN LUPA NGURANGI DUIT
                             JOptionPane.showMessageDialog(null, "Ruangan " + nama + " berhasil ditambahkan!");
-                        } catch (InterruptedException e) {
-                            System.out.println("Aksi terganggu!");
-                        }
-                    }).start();
+                        };
+                    Thread thread = new Thread(r);
+                    thread.start();
+                    // new Thread(() -> {
+                    //     try {
+                    //         owner.addToListUpgrade(this); 
+                    //         waktuMulai = System.currentTimeMillis();
+                    //         owner.deleteFromListUpgrade(this);
+                    //         Thread.sleep(10000);
+                    //         waktuMulai = 0;
+                    //         denahRumah[h][v] = new Ruangan(nama);
+                    //         roomCount++;
+                    //         JOptionPane.showMessageDialog(null, "Ruangan " + nama + " berhasil ditambahkan!");
+                    //     } catch (InterruptedException e) {
+                    //         System.out.println("Aksi terganggu!");
+                    //     }
+                    // }).start();
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Ruangan tidak jadi ditambahkan!", "Upgrade rumah batal!", JOptionPane.WARNING_MESSAGE);

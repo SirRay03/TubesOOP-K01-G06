@@ -20,7 +20,7 @@ public class LandingPage {
         });
         frame.middlePanel.add(viewSimInfo);
 
-        MyButton goToWorld = new MyButton("Go to World");
+        MyButton goToWorld = new MyButton("Go to House");
         goToWorld.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();

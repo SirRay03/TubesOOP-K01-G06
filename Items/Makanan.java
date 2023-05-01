@@ -1,7 +1,7 @@
 package Items;
 import java.util.*;
 
-import src.Sim;
+import src.*;
 
 public abstract class Makanan implements Item{
     protected String nama;
@@ -24,20 +24,42 @@ public abstract class Makanan implements Item{
     };
     public void beliBarang(Sim sim){
         Random random = new Random();
-        waktuPengantaran = (random.nextInt(4000) + 1000)*30;
-        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran);       
-        new Thread(() -> {
-            try {
-                sim.addToListOnDelivery(this); 
-                waktuMulai = System.currentTimeMillis();
-                Thread.sleep(3000); 
-                sim.deleteFromListOnDelivery(this);
-                waktuMulai = 0;
-                sim.getInventory().addItem(this, 1);
-            } catch (InterruptedException e) {
-                System.out.println("Aksi terganggu!");
-            }
-        }).start();
+        waktuPengantaran = (random.nextInt(4) + 1)*30;
+        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+        long finalTime = World.getInstance().getTime() + waktuPengantaran;
+        System.out.println(finalTime);
+        System.out.println(World.getInstance().getTime());
+        Runnable r = () -> {
+            while (World.getInstance().getTime() <  finalTime){
+                    try {
+                        //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+                        Thread.sleep(1000);
+                        //Thread.sleep(waktuPengantaran*1000);
+                    } catch (InterruptedException e) {
+                        System.out.println("Aksi terganggu!");
+                    }
+            } 
+            sim.addToListOnDelivery(this); 
+            waktuMulai = System.currentTimeMillis();
+            sim.deleteFromListOnDelivery(this);
+            waktuMulai = 0;
+            sim.getInventory().addItem(this, 1);   
+            };
+        Thread thread = new Thread(r);
+        thread.start();
+        // new Thread(() -> {
+        //     try {
+        //         sim.addToListOnDelivery(this); 
+        //         waktuMulai = System.currentTimeMillis();
+        //         Thread.sleep(3000); 
+        //         //Thread.sleep(waktuPengantaran * 1000); 
+        //         sim.deleteFromListOnDelivery(this);
+        //         waktuMulai = 0;
+        //         sim.getInventory().addItem(this, 1);
+        //     } catch (InterruptedException e) {
+        //         System.out.println("Aksi terganggu!");
+        //     }
+        // }).start();
 
     }
     public String getNama(){

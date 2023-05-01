@@ -86,10 +86,10 @@ public class MejaKursi extends NonMakanan {
             sim.getKesejahteraan().setMood(waktu*2); //namabah mood waktu*2
             sim.getKesejahteraan().setHunger(waktu); //ngurang kenyang waktu
             System.out.println("Proses main selesai");
-            World.getInstance().addWaktu(710000);
+            World.getInstance().addWaktu(waktu*1000);
             // World.getInstance().checkSimTime(waktu);
-            sim.tambahWaktuBelumTidur(waktu);
-            sim.tambahWaktuBelumBAB(waktu); 
+            sim.tambahWaktuBelumTidur(waktu*1000);
+            sim.tambahWaktuBelumBAB(waktu*1000); 
             sim.resetTimerBelumBab();
             sim.resetWaktuTidurAfterNoSleep();
         }catch(InterruptedException e){

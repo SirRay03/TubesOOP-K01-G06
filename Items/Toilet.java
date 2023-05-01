@@ -71,5 +71,10 @@ public class Toilet extends NonMakanan {
         });
         System.out.println("Sim sedang buang air...");
         thread.start();
+        try{
+            thread.join();
+        }catch(InterruptedException e){
+            System.out.println("Proses buang air terganggu");
+        }
     }
     }

@@ -18,11 +18,11 @@ public class Sim {
     private Ruangan currRuangan;
     private List<Item> listOnDelivery;
     private List<Rumah> listUpgrade;
-    public int timerNoSleep;
+    public long timerNoSleep;
     public long startKerja = System.currentTimeMillis();
     public long elapsedTimeKerja;
     public double secKerja;
-    private int timerNoBab;
+    private long timerNoBab;
     private boolean isBab;
     private int durasiKerja;
     private int durasiBerkunjung;
@@ -94,7 +94,7 @@ public class Sim {
         return inventory;
     }
 
-    public int getTimerNoSleep () {
+    public long getTimerNoSleep () {
         return timerNoSleep;
     }
 
@@ -158,7 +158,7 @@ public class Sim {
 
     // === METHOD ===
 
-    public void tambahWaktuBelumTidur(int duration){
+    public void tambahWaktuBelumTidur(long duration){
         this.timerNoSleep += duration; 
         // duration diambil dari durasi di method tidur
         /* if(getStatus().equals("Sim sedang tidur")){
@@ -200,7 +200,7 @@ public class Sim {
     {
         if (timerNoSleep >= 600000) // tidak tidur > 10 menit
         {
-            System.out.println("Waktu Tidur Anda kurang! Harus segera tidur");
+            System.out.println("Waktu Tidur Anda kurang! Sim terluka! Segeralah tidur");
             timerNoSleep = 0;
             kesejahteraan.setHealth(-5);
             kesejahteraan.setMood(-5);
@@ -216,15 +216,15 @@ public class Sim {
     }
 
     public void resetTimerBelumBab () {
-        if (timerNoBab > 240 & isBab) {
-            System.out.println("Anda belum BAB, segera buang air!");
+        if (timerNoBab > 240000 & isBab) {
+            System.out.println("Anda belum BAB, Sim terluka! Segeralah buang air!");
             timerNoBab = 0;
             getKesejahteraan().setHealth(-5);
             getKesejahteraan().setMood(-5);
         }
     }
 
-    public void tambahWaktuBelumBAB (int duration) {
+    public void tambahWaktuBelumBAB (long duration) {
         if (isBab) {
             timerNoBab += duration;
         }
@@ -350,7 +350,7 @@ public class Sim {
             {
                 try 
                 {
-                    System.out.print("Masukkan durasi tidur (dalem detik dan kelipatan 240):");
+                    System.out.print("Masukkan durasi olahraga (dalam detik dan kelipatan 20):");
                     valid = true;
                 }
                 catch (Exception e) 
@@ -375,10 +375,10 @@ public class Sim {
             getKesejahteraan().setMood(10* durasiOlahraga);
             getKesejahteraan().setHunger(-5* durasiOlahraga);
             getKesejahteraan().setHealth(5*durasiOlahraga);
-            World.getInstance().addWaktu(durasiOlahraga);
+            World.getInstance().addWaktu(durasiOlahraga*1000);
             // World.getInstance().checkSimTime(durasiOlahraga);
-            tambahWaktuBelumTidur(durasiOlahraga);
-            tambahWaktuBelumBAB(durasiOlahraga); 
+            tambahWaktuBelumTidur(durasiOlahraga*1000);
+            tambahWaktuBelumBAB(durasiOlahraga*1000); 
             resetTimerBelumBab();
             resetWaktuTidurAfterNoSleep();
             System.out.println("Proses olahraga selesai");

@@ -11,8 +11,7 @@
 11. Bikin cara cepet deploy and run
 12. Ngecek waktu
 13. Aksi pasif
-14. Bangunin Willy
-15. GOTOWORLD -> GOTOHOUSE
+15. GOTOWORLD -> GOTOHOUSE (DONE)
 16. Help benerin
 17. Bisa mandi di toilet ternyata
 18. Blm bisa mati
@@ -21,8 +20,6 @@
 22. rotate barang blom dicoba
 23. pindahin juga
 24. jangan copas (olahraga)
-25. canda
-lu lagi on han? nah iya bole, push aja, zip janlup
-lg mo keluar dulu tp laptop tetep nyalaa
-mau gua push?
-ntar live share pake punya lu
+25. upgradeHouse
+26. ubah semua time ke long (skrg ada yg int ada yg long)
+ada bbrp efek yg blm bener

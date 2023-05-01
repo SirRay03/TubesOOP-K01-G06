@@ -1,8 +1,7 @@
 package Items;
 import java.util.*;
 
-import src.Actionable;
-import src.Sim;
+import src.*;
 public abstract class NonMakanan implements Item, Actionable{
     protected int panjang; 
     protected int lebar; 
@@ -41,23 +40,53 @@ public abstract class NonMakanan implements Item, Actionable{
         return waktuMulai;
     };
     public void beliBarang(Sim sim){
+        // Random random = new Random();
+        // waktuPengantaran = (random.nextInt(4000) + 1000)*30;
+        // System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+        // new Thread(() -> {
+        //     try {
+        //         sim.addToListOnDelivery(this); 
+        //         waktuMulai = System.currentTimeMillis();
+        //         Thread.sleep(3000);
+        //         //Thread.sleep(waktuPengantaran);
+        //         sim.deleteFromListOnDelivery(this);
+        //         waktuMulai = 0;
+        //     } catch (InterruptedException e) {
+        //         System.out.println("Aksi terganggu!");
+        //     }
+        //     sim.getInventory().addItem(this, 1);
+        // }).start();
         Random random = new Random();
-        waktuPengantaran = (random.nextInt(4000) + 1000)*30;
-        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
-        new Thread(() -> {
-            try {
-                sim.addToListOnDelivery(this); 
-                waktuMulai = System.currentTimeMillis();
-                Thread.sleep(3000);
-                //Thread.sleep(waktuPengantaran);
-                sim.deleteFromListOnDelivery(this);
-                waktuMulai = 0;
-            } catch (InterruptedException e) {
-                System.out.println("Aksi terganggu!");
+        waktuPengantaran = (random.nextInt(4) + 1)*30;
+        //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+        long finalTime = World.getInstance().getTime() + waktuPengantaran;
+        System.out.println(finalTime);
+        System.out.println(World.getInstance().getTime());
+        Runnable r = () -> {
+            while (World.getInstance().getTime() <  finalTime){
+                    try {
+                        //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+                        Thread.sleep(1000);
+                        //Thread.sleep(waktuPengantaran*1000);
+                    } catch (InterruptedException e) {
+                        System.out.println("Aksi terganggu!");
+                    }
             }
+            sim.addToListOnDelivery(this); 
+            waktuMulai = System.currentTimeMillis();
+            sim.deleteFromListOnDelivery(this);
+            waktuMulai = 0;
             sim.getInventory().addItem(this, 1);
-        }).start();
-        //.....
+            };
+        Thread thread = new Thread(r);
+        thread.start();
+        // while (thread.isAlive()) {
+        //     try {
+        //         Thread.sleep(1000); // memberikan waktu tunggu 1 detik
+        //     } catch (InterruptedException e) {
+        //         System.out.println("Aksi terganggu!");
+        //     }
+        // }
     }
     public abstract void printListAction();
 }

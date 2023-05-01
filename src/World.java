@@ -93,12 +93,12 @@ public class World{
     // }
 
 
-    public void setTime (Long time){
-        time -= time;
-        if(time >= 0){
-            time += 720000;
-        }
-    }
+    // public void setTime (Long time){
+    //     time -= time;
+    //     if(time >= 0){
+    //         time += 720000;
+    //     }
+    // }
 
     // === METHOD ===
 
@@ -132,7 +132,7 @@ public class World{
     }
 
     public String displayTime() {
-        return day + " day, " + (time/1000/60) + "minute";
+        return day + " day, " + ((time%720000)/1000/60) + "minute1";
     }
 
     // public void checkSimTime(int duration)
@@ -152,13 +152,18 @@ public class World{
         if (time + timeinput >= 720000) 
         {
             addDay();
-            time = time + timeinput - 720000;
         }
-        else 
-        {
             time += timeinput;
-        }
     }
+        // if (time + timeinput >= 720000) 
+        // {
+        //     addDay();
+        //     time = time + timeinput - 720000;
+        // }
+        // else 
+        // {
+        //     time += timeinput;
+        // }
 
     // public <Map> float getDistance (Sim[][] rumah1, Sim[][] rumah2) {
     //     int x1 = 0;
