@@ -9,7 +9,7 @@ public class World{
     private static Rumah[][] map = new Rumah[horizontal][vertical];
     private static Sim[] simList = new Sim[4096];
     private static int simCount = 0;
-    private static long time;
+    private static int time;
     private static int day;
     
     // === CONSTRUCTOR ===
@@ -32,7 +32,7 @@ public class World{
         return vertical;
     }
 
-    public Long getTime(){
+    public int getTime(){
         return time;
     }
 
@@ -76,6 +76,7 @@ public class World{
         }
         simList[i] = sim;
         sim.setRumah(rumah);
+        sim.setCurrentRumah(rumah);
         rumah.setHAddress(horizontalAddr);
         rumah.setVAddress(verticalAddr);
         sim.setRuangan(rumah.searchRuangan("Kamar Utama"));
@@ -89,12 +90,20 @@ public class World{
     public void addDay() {
         day++;
     }
+
+    public int getDay () {
+        return day;
+    }
     public void addWaktu(int timeinput) {
         if (time + timeinput >= 720000) 
         {
+            time = timeinput + time - 720000;
             addDay();
         }
+        else
+        {
             time += timeinput;
+        }
     }
         // if (time + timeinput >= 720000) 
         // {

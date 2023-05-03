@@ -48,6 +48,18 @@ public class RoomMap {
                                     break;
                             }
                         }
+                        else if (any instanceof Toilet){
+                            String[] actionNames = {"Buang Air", "Mandi"};
+                            String selectedAction = (String) JOptionPane.showInputDialog(null, "Pilih aksi:", "Aksi Toilet", JOptionPane.QUESTION_MESSAGE, null, actionNames, actionNames[0]);
+                            switch (selectedAction){
+                                case "Mandi":
+                                    ((Toilet) any).mandi(sim);
+                                    break;
+                                default:
+                                    ((Toilet) any).doAction(sim);
+                                    break;
+                            }
+                        }
                         else{
                             ((NonMakanan) any).doAction(sim);
                         }
@@ -76,26 +88,15 @@ public class RoomMap {
         frame.bottomPanel.setLayout(new BorderLayout());
         frame.bottomPanel.add(back, BorderLayout.WEST);
 
-        if (sim != sim.getRumah().getOwner()){
-            for (int i = 0; i < 64; i++){
-                for (int j = 0; j < 64; j++){
-                    if (World.getInstance().getMap()[i][j].getOwner() == sim){
-                        final int finalI = i;
-                        final int finalJ = j;
-                        MyButton goHome = new MyButton("Go Home");
-                        goHome.setPreferredSize(new Dimension(200, 50));
-                        goHome.addActionListener(e -> {
-                            sim.setRumah(World.getInstance().getMap()[finalI][finalJ]);
-                            frame.dispose();
-                            new RoomMap(sim);
-                        });
-                        frame.bottomPanel.add(goHome, BorderLayout.CENTER);
-                        return; // Exit the loops since we've found the sim's house
-                    }
-                }
-            }
-            // Handle case where sim does not have a house
-            
+        if (sim.getcurrentRumah() != sim.getRumah()){
+            MyButton goHome = new MyButton("Go Home");
+            goHome.setPreferredSize(new Dimension(200, 50));
+            goHome.addActionListener(e -> {
+                sim.setRumah(sim.getRumah());
+                sim.setRuangan(sim.getRumah().searchRuangan("Kamar Utama"));
+                frame.dispose();
+                new RoomMap(sim);
+            });
         }
         
 

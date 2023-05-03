@@ -27,16 +27,16 @@ public class BerkunjungGUI {
         map.setPreferredSize(new Dimension(1200, 650));
         frame.middlePanel.add(map);
 
-        for (int i = 0; i < World.getInstance().getSimCount(); i++){
-            final int index = i;
-            if (World.getInstance().getSimList()[i] != sim){
-                final JButton button = new JButton("Rumah " + arr[i].getFullName() + " (" + arr[i].getRumah().getHAddress() + "," + arr[i].getRumah().getVAddress() + ")");
-                button.addActionListener(e -> {
-                    frame.dispose();
-                    sim.setRumah(World.getInstance().getMap()[arr[index].getRumah().getHAddress()][arr[index].getRumah().getVAddress()]);
-                    new RoomMap(sim);
-                });
-                map.add(button);
+        for (Object s: arr){
+            while (s != null){
+                MyButton button = new MyButton(((Sim) s).getFirstName() + "'s house" + "(" + ((Sim) s).getRumah().getHAddress() + "," + ((Sim) s).getRumah().getVAddress() + ")");
+            button.addActionListener(e -> {
+                sim.setCurrentRumah(((Sim) s).getRumah());
+                sim.setRuangan(sim.getcurrentRumah().searchRuangan("Kamar Utama"));
+                new RoomMap(sim);
+                frame.dispose();
+            });
+            map.add(button);
             }
         }
 

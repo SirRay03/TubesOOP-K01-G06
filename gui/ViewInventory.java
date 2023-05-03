@@ -78,8 +78,8 @@ public class ViewInventory {
     private void LoadInventory(Sim sim, JPanel nonMakanan) throws IOError {
         try {
             for (Item item: sim.getInventory().getMap().keySet()){
-                if(!(item instanceof Makanan)){
-                    if (item instanceof Kasur){
+                if(item instanceof NonMakanan){
+                    if (item instanceof Kasur || item instanceof Kompor){
                         tombol = new JButton(((Kasur) item).getNama() + " x" + sim.getInventory().getMap().get(item));
                         tombol.setPreferredSize(new Dimension(150, 100));
                         tombol.setFont(new Font("Times New Roman", Font.PLAIN, 20));

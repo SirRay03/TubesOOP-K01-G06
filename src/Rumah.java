@@ -5,8 +5,9 @@ public class Rumah{
     private Ruangan[][] denahRumah;
     private int roomCount;
     private Sim owner;
-    private long waktuUpgrade;
-    private long waktuMulai;
+    private int waktuUpgrade;
+    private int waktuMulai;
+    private int hariMulai;
     private int hAddress;
     private int vAddress;
     
@@ -19,6 +20,7 @@ public class Rumah{
         waktuUpgrade = 1080000;
         hAddress = 0;
         vAddress = 0;
+        hariMulai = 0;
     }
 
     public String[] getRoomNames(){
@@ -48,11 +50,15 @@ public class Rumah{
         return null;
     }
 
-    public long getWaktuMulai(){
+    public int getWaktuMulai(){
         return waktuMulai;
-    };
+    }
 
-    public long getWaktuUpgrade(){
+    public int getHariMulai(){
+        return hariMulai;   
+    }
+
+    public int getWaktuUpgrade(){
         return waktuUpgrade;
     }
 
@@ -81,6 +87,7 @@ public class Rumah{
     }
 
     public int upgradeRumah(Sim sim, int uang){
+        World world = World.getInstance();
         if (uang >= 1500 && sim == owner){
             int horizontal = 11;
             int vertical = 11;
@@ -155,9 +162,12 @@ public class Rumah{
                     final int h = horizontal;
                     final int v = vertical;
                     final String nama = namaRuangan;
-                    long finalTime = World.getInstance().getTime() + 1080000;
+                    int finalTime = World.getInstance().getTime() + 1080000;
                     Runnable r = () -> {
-                        while (World.getInstance().getTime() <  finalTime){
+                        owner.addToListUpgrade(this); 
+                        waktuMulai = world.getTime();
+                        hariMulai = world.getDay();
+                        while (World.getInstance().getTime() <=  finalTime){
                                 try {
                                     //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
                                     Thread.sleep(1000);
@@ -166,10 +176,7 @@ public class Rumah{
                                     System.out.println("Aksi terganggu!");
                                 }
                         } 
-                            owner.addToListUpgrade(this); 
-                            //waktuMulai = System.currentTimeMillis();
                             owner.deleteFromListUpgrade(this);
-                            //waktuMulai = 0;
                             denahRumah[h][v] = new Ruangan(nama);
                             roomCount++;
                             //JANGAN LUPA NGURANGI DUIT

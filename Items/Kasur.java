@@ -1,9 +1,11 @@
 package Items;
 import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
 
 import src.Sim;
 import src.World;
-//import gui.SleepOverlay;
+import gui.*;
 //import src.World2;
 
 public class Kasur extends NonMakanan {
@@ -47,59 +49,38 @@ public class Kasur extends NonMakanan {
     };
 
     public void doAction(Object... args){
-        //implementation code goes here
-        //Object... args artinya dia bisa nerima banyak argumen
-        //akses argumen nya satu2, baru cast jadi yg sesuai
-        //misal: doAction(Sim sima, String contoh)
-        //brarti cara akses parameter pertama nya : Sim sima = (Sim) args[0]
-        //brarti cara akses parameter kedua nya : String contoh = (String) args[1]
         Sim sim = (Sim) args[0];
+
+        MyOverlay frame = new MyOverlay("Your sim is now sleeping zzz...", "Do not panic if the app looks like it's not responding. It's just your sim sleeping.");
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setPreferredSize(new Dimension(500, 100));
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 60, 0);
+        slider.setMajorTickSpacing(4);
+        slider.setMinorTickSpacing(4);
+        slider.setSnapToTicks(true);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+        panel.add(slider, BorderLayout.CENTER);
+
+        int option = JOptionPane.showOptionDialog(null, panel, "Select duration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+        if (option == JOptionPane.OK_OPTION) {
+            duration = (slider.getValue())*60;
+        } else {
+            duration = 0;
+            frame.dispose();
+            return;
+        }
+
         sim.setStatus("Sim sedang tidur");
-        Scanner scan = new Scanner(System.in);
-        boolean valid = false;
-        int duration = 1;
-        while (!valid) 
-        {
-            try 
-            {
-                System.out.print("Masukkan durasi tidur (dalem detik dan kelipatan 240): ");
-                duration = scan.nextInt();
-                valid = true;
-            }
-            catch (Exception e)
-            {
-                System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                scan.nextLine();
-            }
-        }
-        while (duration % 240 != 0)
-        {
-            System.out.println("Input harus berupa kelipatan 240! Silakan input ulang!");
-            valid = false;
-            while (!valid)
-            {
-                try 
-                {
-                    System.out.print("Masukkan durasi tidur (dalem detik dan kelipatan 240):");
-                    duration = scan.nextInt();
-                    valid = true;
-                }
-                catch (Exception e) 
-                {
-                    System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                    scan.nextLine();
-                }
-            }
-        }
-        int totalDurasi = duration;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(totalDurasi * 1000);
-                    sim.tambahWaktuBelumBAB(totalDurasi);
-                    World.getInstance().addWaktu(totalDurasi);
-                    // World.getInstance().checkSimTime(totalDurasi);
+                    Thread.sleep(3000); //duration * 1000
+                    sim.tambahWaktuBelumBAB(duration*1000);
+                    World.getInstance().addWaktu(duration*1000);
+                    // World.getInstance().checkSimTime(duration);
                     sim.resetTimerBelumBab();
                 } catch (InterruptedException e) {
                     System.out.println("Proses tidur terganggu");
@@ -108,30 +89,15 @@ public class Kasur extends NonMakanan {
         });
         System.out.println("Sedang tidur...");
         thread.start();
-        scan.close();
         try{
             thread.join();
-            sim.getKesejahteraan().setHealth(30 * (totalDurasi / 240));
-            sim.getKesejahteraan().setHealth(30 * (totalDurasi / 240));
+            sim.getKesejahteraan().setHealth(30 * (duration / 240));
+            sim.getKesejahteraan().setHealth(30 * (duration / 240));
             System.out.println("Tidur selesai!");
+            frame.dispose();
         }catch(InterruptedException e){
             System.out.println("Proses tidur terganggu");
+            frame.dispose();
         }
     }
 }
-
-/**
-
- * CARA RUN DI MAIN*
- public class Main{
-    public static void main(String[] args){
-        Kasur largeBed = new Kasur(Kasur.tipeKasur.Queen);
-        int largeBedPrice = largeBed.getHarga();
-        int largeBedLength = largeBed.getPanjang();
-        int largeBedWidth = largeBed.getLebar();
-        System.out.println("Large Bed Price: " + largeBedPrice);
-        System.out.println("Large Bed Length: " + largeBedLength);
-        System.out.println("Large Bed Width: " + largeBedWidth);
-}
-}
- */

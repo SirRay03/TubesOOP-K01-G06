@@ -48,7 +48,7 @@ public class BuyItem {
         MakananDB arrMakanan = new MakananDB();
         NonMakananDB arrNonMakanan = new NonMakananDB();
 
-        MyFrame frame = new MyFrame("Welcome to Nook's Cranny", "Give up your money to the almighty Tom Nook!");
+        MyFrame frame = new MyFrame("Welcome to Nook's Cranny", "Give up all of your money to the almighty Tom Nook!");
 
         JPanel makananTitle = new JPanel();
         makananTitle.setPreferredSize(new Dimension(1200, 75));
@@ -161,8 +161,12 @@ public class BuyItem {
                         kertas.beliBarang(sim);
                         break;
                     case "Kompor Gas":
-                        Kompor komporGas = new Kompor(Kompor.tipeKompor.Gas);
+                        Kompor komporGas = new Kompor(Kompor.tipeKompor.Sedang);
                         komporGas.beliBarang(sim);
+                        break;
+                    case "Kompor Listrik":
+                        Kompor komporListrik = new Kompor(Kompor.tipeKompor.Kecil);
+                        komporListrik.beliBarang(sim);
                         break;
                     case "MejaKursi":
                         MejaKursi mejaKursi = new MejaKursi();

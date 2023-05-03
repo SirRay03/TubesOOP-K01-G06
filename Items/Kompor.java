@@ -5,16 +5,19 @@ import javax.swing.JOptionPane;
 import src.Sim;
 import src.World;
 public class Kompor extends NonMakanan {
+    private String nama;
 
     public enum tipeKompor{
-        Gas(100, 2, 1),
-        Listrik(200, 1, 1);
+        Sedang("Gas", 100, 2, 1),
+        Kecil("Listrik", 200, 1, 1);
 
+        private String nama;
         private int panjang;
         private int lebar; 
         private int harga;
 
-        tipeKompor(int harga, int panjang, int lebar){
+        tipeKompor(String nama, int harga, int panjang, int lebar){
+            this.nama = nama;
             this.harga = harga;
             this.lebar = lebar;
             this.panjang = panjang;
@@ -23,11 +26,12 @@ public class Kompor extends NonMakanan {
 
     public Kompor(tipeKompor tipe){
         super(tipe.harga, tipe.panjang, tipe.lebar);
+        this.nama = tipe.nama;
     }
     
-    // public int getdurasiMasak(){
-    //     return durasiMasak;
-    // }
+    public String getNama(){
+        return this.nama;
+    }
 
     public void printListAction(){
         System.out.println("1. Memasak");

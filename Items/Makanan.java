@@ -6,31 +6,40 @@ import src.*;
 public abstract class Makanan implements Item{
     protected String nama;
     protected int kekenyangan;
-    private long waktuPengantaran;
-    private long waktuMulai;
+    private int waktuPengantaran;
+    private int waktuMulai;
+    private int hariMulai;
 
     public Makanan(String nama, int kekenyangan){
         this.nama = nama;
         this.kekenyangan = kekenyangan;
         this.waktuPengantaran = 0;
         this.waktuMulai = 0;
+        this.hariMulai = 0;
     }
 
-    public long getWaktuPengantaran(){
+    public int getWaktuPengantaran(){
         return waktuPengantaran;
     }
-    public long getWaktuMulai(){
+    public int getWaktuMulai(){
         return waktuMulai;
-    };
+    }
+    public int getHariMulai(){
+        return hariMulai;
+    }
     public void beliBarang(Sim sim){
+        World world = World.getInstance();
         Random random = new Random();
         waktuPengantaran = (random.nextInt(4) + 1)*30;
         System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
-        long finalTime = World.getInstance().getTime() + waktuPengantaran;
+        int finalTime = World.getInstance().getTime() + waktuPengantaran*1000;
         System.out.println(finalTime);
         System.out.println(World.getInstance().getTime());
         Runnable r = () -> {
-            while (World.getInstance().getTime() <  finalTime){
+            sim.addToListOnDelivery(this); 
+            hariMulai = world.getDay();
+            waktuMulai = world.getTime();
+            while (World.getInstance().getTime() <=  finalTime){
                     try {
                         //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
                         Thread.sleep(1000);
@@ -39,11 +48,13 @@ public abstract class Makanan implements Item{
                         System.out.println("Aksi terganggu!");
                     }
             } 
-            sim.addToListOnDelivery(this); 
-            waktuMulai = System.currentTimeMillis();
             sim.deleteFromListOnDelivery(this);
             waktuMulai = 0;
+            hariMulai = 0;
             sim.getInventory().addItem(this, 1);   
+            System.out.println(finalTime);
+            System.out.println(World.getInstance().getTime());
+            sim.getInventory().printInventory();
             };
         Thread thread = new Thread(r);
         thread.start();

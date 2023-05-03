@@ -1,5 +1,4 @@
 package Items;
-import java.util.concurrent.TimeUnit;
 
 import src.*;
 
@@ -17,17 +16,18 @@ public class Jam extends NonMakanan {
         //misal: doAction(Sim sima, String contoh)
         //brarti cara akses parameter pertama nya : Sim sima = (Sim) args[0]
         //brarti cara akses parameter kedua nya : String contoh = (String) args[1]
-        World world = (World) args[0]; 
-        Sim sim =(Sim) args[1];
+        World world = World.getInstance();
+        Sim sim =(Sim) args[0];
 
-        long hour;
-        long minute;
-        long second;
-        long duration;
+        int hour;
+        int minute;
+        int second;
+        int duration;
+        int day;
 
         minute = (720000 - world.getTime()) / 60000;
         second =  (720000 - world.getTime()) % 60000;
-        System.out.println("SISA WAKTU HARI INI ADALAH " + minute + " MENIT " + second +" second.");
+        System.out.println("SISA WAKTU HARI INI ADALAH " + minute + " MENIT " + second +" DETIK.");
 
         System.out.println("SISA WAKTU PENGIRIMAN ITEM");
         if(sim.getListOnDelivery().isEmpty()){
@@ -37,10 +37,11 @@ public class Jam extends NonMakanan {
             for(Item a : sim.getListOnDelivery()){
                 if(a instanceof NonMakanan){
                     NonMakanan nonMakanan = (NonMakanan) a;
-                    duration = nonMakanan.getWaktuPengantaran() - (System.currentTimeMillis() - nonMakanan.getWaktuMulai());
-                    hour = TimeUnit.MILLISECONDS.toHours(duration);
-                    minute = TimeUnit.MILLISECONDS.toMinutes(duration - TimeUnit.HOURS.toMillis(hour));
-                    second =  TimeUnit.MILLISECONDS.toSeconds(duration - TimeUnit.HOURS.toMillis(hour) - TimeUnit.MINUTES.toMillis(minute));
+                    day = world.getDay() - nonMakanan.getHariMulai();
+                    duration = ((day*720000 + world.getTime()) + nonMakanan.getWaktuPengantaran() * 1000 - nonMakanan.getWaktuMulai())/1000;
+                    hour = duration/3600;
+                    minute = (duration - hour*3600) / 60;
+                    second = (duration - hour*3600) % 60;   
                     if(nonMakanan instanceof Jam){
                         Jam jam = (Jam) nonMakanan;
                         System.out.println(jam.getClass().getSimpleName().toUpperCase() + " ADALAH " + hour + " JAM " + minute + " MENIT " + second + " DETIK.");
@@ -72,10 +73,11 @@ public class Jam extends NonMakanan {
                 } 
                 else if(a instanceof BahanMakanan){
                     BahanMakanan bahanMakanan = (BahanMakanan) a;
-                    duration = bahanMakanan.getWaktuPengantaran() - (System.currentTimeMillis() - bahanMakanan.getWaktuMulai());
-                    hour = TimeUnit.MILLISECONDS.toHours(duration);
-                    minute = TimeUnit.MILLISECONDS.toMinutes(duration - TimeUnit.HOURS.toMillis(hour));
-                    second =  TimeUnit.MILLISECONDS.toSeconds(duration - TimeUnit.HOURS.toMillis(hour) - TimeUnit.MINUTES.toMillis(minute));
+                    day = world.getDay() - bahanMakanan.getHariMulai();
+                    duration = ((day*720000 + world.getTime()) + bahanMakanan.getWaktuPengantaran()*1000 - bahanMakanan.getWaktuMulai())/1000;
+                    hour = duration/3600;
+                    minute = (duration - hour*3600) / 60;
+                    second = (duration - hour*3600) % 60;                    
                     System.out.println(bahanMakanan.getNama().toUpperCase() + " ADALAH " + hour + " JAM " + + minute + " MENIT " + second +" DETIK.");
                 }
             
@@ -88,12 +90,13 @@ public class Jam extends NonMakanan {
     }
     else{
         for(Rumah rumah : sim.getListUpgrade()){
-            duration = rumah.getWaktuUpgrade() - (System.currentTimeMillis() - rumah.getWaktuMulai());
-            hour = TimeUnit.MILLISECONDS.toHours(duration);
-            minute = TimeUnit.MILLISECONDS.toMinutes(duration - TimeUnit.HOURS.toMillis(hour));
-            second =  TimeUnit.MILLISECONDS.toSeconds(duration - TimeUnit.HOURS.toMillis(hour) - TimeUnit.MINUTES.toMillis(minute));
-            System.out.println(rumah.getClass().getSimpleName().toUpperCase() + " ADALAH " + hour + " JAM " + minute + " MENIT " + second + " DETIK.");
+            day = world.getDay() - rumah.getHariMulai();
+            duration = ((day*720000 + world.getTime()) +rumah.getWaktuUpgrade() - rumah.getWaktuMulai())/1000;
+            hour = duration/3600;
+            minute = (duration - hour*3600) / 60;
+            second = (duration - hour*3600) % 60;  
+            System.out.println("Sisa Waktu " + rumah.getClass().getSimpleName().toUpperCase() + " ADALAH " + hour + " JAM " + minute + " MENIT " + second + " DETIK.");
         }
     }
-}
+    }
 }

@@ -74,7 +74,7 @@ public class MejaKursi extends NonMakanan {
         System.out.println("Sim sedang main...");
         Thread t = new Thread(()->{
         try{
-                Thread.sleep(waktu*1000); //1 detik main
+                Thread.sleep(3000); //1 detik main waktu*1000
             }
             catch(InterruptedException e){
                 System.out.println("Proses main terganggu");

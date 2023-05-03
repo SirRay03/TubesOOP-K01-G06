@@ -67,7 +67,12 @@ public class LandingPage {
                 int confirm = (int) JOptionPane.showConfirmDialog(null, "Are you sure you want to go to work?", "Work", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
                     JOptionPane.showMessageDialog(null, "This feature is coming soon.", "Coming Soon", JOptionPane.INFORMATION_MESSAGE);
-                    //sim.goToWork();
+                    try {
+						sim.kerja();
+					} catch (DeadException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                 } else {
                     JOptionPane.showMessageDialog(null, "You have cancelled going to work.", "Work", JOptionPane.INFORMATION_MESSAGE);
                 }

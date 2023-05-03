@@ -56,20 +56,46 @@ public class Inventory<T> {
     }
 
     public void addItem(T item, int quantity) {
+        boolean unique = true;
         for (T xT : items.keySet()) {
-            if (xT instanceof Makanan){
-                if (((Makanan) xT).getNama().equals(((Makanan) item).getNama())) {
+            if (item instanceof Makanan && xT instanceof Makanan) {
+                if (((Makanan) item).getNama().equals(((Makanan) xT).getNama())) {
                     int currentQuantity = items.get(xT);
-                    items.put(xT, currentQuantity + quantity);
-                    return;
-                }
-            } else if (xT instanceof NonMakanan){
-                if (((NonMakanan) xT).getClass().getSimpleName().equals(((NonMakanan) item).getClass().getSimpleName())) {
-                    int currentQuantity = items.get(xT);
+                    items.remove(xT);
                     items.put(xT, currentQuantity + quantity);
                     return;
                 }
             }
+            else if (item instanceof NonMakanan && xT instanceof NonMakanan) {
+                if (((NonMakanan) item).getClass().getSimpleName().equals(((NonMakanan) xT).getClass().getSimpleName())) {
+                    if (item instanceof Kasur){
+                        if (((Kasur) item).getNama().equals(((Kasur) xT).getNama())){
+                            int currentQuantity = items.get(xT);
+                            items.remove(xT);
+                            items.put(xT, currentQuantity + quantity);
+                            return;
+                        }
+                    }
+                    else if (item instanceof Kompor){
+                        if (((Kompor) item).getNama().equals(((Kompor) xT).getNama())){
+                            int currentQuantity = items.get(xT);
+                            items.remove(xT);
+                            items.put(xT, currentQuantity + quantity);
+                            return;
+                        }
+                    }
+                    
+                    else{
+                        int currentQuantity = items.get(xT);
+                        items.remove(xT);
+                        items.put(xT, currentQuantity + quantity);
+                        return;
+                    }
+                }
+            }
+        }
+        if (unique) {
+            items.put(item, quantity);
         }
     }
 
@@ -102,48 +128,3 @@ public class Inventory<T> {
         return items;
     }
 }
-
-    //  public static void main(String[] args) {
-    //      Inventory<String> inventory = new Inventory<>();
-    //      Scanner scanner = new Scanner(System.in);
-
-    //      boolean exit = false;
-
-    //      while (!exit) {
-    //          System.out.println("1. Add Item");
-    //          System.out.println("2. Get Item");
-    //          System.out.println("3. Print Inventory");
-    //          System.out.println("4. Exit");
-    //          System.out.print("Choose option: ");
-    //          int choice = scanner.nextInt();
-    //          scanner.nextLine();  //consume the newline character
-
-    //          switch (choice) {
-    //              case 1:
-    //                  System.out.print("Enter item name: ");
-    //                  String item = scanner.nextLine();
-    //                  System.out.print("Enter quantity: ");
-    //                  int quantity = scanner.nextInt();
-    //                  inventory.addItem(item, quantity);
-    //                  break;
-    //              case 2:
-    //                  System.out.print("Enter item name: ");
-    //                  item = scanner.nextLine();
-    //                  System.out.print("Enter quantity: ");
-    //                  quantity = scanner.nextInt();
-    //                  inventory.getItem(item, quantity);
-    //                  break;
-    //              case 3:
-    //                  inventory.printInventory();
-    //                  break;
-    //              case 4:
-    //                  exit = true;
-    //                  break;
-    //              default:
-    //                  System.out.println("Invalid choice!");
-    //                  break;
-    //          }
-    //      }
-    //  scanner.close();
-    //  }
-//}

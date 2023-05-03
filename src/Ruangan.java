@@ -25,7 +25,7 @@ public class Ruangan {
         }
         if(this.nama =="Kamar Utama"){
             Kasur kasur = new Kasur(Kasur.tipeKasur.Kecil);
-            Kompor kompor = new Kompor(Kompor.tipeKompor.Gas);
+            Kompor kompor = new Kompor(Kompor.tipeKompor.Sedang);
             MejaKursi mejaKursi = new MejaKursi();
             Toilet toilet = new Toilet();
             Jam jam =new Jam();
@@ -151,19 +151,23 @@ public class Ruangan {
         this.nama = nama;
     }
 
-    public NonMakanan mengambilBarang(String barang){
-        NonMakanan barangDiambil;
-        for(NonMakanan a : listBarang){
-            if(a.get)
+    public void mengambilBarang(String barang,Sim sim){
+        NonMakanan barangDiambil = null;
+        for(NonMakanan item : listBarang){
+            if(item.getClass().getSimpleName().equals(barang)){
+                barangDiambil = item;
+            }
         }
-        for(int i=0; i < 6;i++){
-            for(int j=0; j < 6; j++){
-                if(matriksPemetaan[i][j] == barangDiambil){
-                    matriksPemetaan[i][j] = null;
+        if(barangDiambil != null){
+            for(int i = 0; i < 6; i++){
+                for(int j = 0; j < 6; j++){
+                    if(matriksPemetaan[i][j] == barangDiambil){
+                        matriksPemetaan[i][j] = null;
+                    }
                 }
             }
         }
-        return barangDiambil;
+        sim.getInventory().addItem(barangDiambil, 1);
     }
 
     public boolean memasangBarang (NonMakanan barang,int x,int y,Sim sim){
@@ -342,6 +346,7 @@ public class Ruangan {
         }
         return objek;
     }
+    /*
     public static void main(String[] args){
      Sim sim = new Sim("Ayam", "Goreng");
      Kasur kasurTes = new Kasur(Kasur.tipeKasur.Kecil);
@@ -423,5 +428,5 @@ public class Ruangan {
     }
     scan.close();
         
- }  
+ }  */
 }     

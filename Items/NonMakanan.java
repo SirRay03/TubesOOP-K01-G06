@@ -6,14 +6,16 @@ public abstract class NonMakanan implements Item, Actionable{
     protected int panjang; 
     protected int lebar; 
     protected int harga;
-    protected long waktuPengantaran;
-    private long waktuMulai;
+    protected int waktuPengantaran;
+    protected int hariMulai;
+    private int waktuMulai;
     public NonMakanan(int harga,int panjang, int lebar){
         this.harga = harga;
         this.lebar = lebar;
         this.panjang = panjang;
         this.waktuPengantaran =0;
         this.waktuMulai = 0;
+        this.hariMulai=0;
     }
     public int getPanjang(){
         return panjang;
@@ -24,7 +26,7 @@ public abstract class NonMakanan implements Item, Actionable{
     public int getHarga(){
         return harga;
     }
-    public long getWaktuPengantaran(){
+    public int getWaktuPengantaran(){
         return waktuPengantaran;
     }
     public void setPanjang(int panjang){
@@ -36,9 +38,12 @@ public abstract class NonMakanan implements Item, Actionable{
     public void setHarga(int harga){
         this.harga = harga;
     }
-    public long getWaktuMulai(){
+    public int getWaktuMulai(){
         return waktuMulai;
-    };
+    }
+    public int getHariMulai(){
+        return hariMulai;
+    }
     public void beliBarang(Sim sim){
         // Random random = new Random();
         // waktuPengantaran = (random.nextInt(4000) + 1000)*30;
@@ -56,14 +61,18 @@ public abstract class NonMakanan implements Item, Actionable{
         //     }
         //     sim.getInventory().addItem(this, 1);
         // }).start();
+        World world = World.getInstance();
         Random random = new Random();
         waktuPengantaran = (random.nextInt(4) + 1)*30;
         //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
-        long finalTime = World.getInstance().getTime() + waktuPengantaran;
+        int finalTime = World.getInstance().getTime() + waktuPengantaran*1000;
         System.out.println(finalTime);
         System.out.println(World.getInstance().getTime());
         Runnable r = () -> {
-            while (World.getInstance().getTime() <  finalTime){
+            sim.addToListOnDelivery(this); 
+            waktuMulai = world.getTime();
+            hariMulai = world.getDay();
+            while (World.getInstance().getTime() <=  finalTime){
                     try {
                         //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
                         Thread.sleep(1000);
@@ -72,45 +81,16 @@ public abstract class NonMakanan implements Item, Actionable{
                         System.out.println("Aksi terganggu!");
                     }
             }
-            sim.addToListOnDelivery(this); 
-            waktuMulai = System.currentTimeMillis();
             sim.deleteFromListOnDelivery(this);
             waktuMulai = 0;
+            hariMulai = 0;
             sim.getInventory().addItem(this, 1);
+            System.out.println(finalTime);
+            System.out.println(World.getInstance().getTime());
+            sim.getInventory().printInventory();
             };
         Thread thread = new Thread(r);
         thread.start();
-        // while (thread.isAlive()) {
-        //     try {
-        //         Thread.sleep(1000); // memberikan waktu tunggu 1 detik
-        //     } catch (InterruptedException e) {
-        //         System.out.println("Aksi terganggu!");
-        //     }
-        // }
     }
     public abstract void printListAction();
 }
-
-/**
- * MAIN BELI BARANG
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Kategori barang apa yang ingin dibeli?");
-        System.out.println("1. Non-Makanan");
-        System.out.println("2. Bahan Makanan");
-        int jenis = scanner.nextInt();
-        if (jenis == 1){
-            System.out.println("1. Kasur Single\n2. Kasur Queen Size\n3. Kasur King Size\n4. Toilet\n 5. Kompor Gas\n6. Kompor Listrik\n7. Meja dan Kursi\n8. Jam");
-            int jenisNonMakanan = scanner.nextInt();
-            if (jenisNonMakanan == 1 && uang >= (insert harga kasur single)){
-                Kasur singleBed = new Kasur(Kasur.tipeKasur.Single);
-                singleBed.beliBarang();
-            }
-        }else if (jenis == 2){
-            System.out.println("1. Nasi\n2. Kentang\n3. Ayam\n4. Sapi\n 5. Wortel\n6. Bayam\n7. Kacang\n8. Susu");            
-            int jenisNonMakanan = scanner.nextInt();
-            if (jenisNonMakanan ==  1 && uang >= (insert harga nasi)){
-                BahanMakanan nasi = new BahanMakanan("nasi", 5, 5);
-                nasi.beliBarang();
-            }
-        }
- */
