@@ -122,10 +122,14 @@ public class Sim {
         return durasiOlahraga;
     }
 
+    public Ruangan getcurrentRuangan() {
+        return currRuangan;
+    }
+
     // === SETTER ===
 
     public void setUang(int uang) {
-            this.uang = uang;
+            this.uang += uang;
     }
 
     public void setStatus(String status) {
@@ -152,8 +156,8 @@ public class Sim {
         this.currRuangan = ruangan;
     }
 
-    public Ruangan getcurrentRuangan() {
-        return currRuangan;
+    public void setDurasiKerja(int durasi){
+        this.durasiKerja += durasi;
     }
 
     // === METHOD ===
@@ -532,5 +536,60 @@ public class Sim {
         if(secKerja > 240.0){
             setUang(pekerjaan.getGaji());
         }
+    }
+
+     public void GantiPekerjaan(Pekerjaan pekerjaan){
+        //input pekerjaan baru
+        Scanner scan = new Scanner(System.in);
+        System.out.println("masukkan pekerjaan baru:");
+        String pekerjaanBaru = scan.nextLine();
+        //cek apakah pekerjaan baru ada di list pekerjaan
+        if (pekerjaanBaru != "Dokter" || pekerjaanBaru != "Badut Sulap" || pekerjaanBaru != "Programmer" || pekerjaanBaru != "Polisi" || pekerjaanBaru != "Koki"){
+            //input ulang
+        }
+
+        boolean valid = false;
+        //cek 12 jam kerja apa belom
+        if(getdurasiKerja() > 720){
+            valid = true;
+        }
+        if(valid = true){
+            //cek uang cukup apa belom
+            if(pekerjaanBaru == "Dokter"){
+                setUang(-25);
+                pekerjaan.setPekerjaan("Dokter");
+                setDurasiKerja(-getdurasiKerja());
+                System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+            }
+            else if(pekerjaanBaru == "Programmer"){
+                setUang(-23);
+                pekerjaan.setPekerjaan("Programmer");
+                setDurasiKerja(-getdurasiKerja());
+                System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+            }
+            else if(pekerjaanBaru == "Badut Sulap"){
+                setUang(-8);
+                pekerjaan.setPekerjaan("Badut Sulap");
+                setDurasiKerja(-getdurasiKerja());
+                System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+            }
+            else if(pekerjaanBaru == "Polisi"){
+                setUang(-18);
+                pekerjaan.setPekerjaan("Polisi");
+                setDurasiKerja(-getdurasiKerja());
+                System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+            }
+            /* else if(pekerjaanBaru == "Koki"
+{
+                setUang(-10);
+                pekerjaan.setPekerjaan("Koki");
+                setDurasiKerja(-getdurasiKerja());
+                System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+            } */
+            else{
+                System.out.println("Gagal mengganti pekerjaan");
+            }
+        }
+            scan.close();
     }
 }

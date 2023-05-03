@@ -151,6 +151,21 @@ public class Ruangan {
         this.nama = nama;
     }
 
+    public NonMakanan mengambilBarang(String barang){
+        NonMakanan barangDiambil;
+        for(NonMakanan a : listBarang){
+            if(a.get)
+        }
+        for(int i=0; i < 6;i++){
+            for(int j=0; j < 6; j++){
+                if(matriksPemetaan[i][j] == barangDiambil){
+                    matriksPemetaan[i][j] = null;
+                }
+            }
+        }
+        return barangDiambil;
+    }
+
     public boolean memasangBarang (NonMakanan barang,int x,int y,Sim sim){
         //Cek apakah melewati ruangan atau tidak
         boolean isPlaced = false;
@@ -381,6 +396,23 @@ public class Ruangan {
              sukses = ruangan.memasangBarang(barang, 1, 1, sim);
          }
      }
+        if(sukses){
+            NonMakanan tes =ruangan.mengambilBarang("Kasur");
+            System.out.println(tes.getClass().getSimpleName());
+            for(int i =0;i<6;i++){
+                for(int j=0; j<6; j++){
+                    if(j==5){
+                        System.out.println(ruangan.getMatriksPemetaan()[i][j]);
+                    }
+                    else{
+                        System.out.println(ruangan.getMatriksPemetaan()[i][j] + " |");
+                    }
+                }
+            }
+
+        }
+     //mengambil barang
+    
     //Pindah barang
     // misal pakke inputan yg sebelumnya kasur 
     NonMakanan barang2 = ruangan.searchObjek("Kasur");
@@ -392,6 +424,4 @@ public class Ruangan {
     scan.close();
         
  }  
-}
-
-       
+}     

@@ -14,5 +14,10 @@ public class OverlayOlahraga{
 
         JOptionPane.showMessageDialog(null, "Your sim has finished exercising!", "Exercise", JOptionPane.INFORMATION_MESSAGE);
         frame.dispose();
+
+        ImageIcon icon = new ImageIcon("olahraga.png");
+        frame.middlePanel.add(new JLabel(icon));
+
+        frame.setVisible(true);
     }
 }

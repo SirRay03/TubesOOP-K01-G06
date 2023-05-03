@@ -111,9 +111,8 @@ public class LandingPage {
         MyButton berkunjung = new MyButton("Berkunjung");
         berkunjung.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "This feature is coming soon.", "Coming Soon", JOptionPane.INFORMATION_MESSAGE);
-                // frame.dispose();
-                // new BerkunjungGUI(sim);
+                frame.dispose();
+                new BerkunjungGUI(sim);
             }
         });
         frame.middlePanel.add(berkunjung);

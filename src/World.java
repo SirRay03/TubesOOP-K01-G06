@@ -8,6 +8,7 @@ public class World{
     private static int vertical = 64;
     private static Rumah[][] map = new Rumah[horizontal][vertical];
     private static Sim[] simList = new Sim[4096];
+    private static int simCount = 0;
     private static long time;
     private static int day;
     
@@ -43,62 +44,9 @@ public class World{
         return simList;
     }
 
-    // public <Map> float getDistance (Sim[][] rumah1, Sim[][] rumah2) {
-    //     int x1 = 0;
-    //     int y1 = 0;
-    //     for (int i = 0; i < horizontal; i++) {
-    //         for (int j = 0; j < vertical; j++) {
-    //             if (getMap() == rumah1) {
-    //                 x1 = i;
-    //                 y1 = j;
-    //             }
-    //         }
-    //     }
-    //     int x2 = 0;
-    //     int y2 = 0;
-    //     for (int i = 0; i < horizontal; i++) {
-    //         for (int j = 0; j < vertical; j++) {
-    //             if (getMap() == rumah2) {
-    //                 x2 = i;
-    //                 y2 = j;
-    //             }
-    //         }
-    //     }
-    //     return (float) Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2));
-    // }
-
-    // === SETTER ===
-    // public <Map> float getDistance (Sim[][] rumah1, Sim[][] rumah2) {
-    //     int x1 = 0;
-    //     int y1 = 0;
-    //     for (int i = 0; i < horizontal; i++) {
-    //         for (int j = 0; j < vertical; j++) {
-    //             if (getMap() == rumah1) {
-    //                 x1 = i;
-    //                 y1 = j;
-    //             }
-    //         }
-    //     }
-    //     int x2 = 0;
-    //     int y2 = 0;
-    //     for (int i = 0; i < horizontal; i++) {
-    //         for (int j = 0; j < vertical; j++) {
-    //             if (getMap() == rumah2) {
-    //                 x2 = i;
-    //                 y2 = j;
-    //             }
-    //         }
-    //     }
-    //     return (float) Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2));
-    // }
-
-
-    // public void setTime (Long time){
-    //     time -= time;
-    //     if(time >= 0){
-    //         time += 720000;
-    //     }
-    // }
+    public int getSimCount(){
+        return simCount;
+    }
 
     // === METHOD ===
 
@@ -128,23 +76,16 @@ public class World{
         }
         simList[i] = sim;
         sim.setRumah(rumah);
+        rumah.setHAddress(horizontalAddr);
+        rumah.setVAddress(verticalAddr);
         sim.setRuangan(rumah.searchRuangan("Kamar Utama"));
+        simCount++;
     }
 
     public String displayTime() {
         return day + " day, " + ((time%720000)/1000/60) + "minute1";
     }
 
-    // public void checkSimTime(int duration)
-    // {
-    //     for (Sim sim : simList)
-    //     {
-    //         sim.tambahWaktuBelumTidur(duration);
-    //         sim.resetWaktuTidurAfterNoSleep();
-    //         sim.tambahWaktuBelumBAB(duration);
-    //         sim.resetTimerBelumBab();
-    //     }
-    // }
     public void addDay() {
         day++;
     }

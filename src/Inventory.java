@@ -56,10 +56,21 @@ public class Inventory<T> {
     }
 
     public void addItem(T item, int quantity) {
-        if (items.containsKey(item)) {
-            quantity += items.get(item);
+        for (T xT : items.keySet()) {
+            if (xT instanceof Makanan){
+                if (((Makanan) xT).getNama().equals(((Makanan) item).getNama())) {
+                    int currentQuantity = items.get(xT);
+                    items.put(xT, currentQuantity + quantity);
+                    return;
+                }
+            } else if (xT instanceof NonMakanan){
+                if (((NonMakanan) xT).getClass().getSimpleName().equals(((NonMakanan) item).getClass().getSimpleName())) {
+                    int currentQuantity = items.get(xT);
+                    items.put(xT, currentQuantity + quantity);
+                    return;
+                }
+            }
         }
-        items.put(item, quantity);
     }
 
     public void removeItem(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive

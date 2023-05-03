@@ -17,6 +17,8 @@ public class Rumah{
         owner = null;
         waktuMulai = 0;
         waktuUpgrade = 1080000;
+        hAddress = 0;
+        vAddress = 0;
     }
 
     public String[] getRoomNames(){
