@@ -7,7 +7,6 @@ public class Sim {
     // deklarasi atribut
     private String firstName;
     private String lastName;
-    //private String pekerjaan;
     private Pekerjaan pekerjaan;
     private int uang;
     private Kesejahteraan kesejahteraan;
@@ -583,5 +582,4 @@ public class Sim {
         }
             scan.close();
 }
-        
     }

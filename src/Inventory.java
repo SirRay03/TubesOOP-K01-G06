@@ -136,11 +136,30 @@ public class Inventory<T> {
             System.out.println("Item berhasil dihapus dari inventory");
             ketemu = true;
             }
-            }
-            if (ketemu == false){
-                System.out.println("Item tidak ditemukan di inventory");
+        }
+        if (ketemu == false){
+            System.out.println("Item tidak ditemukan di inventory");
+        }
+    }
+
+    public void removeItemNonMakanan(String itemName, int quantity){
+        boolean ketemu = false;
+        for (T item : items.keySet()) {
+            if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)) {
+                int currentQuantity = items.get(item);
+                if (currentQuantity - quantity == 0) {
+                    items.remove(item);
+                } else {
+                    items.put(item, currentQuantity - quantity);
+                }
+            System.out.println("Item berhasil dihapus dari inventory");
+            ketemu = true;
             }
         }
+        if (ketemu == false){
+            System.out.println("Item tidak ditemukan di inventory");
+        }
+    }
 
     public void printInventory() {
         for (T item : items.keySet()) {

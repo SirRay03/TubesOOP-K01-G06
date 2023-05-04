@@ -37,6 +37,10 @@ public class Ruangan {
         }
     }
 
+    public void setMatriksPemetaan(NonMakanan[][] matriksPemetaan){
+        this.matriksPemetaan = matriksPemetaan;
+    }
+
     private void memasangBarangAwal(NonMakanan barang, int x, int y){
         if(barang.getPanjang() + x-1 <= 6 && barang.getPanjang() + x-1 >=0 && barang.getLebar()+y-1 <= 6 && barang.getLebar() + y-1 >=0){
             boolean cekMatriks;
@@ -229,37 +233,37 @@ public class Ruangan {
                 if(barang instanceof Jam){
                     Jam jam = (Jam) barang;
                     listBarang.add(jam);
-                    sim.getInventory().removeItem(jam.getClass().getSimpleName(),1); 
+                    sim.getInventory().removeItemNonMakanan(jam.getClass().getSimpleName(),1); 
                 }
                 else if(barang instanceof Kaca){
                     Kaca kaca = (Kaca) barang;
                     listBarang.add(kaca);
-                    sim.getInventory().removeItem(kaca.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItemNonMakanan(kaca.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kasur){
                     Kasur kasur = (Kasur) barang;
                     listBarang.add(kasur);
-                    sim.getInventory().removeItem(kasur.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItemNonMakanan(kasur.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kertas){
                     Kertas kertas = (Kertas) barang;
                     listBarang.add(kertas);
-                    sim.getInventory().removeItem(kertas.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItemNonMakanan(kertas.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof MejaKursi){
                     MejaKursi mejaKursi = (MejaKursi) barang;
                     listBarang.add(mejaKursi);
-                    sim.getInventory().removeItem(mejaKursi.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItemNonMakanan(mejaKursi.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Toilet){
                     Toilet toilet = (Toilet) barang;
                     listBarang.add(toilet);
-                    sim.getInventory().removeItem(toilet.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItemNonMakanan(toilet.getClass().getSimpleName(),1);
                 }
                 else if(barang instanceof Kompor){
                     Kompor kompor = (Kompor) barang;
                     listBarang.add(kompor);
-                    sim.getInventory().removeItem(kompor.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItemNonMakanan(kompor.getClass().getSimpleName(),1);
                 }
 
                 while(barang.getPanjang()<0 || barang.getLebar()<0){

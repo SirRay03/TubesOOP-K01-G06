@@ -79,8 +79,16 @@ public class ViewInventory {
         try {
             for (Item item: sim.getInventory().getMap().keySet()){
                 if(item instanceof NonMakanan){
-                    if (item instanceof Kasur || item instanceof Kompor){
+                    if (item instanceof Kasur){
                         tombol = new JButton(((Kasur) item).getNama() + " x" + sim.getInventory().getMap().get(item));
+                        tombol.setPreferredSize(new Dimension(150, 100));
+                        tombol.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+                        tombol.setFocusPainted(false);
+                        tombol.setBackground(Color.white);
+                        nonMakanan.add(tombol);
+                    }
+                    else if (item instanceof Kompor){
+                        tombol = new JButton(((Kompor) item).getNama() + " x" + sim.getInventory().getMap().get(item));
                         tombol.setPreferredSize(new Dimension(150, 100));
                         tombol.setFont(new Font("Times New Roman", Font.PLAIN, 20));
                         tombol.setFocusPainted(false);
