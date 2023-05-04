@@ -17,6 +17,9 @@ public abstract class NonMakanan implements Item, Actionable{
         this.waktuMulai = 0;
         this.hariMulai=0;
     }
+    public int getKekenyangan(){
+        return 0;
+    }
     public int getPanjang(){
         return panjang;
     }
@@ -64,7 +67,7 @@ public abstract class NonMakanan implements Item, Actionable{
         World world = World.getInstance();
         Random random = new Random();
         waktuPengantaran = (random.nextInt(4) + 1)*30;
-        //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
         int finalTime = World.getInstance().getTime() + waktuPengantaran*1000;
         System.out.println(finalTime);
         System.out.println(World.getInstance().getTime());

@@ -14,9 +14,9 @@ public class Kasur extends NonMakanan {
     private int duration;
 
     public enum tipeKasur{
-        Kecil("Single",50, 4, 1),
-        Sedang("Queen",100, 4, 2),
-        Besar("King",150, 5, 2);
+        Kecil("Kasur Single",50, 4, 1),
+        Sedang("Kasur Queen",100, 4, 2),
+        Besar("Kasur King",150, 5, 2);
 
         private String nama;
         private int panjang; //buat select kata barengan pake ctrl+d
@@ -78,10 +78,7 @@ public class Kasur extends NonMakanan {
             public void run() {
                 try {
                     Thread.sleep(3000); //duration * 1000
-                    sim.tambahWaktuBelumBAB(duration*1000);
-                    World.getInstance().addWaktu(duration*1000);
-                    // World.getInstance().checkSimTime(duration);
-                    sim.resetTimerBelumBab();
+
                 } catch (InterruptedException e) {
                     System.out.println("Proses tidur terganggu");
                 }
@@ -94,6 +91,9 @@ public class Kasur extends NonMakanan {
             sim.getKesejahteraan().setHealth(30 * (duration / 240));
             sim.getKesejahteraan().setHealth(30 * (duration / 240));
             System.out.println("Tidur selesai!");
+            World.getInstance().addWaktu(duration*1000);
+            sim.tambahWaktuBelumBAB(duration*1000);
+            sim.resetTimerBelumBab();
             frame.dispose();
         }catch(InterruptedException e){
             System.out.println("Proses tidur terganggu");

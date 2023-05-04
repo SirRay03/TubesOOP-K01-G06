@@ -10,43 +10,67 @@ public class Inventory<T> {
         items = new HashMap<>();
     }
 
-    public T getItemBahanMakanan(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
+    public T getItem(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
         for (T item : items.keySet()) {
-            if (((Makanan) item).getNama().equals(itemName)) {
-                int currentQuantity = items.get(item);
-                if (currentQuantity - quantity == 0) {
-                    items.remove(item);
-                } else {
-                    items.put(item, currentQuantity - quantity);
+            if (item instanceof Makanan){
+                if (((Makanan) item).getNama().equals(itemName)) {
+                    int currentQuantity = items.get(item);
+                    if (currentQuantity - quantity == 0) {
+                        items.remove(item);
+                    } else {
+                        items.put(item, currentQuantity - quantity);
+                    }
+                    System.out.println("Item berhasil dihapus dari inventory");
+                    return item;
                 }
-                System.out.println("Item berhasil dihapus dari inventory");
-            return item;
             }
+            else if (item instanceof NonMakanan){
+                if (((NonMakanan) item).getNama().equals(itemName)) {
+                    int currentQuantity = items.get(item);
+                    if (currentQuantity - quantity == 0) {
+                        items.remove(item);
+                    } else {
+                        items.put(item, currentQuantity - quantity);
+                    }
+                    System.out.println("Item berhasil dihapus dari inventory");
+                    return item;
+                }
+            }
+            // if (((Makanan) item).getNama().equals(itemName)) {
+            //     int currentQuantity = items.get(item);
+            //     if (currentQuantity - quantity == 0) {
+            //         items.remove(item);
+            //     } else {
+            //         items.put(item, currentQuantity - quantity);
+            //     }
+            //     System.out.println("Item berhasil dihapus dari inventory");
+            // return item;
+            // }
         }
         System.out.println("Item berhasil tidak dihapus dari inventory");
         return null;
     }
 
-    public T getItemNonMakanan(String itemName, int quantity){
-        for (T item : items.keySet()) {
-            if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)) {
-                int currentQuantity = items.get(item);
-                if (currentQuantity - quantity == 0) {
-                    items.remove(item);
-                } else {
-                    items.put(item, currentQuantity - quantity);
-                }
-            System.out.println("Item berhasil dihapus dari inventory");
-            return item;
-            }
-        }
-        System.out.println("Item berhasil tidak dihapus dari inventory");
-        return null;
-    }
+    // public T getItemNonMakanan(String itemName, int quantity){
+    //     for (T item : items.keySet()) {
+    //         if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)) {
+    //             int currentQuantity = items.get(item);
+    //             if (currentQuantity - quantity == 0) {
+    //                 items.remove(item);
+    //             } else {
+    //                 items.put(item, currentQuantity - quantity);
+    //             }
+    //         System.out.println("Item berhasil dihapus dari inventory");
+    //         return item;
+    //         }
+    //     }
+    //     System.out.println("Item berhasil tidak dihapus dari inventory");
+    //     return null;
+    // }
 
     public boolean checkerItemBahanMakanan(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
         for (T item : items.keySet()) {
-            if (((Makanan) item).getNama().equals(itemName)) {
+            if (((Item) item).getNama().equals(itemName)) {
                 System.out.println("Item ada");
             return false;
             }

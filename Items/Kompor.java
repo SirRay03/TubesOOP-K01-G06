@@ -50,8 +50,8 @@ public class Kompor extends NonMakanan {
                 }else{
                     builder.setNama(namaMasakan);
                     builder.setKekenyangan(16);
-                    builder.setNasi((BahanMakanan) sim.getInventory().getItemBahanMakanan("Nasi", 1)); //butuh getter nasi dari inventory
-                    builder.setAyam((BahanMakanan) sim.getInventory().getItemBahanMakanan("Ayam", 1)); //butuh getter ayam dari inventory
+                    builder.setNasi((BahanMakanan) sim.getInventory().getItem("Nasi", 1)); //butuh getter nasi dari inventory
+                    builder.setAyam((BahanMakanan) sim.getInventory().getItem("Ayam", 1)); //butuh getter ayam dari inventory
                     cukup = true;
                 }
                 break;
@@ -61,10 +61,10 @@ public class Kompor extends NonMakanan {
             }else{
                 builder.setNama(namaMasakan);
                 builder.setKekenyangan(30);
-                builder.setNasi((BahanMakanan) sim.getInventory().getItemBahanMakanan("Nasi", 1)); //butuh getter nasi dari inventory
-                builder.setKentang((BahanMakanan) sim.getInventory().getItemBahanMakanan("Kentang", 1)); //butuh getter dari inventory
-                builder.setWortel((BahanMakanan) sim.getInventory().getItemBahanMakanan("Wortel", 1)); //butuh getter dari inventory
-                builder.setSapi((BahanMakanan) sim.getInventory().getItemBahanMakanan("Sapi", 1));//butuh getter dari inventory
+                builder.setNasi((BahanMakanan) sim.getInventory().getItem("Nasi", 1)); //butuh getter nasi dari inventory
+                builder.setKentang((BahanMakanan) sim.getInventory().getItem("Kentang", 1)); //butuh getter dari inventory
+                builder.setWortel((BahanMakanan) sim.getInventory().getItem("Wortel", 1)); //butuh getter dari inventory
+                builder.setSapi((BahanMakanan) sim.getInventory().getItem("Sapi", 1));//butuh getter dari inventory
                 cukup = true;
             }
             break;
@@ -74,20 +74,19 @@ public class Kompor extends NonMakanan {
             }else{
                 builder.setNama(namaMasakan);
                 builder.setKekenyangan(5);
-                builder.setSusu((BahanMakanan) sim.getInventory().getItemBahanMakanan("Susu", 1)); //butuh getter nasi dari inventory
-                builder.setKacang((BahanMakanan) sim.getInventory().getItemBahanMakanan("Kacang", 1)); //butuh getter dari inventory
+                builder.setSusu((BahanMakanan) sim.getInventory().getItem("Susu", 1)); //butuh getter nasi dari inventory
+                builder.setKacang((BahanMakanan) sim.getInventory().getItem("Kacang", 1)); //butuh getter dari inventory
                 cukup = true;
             }
                 break;
             case "Tumis Sayur":
-            System.out.println("ketemu tumis sayur");
             if (sim.getInventory().checkerItemBahanMakanan("Wortel", 1) || sim.getInventory().checkerItemBahanMakanan("Bayam", 1)){
                 JOptionPane.showMessageDialog(null, "Bahan makanan tidak cukup", "Gagal", JOptionPane.ERROR_MESSAGE);
             }else{
                 builder.setNama(namaMasakan);
                 builder.setKekenyangan(5);
-                builder.setWortel((BahanMakanan) sim.getInventory().getItemBahanMakanan("Wortel", 1)); //butuh getter dari inventory
-                builder.setBayam((BahanMakanan) sim.getInventory().getItemBahanMakanan("Bayam", 1)); //butuh getter dari inventory
+                builder.setWortel((BahanMakanan) sim.getInventory().getItem("Wortel", 1)); //butuh getter dari inventory
+                builder.setBayam((BahanMakanan) sim.getInventory().getItem("Bayam", 1)); //butuh getter dari inventory
                 cukup = true;
             }
                 break;
@@ -97,8 +96,8 @@ public class Kompor extends NonMakanan {
             }else{
                 builder.setNama(namaMasakan);
                 builder.setKekenyangan(22);
-                builder.setKentang((BahanMakanan) sim.getInventory().getItemBahanMakanan("Kentang", 1)); //butuh getter dari inventory
-                builder.setSapi((BahanMakanan) sim.getInventory().getItemBahanMakanan("Sapi", 1));//butuh getter dari inventory
+                builder.setKentang((BahanMakanan) sim.getInventory().getItem("Kentang", 1)); //butuh getter dari inventory
+                builder.setSapi((BahanMakanan) sim.getInventory().getItem("Sapi", 1));//butuh getter dari inventory
                 cukup = true;
             }
                 break;
@@ -121,7 +120,6 @@ public class Kompor extends NonMakanan {
                 t.join();
                 sim.getKesejahteraan().setMood(10); //namabah mood 10
                 World.getInstance().addWaktu(durasiMasak);
-                // World.getInstance().checkSimTime(durasiMasak);
                 sim.tambahWaktuBelumTidur(durasiMasak);
                 sim.tambahWaktuBelumBAB(durasiMasak); 
                 sim.resetTimerBelumBab();

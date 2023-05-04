@@ -17,7 +17,9 @@ public abstract class Makanan implements Item{
         this.waktuMulai = 0;
         this.hariMulai = 0;
     }
-
+    public int getKekenyangan(){
+        return kekenyangan;
+    }
     public int getWaktuPengantaran(){
         return waktuPengantaran;
     }

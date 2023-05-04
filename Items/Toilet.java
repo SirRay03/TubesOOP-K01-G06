@@ -8,9 +8,9 @@ public class Toilet extends NonMakanan {
         super(50, 1, 1);
     }
 
-    // public int getdurasiBuangAir(){
-    //     return durasiBuangAir;
-    // }
+    public String getNama(){
+        return "Toilet";
+    }
 
     public void printListAction(){
         System.out.println("1. Mandi");

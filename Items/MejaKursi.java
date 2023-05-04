@@ -13,7 +13,9 @@ public class MejaKursi extends NonMakanan {
     public MejaKursi(){
         super(50, 3, 3); //harga, panjang, lebar sudah ditetapkan
     }
-
+    public String getNama(){
+        return "Meja Kursi";
+    }
     public int getdurasiMakan(){
         return durasiMakan;
     }
@@ -43,7 +45,7 @@ public class MejaKursi extends NonMakanan {
             try{
                     sim.setStatus("Sim sedang makan");
                     System.out.println("Sim sedang makan...");
-                    Thread.sleep(durasiMakan*1000); //30 detik
+                    Thread.sleep(3000); //durasiMakan*1000
                 }
                 catch(InterruptedException e){
                     System.out.println("Proses makan terganggu");
@@ -52,13 +54,11 @@ public class MejaKursi extends NonMakanan {
             t.start();
             try{
                 t.join();
-                sim.getKesejahteraan().setMood(1*2); //namabah mood waktu*2
-                sim.getKesejahteraan().setHunger(1); //ngurang kenyang waktu
-                sim.getInventory().removeItem(namaMasakan, 1);
-                World.getInstance().addWaktu(durasiMakan);
+                sim.getKesejahteraan().setHunger(sim.getInventory().getItem(namaMasakan, 1).getKekenyangan());
+                World.getInstance().addWaktu(durasiMakan*1000);
                 // World.getInstance().checkSimTime(durasiMakan);
-                sim.tambahWaktuBelumTidur(durasiMakan);
-                sim.tambahWaktuBelumBAB(durasiMakan);
+                sim.tambahWaktuBelumTidur(durasiMakan*1000);
+                sim.tambahWaktuBelumBAB(durasiMakan*1000);
                 sim.resetTimerBelumBab();
                 sim.resetWaktuTidurAfterNoSleep(); 
                 System.out.println("Proses makan selesai");
@@ -84,7 +84,7 @@ public class MejaKursi extends NonMakanan {
         try{
             t.join();
             sim.getKesejahteraan().setMood(waktu*2); //namabah mood waktu*2
-            sim.getKesejahteraan().setHunger(waktu); //ngurang kenyang waktu
+            sim.getKesejahteraan().setHunger(-waktu); //ngurang kenyang waktu
             System.out.println("Proses main selesai");
             World.getInstance().addWaktu(waktu*1000);
             // World.getInstance().checkSimTime(waktu);

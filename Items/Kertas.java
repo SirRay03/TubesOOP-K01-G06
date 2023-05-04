@@ -7,6 +7,9 @@ public class Kertas extends NonMakanan {
     public Kertas(){
         super(1, 1, 1);
     }
+    public String getNama(){
+        return "Kertas";
+    }
     public void printListAction(){
         System.out.println("1. Menulis");
     };

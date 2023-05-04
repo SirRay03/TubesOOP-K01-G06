@@ -341,7 +341,7 @@ public class Sim {
         Thread t = new Thread(()->{
         try{
                 System.out.println("Sim sedang olahraga...");
-                Thread.sleep(1000*waktuOlahraga); //1000*durasiOlahraga
+                Thread.sleep(3000); //1000*durasiOlahraga
             }
             catch(InterruptedException e){
                 System.out.println("Proses olahraga terganggu");
@@ -457,7 +457,7 @@ public class Sim {
                 System.out.println("Sim sedang bekerja...");
                 Thread t = new Thread (()->{
                 try{
-                    Thread.sleep(120000); // 120 detik (1 siklus kerja)
+                    Thread.sleep(3000); // 120 detik (1 siklus kerja)
                 } catch(InterruptedException e){
                     System.out.println("Proses bekerja terganggu");
                 }
@@ -488,7 +488,7 @@ public class Sim {
                 System.out.println("Sim sedang bekerja");
                 Thread t = new Thread (()->{
                 try{
-                    Thread.sleep(240000); // 240 detik (1 siklus kerja)
+                    Thread.sleep(3000); // 240 detik (1 siklus kerja)
                     //setUang(getGaji());
                     getKesejahteraan().setMood(-80);
                     getKesejahteraan().setHunger(-80);

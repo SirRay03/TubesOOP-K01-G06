@@ -34,8 +34,8 @@ public class BuyItem {
             items.put("Jam", 10);
             items.put("Kaca", 75);
             items.put("Kasur Single", 50);
-            items.put("Kasur Queen Size", 100);
-            items.put("Kasur King Size", 150);
+            items.put("Kasur Queen", 100);
+            items.put("Kasur King", 150);
             items.put("Kertas", 5);
             items.put("Kompor Gas", 100);
             items.put("Kompor Listrik", 200);
@@ -144,15 +144,15 @@ public class BuyItem {
                         Kaca kaca = new Kaca();
                         kaca.beliBarang(sim);
                         break;
-                    case "Kasur King Size":
+                    case "Kasur King":
                         Kasur kasurKing = new Kasur(Kasur.tipeKasur.Besar);
                         kasurKing.beliBarang(sim);
                         break;
-                    case "Kasur Queen Size":
+                    case "Kasur Queen":
                         Kasur kasurQueen = new Kasur(Kasur.tipeKasur.Sedang);
                         kasurQueen.beliBarang(sim);
                         break;
-                    case "Kasur Single Size":
+                    case "Kasur Single":
                         Kasur kasurSingle = new Kasur(Kasur.tipeKasur.Kecil);
                         kasurSingle.beliBarang(sim);
                         break;

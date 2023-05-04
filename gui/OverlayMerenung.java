@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 
 import src.Sim;
+import src.World;
+
 
 public class OverlayMerenung{
     MyOverlay frame;
@@ -37,6 +39,14 @@ public class OverlayMerenung{
             jawaban[9] = "Jangan terlalu dipikirkan";
             jawaban[10] = "Merenunglah kembali";
             JOptionPane.showMessageDialog(null,jawaban[pilihanJawaban], "Merenung", JOptionPane.INFORMATION_MESSAGE);
+            sim.getKesejahteraan().setMood(3);
+            sim.getKesejahteraan().setHunger(-2);
+            World.getInstance().addWaktu(1000);
+            // World.getInstance().checkSimTime(durasiOlahraga);
+            sim.tambahWaktuBelumTidur(1000);
+            sim.tambahWaktuBelumBAB(1000); 
+            sim.resetTimerBelumBab();
+            sim.resetWaktuTidurAfterNoSleep();
             frame.dispose();
         });
         frame.interactionBar.add(button);

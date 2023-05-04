@@ -97,13 +97,9 @@ public class World{
     public void addWaktu(int timeinput) {
         if (time + timeinput >= 720000) 
         {
-            time = timeinput + time - 720000;
             addDay();
         }
-        else
-        {
             time += timeinput;
-        }
     }
         // if (time + timeinput >= 720000) 
         // {

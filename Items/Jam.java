@@ -6,6 +6,9 @@ public class Jam extends NonMakanan {
     public Jam(){
         super(10, 1, 1);
     }
+    public String getNama(){
+        return "Jam";
+    }
     public void printListAction(){
         System.out.println("1. Melihat Jam");
     };
