@@ -33,7 +33,7 @@ public abstract class Makanan implements Item{
         World world = World.getInstance();
         Random random = new Random();
         waktuPengantaran = (random.nextInt(4) + 1)*30;
-        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran);
         int finalTime = World.getInstance().getTime() + waktuPengantaran*1000;
         System.out.println(finalTime);
         System.out.println(World.getInstance().getTime());
@@ -60,20 +60,6 @@ public abstract class Makanan implements Item{
             };
         Thread thread = new Thread(r);
         thread.start();
-        // new Thread(() -> {
-        //     try {
-        //         sim.addToListOnDelivery(this); 
-        //         waktuMulai = System.currentTimeMillis();
-        //         Thread.sleep(3000); 
-        //         //Thread.sleep(waktuPengantaran * 1000); 
-        //         sim.deleteFromListOnDelivery(this);
-        //         waktuMulai = 0;
-        //         sim.getInventory().addItem(this, 1);
-        //     } catch (InterruptedException e) {
-        //         System.out.println("Aksi terganggu!");
-        //     }
-        // }).start();
-
     }
     public String getNama(){
         return this.nama;

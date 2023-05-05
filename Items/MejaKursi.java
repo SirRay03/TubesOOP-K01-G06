@@ -54,13 +54,15 @@ public class MejaKursi extends NonMakanan {
             t.start();
             try{
                 t.join();
-                sim.getKesejahteraan().setHunger(sim.getInventory().getItem(namaMasakan, 1).getKekenyangan());
+                sim.getKesejahteraan().setHunger(((Makanan) sim.getInventory().getItem(namaMasakan, 1)).getKekenyangan());
                 World.getInstance().addWaktu(durasiMakan*1000);
                 // World.getInstance().checkSimTime(durasiMakan);
                 sim.tambahWaktuBelumTidur(durasiMakan*1000);
                 sim.tambahWaktuBelumBAB(durasiMakan*1000);
+                sim.setTimerGantiKerja(durasiMakan*1000);
                 sim.resetTimerBelumBab();
-                sim.resetWaktuTidurAfterNoSleep(); 
+                sim.resetWaktuTidurAfterNoSleep();
+                sim.tambahDurasiBerkunjung(durasiMakan);
                 System.out.println("Proses makan selesai");
             }catch(InterruptedException e){
                 System.out.println("Proses makan terganggu");
@@ -90,8 +92,10 @@ public class MejaKursi extends NonMakanan {
             // World.getInstance().checkSimTime(waktu);
             sim.tambahWaktuBelumTidur(waktu*1000);
             sim.tambahWaktuBelumBAB(waktu*1000); 
+            sim.setTimerGantiKerja(waktu*1000);
             sim.resetTimerBelumBab();
             sim.resetWaktuTidurAfterNoSleep();
+            sim.tambahDurasiBerkunjung(waktu*1000);
         }catch(InterruptedException e){
             System.out.println("Proses main terganggu");
         }
@@ -113,6 +117,12 @@ public class MejaKursi extends NonMakanan {
             t.join();
             sim.getKesejahteraan().setMood(10*3); //namabah mood 10*3
             sim.getKesejahteraan().setHunger(10); //ngurang kenyang sebanyak waktu
+            sim.tambahWaktuBelumTidur(10000);
+            sim.tambahWaktuBelumBAB(10000); 
+            sim.setTimerGantiKerja(10000);
+            sim.resetTimerBelumBab();
+            sim.resetWaktuTidurAfterNoSleep();
+            sim.tambahDurasiBerkunjung(10000);
             System.out.println("Proses berdoa selesai");
         }catch(InterruptedException e){
             System.out.println("Proses berdoa terganggu");
@@ -134,6 +144,12 @@ public class MejaKursi extends NonMakanan {
             t.join();
             sim.getKesejahteraan().setMood(1); //namabah mood 1
             sim.getKesejahteraan().setHunger(-1); //ngurang kenyang 2
+            sim.tambahWaktuBelumTidur(1000);
+            sim.tambahWaktuBelumBAB(1000); 
+            sim.setTimerGantiKerja(1000);
+            sim.resetTimerBelumBab();
+            sim.resetWaktuTidurAfterNoSleep();
+            sim.tambahDurasiBerkunjung(1000);
             System.out.println("Proses minum selesai");
         }catch(InterruptedException e){
             System.out.println("Proses minum terganggu");

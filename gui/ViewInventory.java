@@ -59,7 +59,6 @@ public class ViewInventory {
 
     private void LoadMakananInventory(Sim sim, JPanel makanan) throws IOError {
         try{
-            
             for (Item item: sim.getInventory().getMap().keySet()){
                 if(item instanceof Makanan){
                     JButton tombol;
@@ -70,25 +69,27 @@ public class ViewInventory {
                     makanan.add(tombol);
                 }
             }
-        } catch( Exception Ex) {
+        } catch(Exception Ex) {
             System.out.println("Error, inventory Makanan kosong");
         }
+    }
+
+    private Ruangan createBuffer(Sim sim){
+        Ruangan buffer = new Ruangan("buffer");
+        for (int i=0; i<6; i++){
+            for (int j=0; j<6; j++){
+                buffer.getMatriksPemetaan()[i][j] = sim.getRuangan().getMatriksPemetaan()[i][j];
+            }
+        }
+        return buffer;
     }
 
     private void LoadInventory(Sim sim, JPanel nonMakanan) throws IOError {
         try {
             for (Item item: sim.getInventory().getMap().keySet()){
                 if(item instanceof NonMakanan){
-                    if (item instanceof Kasur){
-                        tombol = new JButton(((Kasur) item).getNama() + " x" + sim.getInventory().getMap().get(item));
-                        tombol.setPreferredSize(new Dimension(150, 100));
-                        tombol.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-                        tombol.setFocusPainted(false);
-                        tombol.setBackground(Color.white);
-                        nonMakanan.add(tombol);
-                    }
-                    else if (item instanceof Kompor){
-                        tombol = new JButton(((Kompor) item).getNama() + " x" + sim.getInventory().getMap().get(item));
+                    if (item instanceof Kasur || item instanceof Kompor){
+                        tombol = new JButton(((NonMakanan)item).getNama() + " x" + sim.getInventory().getMap().get(item));
                         tombol.setPreferredSize(new Dimension(150, 100));
                         tombol.setFont(new Font("Times New Roman", Font.PLAIN, 20));
                         tombol.setFocusPainted(false);
@@ -103,10 +104,12 @@ public class ViewInventory {
                         tombol.setBackground(Color.white);
                         nonMakanan.add(tombol);
                     }
+                    tombol.addActionListener(e -> {
+                        Ruangan buffer = createBuffer(sim);
+                        new PasangBarang(sim, (NonMakanan) item, buffer);
+                        frame.dispose();
+                    });
                 }
-                tombol.addActionListener(e -> {
-                    new PasangBarang(sim,(NonMakanan) item);
-                });
             }
         } catch (Exception e) {
             System.out.println("Error, inventory Non Makanan kosong");

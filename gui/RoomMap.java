@@ -30,18 +30,32 @@ public class RoomMap {
                             switch (selectedAction){
                                 case "Main":
                                     try {
+                                        //try{
                                             int number = Integer.parseInt((String) JOptionPane.showInputDialog("Lama waktu main?: "));
                                             ((MejaKursi) any).main(number, sim);
-                                        } 
+                                            //sim.getKesejahteraan().isAlive();
+                                        //} catch (DeadException dead){
+                                            //JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                                            //new MainMenu();
+                                            //World.getInstance().removeSim(sim);
+                                        //}                                           
+                                    } 
                                     catch (NumberFormatException ex) {
                                             JOptionPane.showMessageDialog(null, "Input harus berupa angka!", "Gagal", JOptionPane.ERROR_MESSAGE);
-                                        }
-                                        break;
+                                    }
+                                    break;
                                 case "Berdoa":
                                     ((MejaKursi) any).berdoa(sim);
                                     break;
                                 case "Minum":
-                                    ((MejaKursi) any).minum(sim);
+                                    try{    
+                                        ((MejaKursi) any).minum(sim);
+                                        sim.getKesejahteraan().isAlive();
+                                    } catch (DeadException dead){
+                                        JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                                        new MainMenu();
+                                        World.getInstance().removeSim(sim);
+                                    }  
                                     break;
                                 default:
                                     ((MejaKursi) any).doAction(sim);
@@ -53,15 +67,36 @@ public class RoomMap {
                             String selectedAction = (String) JOptionPane.showInputDialog(null, "Pilih aksi:", "Aksi Toilet", JOptionPane.QUESTION_MESSAGE, null, actionNames, actionNames[0]);
                             switch (selectedAction){
                                 case "Mandi":
-                                    ((Toilet) any).mandi(sim);
+                                    try{
+                                        ((Toilet) any).mandi(sim);
+                                        sim.getKesejahteraan().isAlive();
+                                    } catch (DeadException dead){
+                                        JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                                        new MainMenu();
+                                        World.getInstance().removeSim(sim);
+                                    }
                                     break;
                                 default:
-                                    ((Toilet) any).doAction(sim);
+                                    try{
+                                        ((Toilet) any).doAction(sim);
+                                        sim.getKesejahteraan().isAlive();
+                                    } catch (DeadException dead){
+                                        JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                                        new MainMenu();
+                                        World.getInstance().removeSim(sim);
+                                    }
                                     break;
                             }
                         }
                         else{
-                            ((NonMakanan) any).doAction(sim);
+                            try{
+                                ((NonMakanan) any).doAction(sim);
+                                sim.getKesejahteraan().isAlive();
+                            } catch (DeadException dead){
+                                JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                                new MainMenu();
+                                World.getInstance().removeSim(sim);
+                            }
                         }
                     }
                 });
@@ -79,14 +114,36 @@ public class RoomMap {
             }
         }
         
-        MyButton back = new MyButton("Back");
-        back.setPreferredSize(new Dimension(100, 50));
-        back.addActionListener(e -> {
-            frame.dispose();
-            new LandingPage(sim);
-        });
-        frame.bottomPanel.setLayout(new BorderLayout());
-        frame.bottomPanel.add(back, BorderLayout.WEST);
+        if (sim.getcurrentRumah().getOwner() == sim){
+            MyButton back = new MyButton("Back");
+            back.setPreferredSize(new Dimension(200, 50));
+            back.addActionListener(e -> {
+                frame.dispose();
+                new LandingPage(sim);
+            });
+            frame.bottomPanel.setLayout(new BorderLayout());
+            frame.bottomPanel.add(back, BorderLayout.WEST);
+        }
+        else{
+            MyButton goHome = new MyButton("Go Home");
+            goHome.setPreferredSize(new Dimension(200, 50));
+            goHome.addActionListener(e -> {
+                sim.berkunjung(sim.getRumah());
+                frame.dispose();
+                new RoomMap(sim);
+            });
+            frame.bottomPanel.setLayout(new BorderLayout());
+            frame.bottomPanel.add(goHome, BorderLayout.WEST);
+
+            MyButton viewSimInfo = new MyButton("View Sim Info");
+            viewSimInfo.setPreferredSize(new Dimension(200, 50));
+            viewSimInfo.addActionListener(e -> {
+                new SimInfo(sim);
+            });
+            frame.bottomPanel.add(viewSimInfo, BorderLayout.CENTER);
+        }
+
+        
 
         if (sim.getcurrentRumah() != sim.getRumah()){
             MyButton goHome = new MyButton("Go Home");

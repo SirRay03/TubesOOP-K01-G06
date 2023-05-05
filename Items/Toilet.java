@@ -2,8 +2,6 @@ package Items;
 import src.*;
 public class Toilet extends NonMakanan {
 
-    private int durasiBuangAir;
-
     public Toilet(){
         super(50, 1, 1);
     }
@@ -36,6 +34,8 @@ public class Toilet extends NonMakanan {
             sim.getKesejahteraan().setHunger(-5); 
             System.out.println("Proses mandi selesai");
             World.getInstance().addWaktu(10000);
+            sim.tambahDurasiBerkunjung(10000);
+            sim.setTimerGantiKerja(10000);
             // World.getInstance().checkSimTime(10);
         }catch(InterruptedException e){
             System.out.println("Proses mandi terganggu");
@@ -53,9 +53,11 @@ public class Toilet extends NonMakanan {
                     System.out.println("Proses buang air selesai");
                     sim.getKesejahteraan().setHunger(-20);
                     sim.getKesejahteraan().setMood(10);
+                    sim.setTimerGantiKerja(10000);
                     World.getInstance().addWaktu(10000);
                     sim.setStatusBab(false);
                     sim.resetTimerBabAfterBab();
+                    sim.tambahDurasiBerkunjung(10000);
                     //World.checkAllSimTimer(10, scan);
                 } catch (InterruptedException e) {
                     return;

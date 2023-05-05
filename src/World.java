@@ -50,6 +50,17 @@ public class World{
 
     // === METHOD ===
 
+    public void removeSim(Sim sim){
+        int index = 0;
+        while (index < simCount && simList[index] != sim){
+            index++;
+        }
+        for(int i = index; i < simCount;i++){
+            simList[i] = simList[i+1];
+        }
+        simCount--;
+    }
+
     public void addSim(Sim sim, Rumah rumah){
         int horizontalAddr = (int)((Math.random() * horizontal)-1);
         int verticalAddr = (int)((Math.random() * vertical)-1);
@@ -84,7 +95,7 @@ public class World{
     }
 
     public String displayTime() {
-        return day + " day, " + ((time%720000)/1000/60) + "minute1";
+        return day + " day, " + ((time%720000)/1000/60) + "minute" + ((time%720000)/1000) + "second";
     }
 
     public void addDay() {
@@ -111,27 +122,10 @@ public class World{
         //     time += timeinput;
         // }
 
-    // public <Map> float getDistance (Sim[][] rumah1, Sim[][] rumah2) {
-    //     int x1 = 0;
-    //     int y1 = 0;
-    //     for (int i = 0; i < horizontal; i++) {
-    //         for (int j = 0; j < vertical; j++) {
-    //             if (getMap() == rumah1) {
-    //                 x1 = i;
-    //                 y1 = j;
-    //             }
-    //         }
-    //     }
-    //     int x2 = 0;
-    //     int y2 = 0;
-    //     for (int i = 0; i < horizontal; i++) {
-    //         for (int j = 0; j < vertical; j++) {
-    //             if (getMap() == rumah2) {
-    //                 x2 = i;
-    //                 y2 = j;
-    //             }
-    //         }
-    //     }
-    //     return (float) Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2));
-    // }
+    public int getDistance (int x1, int y1, int x2, int y2) {
+        double distance = Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2));
+        float distanceAkhir = (float) distance;
+        int finalDistance = Math.round(distanceAkhir);
+        return finalDistance;
+    }
 }

@@ -7,9 +7,11 @@ import src.*;
 import Items.*;
 
 public class PasangBarang {
-    PasangBarang(Sim sim, NonMakanan item){
+    PasangBarang(Sim sim, NonMakanan item, Ruangan buffer){
         MyFrame frame = new MyFrame("You are now in " + sim.getFirstName() + "'s house", sim.getRuangan().getNamaRuangan() + " Room");
         frame.bottomPanel.setLayout(new FlowLayout());
+
+        System.out.println("Sebelom pasang:" + buffer);
 
         JPanel map = new JPanel();
         map.setLayout(new GridLayout(6,6));
@@ -17,10 +19,7 @@ public class PasangBarang {
         map.setPreferredSize(new Dimension(600,600));
         frame.middlePanel.add(map);
 
-        // NonMakanan[] items = sim.getRuangan().toPropArray();
-        NonMakanan[][] before = sim.getRuangan().getMatriksPemetaan();
-
-        for (NonMakanan[] x : sim.getRuangan().getMatriksPemetaan()){
+        for (NonMakanan[] x : buffer.getMatriksPemetaan()){
             for (NonMakanan y : x){
                 if (y == null){
                     JButton prop = new JButton();
@@ -33,9 +32,11 @@ public class PasangBarang {
                     prop.addActionListener(e -> {
                         final int x1 = map.getComponentZOrder(prop) / 6;
                         final int y1 = map.getComponentZOrder(prop) % 6;
-                        sim.getRuangan().memasangBarang(item,x1,y1,sim);
+                        buffer.memasangBarang(item,x1,y1,sim);
                         frame.dispose();
-                        new ConfirmPasang(sim, before);
+                        System.out.println("Buffer setelah pasang: " + buffer);
+                        System.out.println("Current ruangan: " + sim.getcurrentRuangan());
+                        new ConfirmPasang(sim, buffer, item);
                     });
                     map.add(prop);
                 }

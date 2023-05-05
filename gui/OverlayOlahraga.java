@@ -28,10 +28,17 @@ public class OverlayOlahraga{
         int option = JOptionPane.showOptionDialog(null, panel, "Select duration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
         if (option == JOptionPane.OK_OPTION) {
+            try{
             int value = slider.getValue();
             sim.olahraga(value);
+            sim.getKesejahteraan().isAlive();
             JOptionPane.showMessageDialog(null, "Your sim has finished exercising!", "Exercise", JOptionPane.INFORMATION_MESSAGE);
-        frame.dispose();
+            frame.dispose();
+            } catch (DeadException dead){
+                JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                new MainMenu();
+                World.getInstance().removeSim(sim);
+            }
         }
         else{
             frame.dispose();

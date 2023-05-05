@@ -8,27 +8,26 @@ UMUM
 23. pindahin juga
 25. upgradeHouse
 
+MOVE ROOM ERROR PAS CANCEL
+
 MASALAH GUI
 3. Overlay (Main, Makan, Minum, Berdoa, Masak, Kerja, Jam, Beli barang)
+4. merenung dipindahin ke sim sama buat sim mati
 6. Percantik GUI (KALO SEMPET AJA YE)
 Non Makanan ga muncul di GUI inventory padahal kebeli di terminal 
 Work masih di kunci di GUI (janlup pake slider aja ya, pastinya tanya ke hugo)
 DayDream -> Di laptop gua, Field buat ketik pertanyaan masih kepotong gt, tp udh jalan fungsinya
 
 MASALAH FUNGSI
-
-1. Berkunjung
-4. Sim gabisa mati --> exception
-Beli Makanan -> sisa uang salah, kompor listrik dan kasur single gabisa dibeli?
-Ruangan -> Non makanan kalo dipasang ga ilang ya
+Ruangan -> Non makanan kalo dipasang ga ilang ya 
 Ruangan -> Rotate Properti (rotate barang kalau hapus barang)
-Jam -> ini kalo ganti hari masih rusak. (saran gua mending dibuat nambah aja waktunya, 0-12 gausah ubah jadi 12-0, soalnya logic time yg dibuat enji begitu, tp bebas ajaa sih)
-Jam -> gua beli barang berhasil, tapi belum keliatan di Jam
-Jam -> gua beli rumah ke detect, tp pas lakuin sesuatu, sisa waktunya malah nambah wkwkw
-Jam -> gua beli kasur beda tipe, masih keliatannya kasur doang
 Kerja -> gua masukin 240, dia kerja, selesai, trus kerja lagi kedua kali padahal ga di input apa2
 Pasang barang
 22. rotate barang blom dicoba
-16. Help benerin
-18. Blm bisa mati
 Cek efek2 dari tiap aksi, nambah ngurang mood nya dkk
+
+CHEAT
+main
+upgrade rumah
+efek tidur
+kerja

@@ -69,7 +69,7 @@ public class BuyItem {
             tombol.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
                     if (sim.getUang() >= item.getValue()){
-                        sim.setUang(sim.getUang() - item.getValue());
+                        sim.setUang(-1 * item.getValue());
                         switch (e.getActionCommand()){
                         case "Nasi":
                             BahanMakanan Nasi = new BahanMakanan("Nasi", 5, 5);
@@ -134,7 +134,7 @@ public class BuyItem {
             button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 if (sim.getUang() >= map.getValue()){
-                    sim.setUang(sim.getUang() - map.getValue());
+                    sim.setUang(-1 * map.getValue());
                     switch (e.getActionCommand()){
                     case "Jam":
                         Jam jam = new Jam();

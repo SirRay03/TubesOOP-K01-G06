@@ -8,8 +8,8 @@ public class Kompor extends NonMakanan {
     private String nama;
 
     public enum tipeKompor{
-        Sedang("Gas", 100, 2, 1),
-        Kecil("Listrik", 200, 1, 1);
+        Sedang("Kompor Gas", 100, 2, 1),
+        Kecil("Kompor Listrik", 200, 1, 1);
 
         private String nama;
         private int panjang;
@@ -122,8 +122,10 @@ public class Kompor extends NonMakanan {
                 World.getInstance().addWaktu(durasiMasak);
                 sim.tambahWaktuBelumTidur(durasiMasak);
                 sim.tambahWaktuBelumBAB(durasiMasak); 
+                sim.setTimerGantiKerja(durasiMasak);
                 sim.resetTimerBelumBab();
                 sim.resetWaktuTidurAfterNoSleep();
+                sim.tambahDurasiBerkunjung(durasiMasak);
                 System.out.println("Proses memasak selesai");
             }catch(InterruptedException e){
                 System.out.println("Proses memasak terganggu");

@@ -93,7 +93,10 @@ public class Kasur extends NonMakanan {
             System.out.println("Tidur selesai!");
             World.getInstance().addWaktu(duration*1000);
             sim.tambahWaktuBelumBAB(duration*1000);
+            sim.setTimerGantiKerja(duration*1000);
             sim.resetTimerBelumBab();
+            sim.resetTimerBelumTidurSetelahTidur();
+            sim.tambahDurasiBerkunjung(duration);
             frame.dispose();
         }catch(InterruptedException e){
             System.out.println("Proses tidur terganggu");

@@ -17,7 +17,7 @@ public class Rumah{
         roomCount = 1;
         owner = null;
         waktuMulai = 0;
-        waktuUpgrade = 1080000;
+        waktuUpgrade = 5;
         hAddress = 0;
         vAddress = 0;
         hariMulai = 0;
@@ -90,9 +90,9 @@ public class Rumah{
         return owner;
     }
 
-    public int upgradeRumah(Sim sim, int uang){
+    public void upgradeRumah(Sim sim){
         World world = World.getInstance();
-        if (uang >= 1500 && sim == owner){
+        if (sim.getUang() >= 1500 && sim == owner){
             int horizontal = 11;
             int vertical = 11;
             if (roomCount > 1){
@@ -113,7 +113,7 @@ public class Rumah{
             if (arah.equals("Atas")){
                 if (denahRumah[horizontal][vertical-1] == null){
                     vertical--;
-                    uang -= 1500;
+                    sim.setUang(-1* 1500);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Ruangan sudah ada!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -123,7 +123,7 @@ public class Rumah{
             else if (arah.equals("Bawah")){
                 if (denahRumah[horizontal][vertical+1] == null){
                     vertical++;
-                    uang -= 1500;
+                    sim.setUang(-1* 1500);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Ruangan sudah ada!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -133,7 +133,7 @@ public class Rumah{
             else if (arah.equals("Kanan")){
                 if (denahRumah[horizontal+1][vertical] == null){
                     horizontal++;
-                    uang -= 1500;
+                    sim.setUang(-1* 1500);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Ruangan sudah ada!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -143,7 +143,7 @@ public class Rumah{
             else if (arah.equals("Kiri")){
                 if (denahRumah[horizontal-1][vertical] == null){
                     horizontal--;
-                    uang -= 1500;
+                    sim.setUang(-1* 1500);
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Ruangan sudah ada!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -211,6 +211,5 @@ public class Rumah{
         else {
             System.out.println("Uang tidak cukup!");
         }
-        return uang;
     }
 }

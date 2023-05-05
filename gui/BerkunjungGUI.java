@@ -14,7 +14,7 @@ public class BerkunjungGUI {
         // System.out.println(sim.getcurrentRumah());
         // System.out.println(sim.getRuangan());
 
-        MyFrame frame = new MyFrame("Let's go on a trip!", "Select the house you want to visit");
+        MyFrame frame = new MyFrame("Let's go on a trip!", "Your address is at (" + sim.getRumah().getHAddress() + ", " + sim.getRumah().getVAddress() + ")");
 
         MyButton back = new MyButton("Back");
         back.setPreferredSize(new Dimension(100, 50));
@@ -37,20 +37,23 @@ public class BerkunjungGUI {
             map.setLayout(new GridLayout(size, size));
             map.setPreferredSize(new Dimension(1200, 650));
             frame.middlePanel.add(map);    
-            for (Object o : arr) {
-                if (o == null) break;
-                Sim s = (Sim) o;
+            for (Sim s : arr) {
+                if (s == null) break;
                 if (s != sim) {
-                    MyButton button = new MyButton(s.getFullName());
+                    MyButton button = new MyButton(s.getFullName() + "(" + s.getRumah().getHAddress() + ", " + s.getRumah().getVAddress() + ")");
                     button.addActionListener(
                         new ActionListener() {
                             public void actionPerformed(java.awt.event.ActionEvent e) {
-                                sim.setCurrentRumah(s.getRumah());
-                                sim.setRuangan(s.getRumah().getDenahRumah()[11][11]);
-                                // System.out.println(sim.getRuangan());
-                                // System.out.println(sim.getcurrentRumah());
-                                new RoomMap(sim);
-                                frame.dispose();
+                                try{
+                                    sim.berkunjung(s.getRumah());
+                                    sim.getKesejahteraan().isAlive();
+                                    new RoomMap(sim);
+                                    frame.dispose();
+                                } catch (DeadException dead){
+                                    JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                                    new MainMenu();
+                                    World.getInstance().removeSim(sim);
+                                }
                             }
                         });
                     map.add(button);

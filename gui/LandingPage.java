@@ -66,13 +66,16 @@ public class LandingPage {
                 //new WorkOverlay(sim);
                 int confirm = (int) JOptionPane.showConfirmDialog(null, "Are you sure you want to go to work?", "Work", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    JOptionPane.showMessageDialog(null, "This feature is coming soon.", "Coming Soon", JOptionPane.INFORMATION_MESSAGE);
-                    try {
-						sim.kerja();
-					} catch (DeadException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+                    //JOptionPane.showMessageDialog(null, "This feature is coming soon.", "Coming Soon", JOptionPane.INFORMATION_MESSAGE);
+                    try{
+                        sim.kerja();
+                        sim.getKesejahteraan().isAlive();
+                    } catch (DeadException dead){
+                        JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                        new MainMenu();
+                        World.getInstance().removeSim(sim);
+                    }
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "You have cancelled going to work.", "Work", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -98,9 +101,7 @@ public class LandingPage {
         MyButton upgradeHouse = new MyButton("Upgrade House");
         upgradeHouse.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int uang = sim.getUang();
-                uang = sim.getRumah().upgradeRumah(sim, uang);
-                sim.setUang(uang);
+                sim.getRumah().upgradeRumah(sim);
             }
         });
         frame.middlePanel.add(upgradeHouse);
@@ -117,10 +118,20 @@ public class LandingPage {
         berkunjung.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new BerkunjungGUI(sim);
+
+                    new BerkunjungGUI(sim);
+                    
             }
         });
         frame.middlePanel.add(berkunjung);
+
+        MyButton changeJob = new MyButton("Change Job");
+        changeJob.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                sim.GantiPekerjaan();
+            }
+        });
+        frame.middlePanel.add(changeJob);
 
         MyButton returnToMain = new MyButton("Return to Main Menu");
         returnToMain.addActionListener(new ActionListener() {

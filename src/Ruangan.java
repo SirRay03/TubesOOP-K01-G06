@@ -36,7 +36,7 @@ public class Ruangan {
             memasangBarangAwal(jam, 6, 6);    
         }
     }
-
+    
     public void setMatriksPemetaan(NonMakanan[][] matriksPemetaan){
         this.matriksPemetaan = matriksPemetaan;
     }
@@ -113,10 +113,10 @@ public class Ruangan {
                     Kompor kompor = (Kompor) barang;
                     listBarang.add(kompor);
                 }
-
-                while(barang.getPanjang()<0 || barang.getLebar()<0){
-                    rotateRight(barang);
-                }
+                /*
+                while(barang.getPanjang() < barang.getLebar()){
+                    rotate(barang);
+                }*/
             }
             else{
                 System.out.println("Ada objek lain");
@@ -187,7 +187,7 @@ public class Ruangan {
         if(cek){
             System.out.println("Sudah ada furniture yang sama di ruangan ini");
         }
-        else if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() <= 6 && barang.getLebar() + x >=0){
+        else if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() +y <= 6 && barang.getLebar() + y >=0){
             boolean cekMatriks;
             cekMatriks = true;
             for (int i = x; i < barang.getPanjang() + x; i++){
@@ -265,10 +265,10 @@ public class Ruangan {
                     listBarang.add(kompor);
                     sim.getInventory().removeItemNonMakanan(kompor.getClass().getSimpleName(),1);
                 }
-
-                while(barang.getPanjang()<0 || barang.getLebar()<0){
-                    rotateRight(barang);
-                }
+                /*
+                while(barang.getPanjang() < barang.getLebar()){
+                    rotate(barang);
+                }*/
                 isPlaced= true;
             }
             else{
@@ -319,20 +319,14 @@ public class Ruangan {
         return isPlaced;
     }
     
-
-    public void rotateRight(NonMakanan barang){
+/*
+    public void rotate(NonMakanan barang){
         int temp;
         temp = barang.getLebar();
         barang.setLebar(barang.getPanjang());
-        barang.setPanjang(temp*-1);
+        barang.setPanjang(temp);
     }   
-    public void rotateLeft(NonMakanan barang){
-        int temp;
-        temp = barang.getPanjang();
-        barang.setPanjang(barang.getLebar());
-        barang.setLebar(temp*-1);
-    }
-
+*/
     public String[] getObjekNames(){
         String[] objekNames = new String[listBarang.size()];
         for(int i = 0; i < listBarang.size(); i++){

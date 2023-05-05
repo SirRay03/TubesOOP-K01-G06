@@ -1,6 +1,11 @@
 package src;
 import java.util.*;
+import javax.swing.*;
 import Items.*;
+import gui.MainMenu;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 
 public class Sim {
@@ -24,11 +29,11 @@ public class Sim {
     public double secKerja;
     private int timerNoBab;
     private boolean isBab;
+    private boolean isGantiKerja;
     private int durasiKerja;
     private int durasiBerkunjung;
     private int durasiOlahraga; 
-    
-
+    private int timerAfterChangeOccupation;
     /**
      * Konstruktor
      * @param namalengkap
@@ -49,8 +54,10 @@ public class Sim {
         this.currRumah = null;
         this.currRuangan = null;
         isBab = false;
+        isGantiKerja =false;
         timerNoSleep = 0;
         timerNoBab= 0;
+        timerAfterChangeOccupation=999999999;
     }
 
     // === GETTER ===
@@ -98,6 +105,10 @@ public class Sim {
         return timerNoSleep;
     }
 
+    public int getTimerAfterGantiKerja(){
+        return this.timerAfterChangeOccupation;
+    }
+
     public Rumah getRumah(){
         return this.ownRumah;
     }
@@ -129,11 +140,14 @@ public class Sim {
     public Rumah getcurrentRumah() {
         return currRumah;
     }
+    public boolean getisGantiKerja(){
+        return this.isGantiKerja;
+    }
 
     // === SETTER ===
 
-    public void setUang(int uang) {
-            this.uang += uang;
+    public synchronized void setUang(int uang) {
+            this.uang = this.uang + uang;
     }
 
     public void setStatus(String status) {
@@ -164,7 +178,18 @@ public class Sim {
         this.durasiKerja += durasi;
     }
 
+    public void setTimerGantiKerja(int duration){
+        if(isGantiKerja){
+            this.timerAfterChangeOccupation += duration;
+        }
+        else{
+            this.timerAfterChangeOccupation =0;
+        }
+    }
+
     // === METHOD ===
+
+    
 
     public void tambahWaktuBelumTidur(int duration){
         this.timerNoSleep += duration; 
@@ -210,8 +235,15 @@ public class Sim {
         {
             System.out.println("Waktu Tidur Anda kurang! Sim terluka! Segeralah tidur");
             timerNoSleep = 0;
-            kesejahteraan.setHealth(-5);
-            kesejahteraan.setMood(-5);
+            try{
+                kesejahteraan.setHealth(-5);
+                kesejahteraan.setMood(-5);
+                kesejahteraan.isAlive();
+            } catch (DeadException dead){
+                JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                new MainMenu();
+                    World.getInstance().removeSim(this);
+            }
         }
     }
 
@@ -266,73 +298,81 @@ public class Sim {
     public void setStatusBab(boolean isBab){
         this.isBab = isBab;
     }
-    public void berkunjung (Scanner scan) {
-        setStatus("Sim sedang berkunjung");
-        boolean isValid = false;
-        int i = 0;
-        while (!isValid)
-        {
-            try {
-                System.out.println("Daftar rumah yang ada di World : ");
-                for (int x = 0; x < 64; x++)
-                {
-                    for (int y = 0; y < 64; y++) 
-                    {
-                        if (World.getInstance().getMap()[x][y] != null) 
-                        {
-                            System.out.println((i+1) + ". " + World.getInstance().getSimList()[i].getFirstName());
-                        }
-                    }
+    public void setisGantiKerja(boolean status){
+            this.isGantiKerja = status;
+    }
+
+    public void berkunjung (Rumah dikunjung) {
+        currRuangan = dikunjung.getDenahRumah()[11][11];
+        int x1 = currRumah.getHAddress();
+        int y1 = currRumah.getVAddress();
+        int x2 = dikunjung.getHAddress();
+        int y2 = dikunjung.getVAddress();
+        int waktuberkunjung = World.getInstance().getDistance(x1, y1, x2, y2);
+        int confirm = (int) JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin berkunjung ke rumah ini? Proses ini akan memakan waktu " + waktuberkunjung + " detik.", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            System.out.println("Proses berkunjung dimulai");
+            Thread t = new Thread(()->{
+            try{
+                    currRumah = dikunjung;// get rumah sesuai opsi yang dipilih
+                    Thread.sleep(waktuberkunjung*1000); //totalWaktuBerkunjung*1000
+                    World.getInstance().addWaktu(waktuberkunjung*1000);
+                    setTimerGantiKerja(waktuberkunjung*1000);
+                    System.out.println(waktuberkunjung); 
+                    System.out.println("Proses berkunjung selesai");
                 }
-                System.out.print("Pilih rumah: ");
-                //opsi = scan.nextLine(); // bingung nnt sim nya bakal milih dlm bentuk apa ??
-                isValid = true;
+                catch(InterruptedException e){
+                    System.out.println("Proses berkunjung terganggu");
+                }
+            });
+            t.start();
+            try{
+                t.join();
+            }catch(InterruptedException e){
+                System.out.println("Proses berkunjung terganggu");
             }
-            catch (Exception e) {
-                System.out.println("Input invalid, silahkan input angka!");
-                scan.nextLine();
-            }
+        }   
+        else{
+            System.out.println("Proses berkunjung dibatalkan");
         }
-        for (int x = 0; x < 64; x++)
-        {
-            for (int y = 0; y < 64; y++) 
-            {
-                if (World.getInstance().getMap()[x][y] == null) 
-                {
-                    System.out.println("Tidak ada rumah di lokasi tersebut, tidak bisa dikunjungi!");
-                }
-                else if (World.getInstance().getMap()[x][y].getOwner().getFullName().equals(getFullName())){
-                    System.out.println("Tidak bisa berkunjung ke rumah sendiri!");
-                }
-            }
-        }
-        //float waktuberkunjung = World.getInstance().getDistance(); // gatau cara masukkin parameter rumah1, rumah2ny gmn
-        float waktuberkunjung = 30;
-        int totalWaktuBerkunjung = (int) (waktuberkunjung * 10);
-        int durasiBerkunjung = totalWaktuBerkunjung;
+    }
+
+    public void pulang () {
+        int x1 = currRumah.getHAddress();
+        int y1 = currRumah.getVAddress();
+        int x2 = ownRumah.getHAddress();
+        int y2 = ownRumah.getVAddress();
+        float waktuPulang = World.getInstance().getDistance(x1, x2, y1, y2);
+        int totalWaktuPulang = ((int) waktuPulang);
         Thread t = new Thread(()->{
         try{
-                setRumah(getRumah());// get rumah sesuai opsi yang dipilih
-                Thread.sleep(totalWaktuBerkunjung*1000); 
-                getKesejahteraan().setMood(totalWaktuBerkunjung/30*10);
-                getKesejahteraan().setHunger(-(totalWaktuBerkunjung/30*10)); 
-                // World.getInstance().addWaktu (totalWaktuBerkjung); nambahin waktu di world karean aksi aktif 
-                System.out.println("Proses berkunjung selesai");
+                setCurrentRumah(ownRumah);
+                Thread.sleep(totalWaktuPulang*1000); 
+                World.getInstance().addWaktu(totalWaktuPulang); 
+                setTimerGantiKerja(totalWaktuPulang*1000);
+                System.out.println("Berhasil Pulang! Kamu sedang berada di rumah kamu sendiri");
             }
             catch(InterruptedException e){
-                System.out.println("Proses berkunjung terganggu");
+                System.out.println("Proses pulang terganggu, tidak bisa pulang!");
             }
         });
         t.start();
         try{
             t.join();
         }catch(InterruptedException e){
-            System.out.println("Proses berkunjung terganggu");
+            System.out.println("Proses pulang terganggu, tidak bisa pulang!");
         }
     }
 
-    public void selesaiBerkjung () {
-        setRumah(currRumah);
+    public void tambahDurasiBerkunjung (int duration) {
+        if (currRumah != ownRumah) {
+            durasiBerkunjung += duration ;
+            if (durasiBerkunjung >= 30000) {
+                 getKesejahteraan().setMood(10);
+                 getKesejahteraan().setHunger(-10);
+                 durasiBerkunjung -= 30000;
+            }
+        }
     }
 
     public void olahraga(int waktuOlahraga){
@@ -356,8 +396,10 @@ public class Sim {
             // World.getInstance().checkSimTime(durasiOlahraga);
             tambahWaktuBelumTidur(waktuOlahraga*1000);
             tambahWaktuBelumBAB(waktuOlahraga*1000); 
+            setTimerGantiKerja(waktuOlahraga*1000);
             resetTimerBelumBab();
             resetWaktuTidurAfterNoSleep();
+            tambahDurasiBerkunjung(waktuOlahraga);
             System.out.println("Proses olahraga selesai");
         }catch(InterruptedException e){
             System.out.println("Proses olahraga terganggu");
@@ -414,142 +456,127 @@ public class Sim {
         }
     }
 
-    public void kerja() throws DeadException{
-        setStatus("Sim sedang bekerja");
-        Scanner scan = new Scanner(System.in);
-        boolean valid = false;
-        double sec = 0;
-        int waktuKerja = 0;
-        while(!valid){
-            try{
-                System.out.print("Masukkan durasi kerja: ");
-                waktuKerja = scan.nextInt();
-                valid = true;
-            }
-            catch (Exception e)
-            {
-                System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                scan.nextLine();
-            }
+    public void kerja(){
+        if(getTimerAfterGantiKerja() < 720000){
+            JOptionPane.showMessageDialog(null, "Kamu baru saja ganti kerja, tunggu 1 hari lagi untuk ganti kerja lagi", "Gagal Berangkat Kerja", JOptionPane.ERROR_MESSAGE);
         }
-        while(waktuKerja % 120 != 0){
-            System.out.println("Input harus berupa kelipatan 120!");
-            valid = false;
-            while (!valid)
-            {
-                try 
-                {
-                    System.out.print("Masukkan durasi kerja (dalem detik dan kelipatan 240):");
-                    waktuKerja = scan.nextInt();
-                    valid = true;
-                }
-                catch (Exception e) 
-                {
-                    System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                    scan.nextLine();
-                }
-            }
-        }
-        int durasiKerja = waktuKerja; // variabel buat durasi kerja
-        while(waktuKerja%120 == 0){
-            if(waktuKerja == 120){ // kerja 2 menit (belom gajian)
-                System.out.println("Sim sedang bekerja...");
-                Thread t = new Thread (()->{
-                try{
-                    Thread.sleep(3000); // 120 detik (1 siklus kerja)
-                } catch(InterruptedException e){
-                    System.out.println("Proses bekerja terganggu");
-                }
-                });
-                t.start();
-                try{
-                    t.join();
-                    //long  elapsedTime = System.currentTimeMillis() - start; //120000
-                    //sec = sec + Math.floor(elapsedTime/1000); // 120 detik = 2 menit
-                    //getGaji();
-                    getKesejahteraan().setMood(-40);
-                    getKesejahteraan().setHunger(-40);
-                    World.getInstance().addWaktu(durasiKerja);
-                    // World.getInstance().checkSimTime(durasiKerja);
-                    tambahWaktuBelumTidur(waktuKerja);
-                    tambahWaktuBelumBAB(waktuKerja); 
-                    resetTimerBelumBab();
-                    resetWaktuTidurAfterNoSleep();
-                }catch(InterruptedException e){
-                    System.out.println("Proses bekerja terganggu");
-                }
+        else{
+            setisGantiKerja(false);
+            setStatus("Sim sedang bekerja");
 
-                if (sec == 240.0){
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.setPreferredSize(new Dimension(500, 100));
+            JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 240, 0);
+            slider.setMajorTickSpacing(120);
+            slider.setMinorTickSpacing(120);
+            slider.setSnapToTicks(true);
+            slider.setPaintTicks(true);
+            slider.setPaintLabels(true);
+            panel.add(slider, BorderLayout.CENTER);
+            JOptionPane.showOptionDialog(null, panel, "Select duration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+            int durasiKerja = slider.getValue();
+
+            double totalKerja = 0;
+             System.out.println(durasiKerja);
+                if(durasiKerja == 120){ // kerja 2 menit (belom gajian)
+                    System.out.println("Sim sedang bekerja...");
+                    Thread t = new Thread (()->{
+                    try{
+                        Thread.sleep(3000); // 120 detik (1 siklus kerja)
+                    } catch(InterruptedException e){
+                        System.out.println("Proses bekerja terganggu");
+                    }
+                    });
+                    t.start();
+                    try{
+                        t.join();
+                        System.out.println("Proses bekerja selesai");
+                        getKesejahteraan().setMood(-40);
+                        getKesejahteraan().setHunger(-40);
+                        World.getInstance().addWaktu(durasiKerja);
+                        setDurasiKerja(1000);
+                        // World.getInstance().checkSimTime(durasiKerja);
+                        tambahWaktuBelumTidur(durasiKerja);
+                        tambahWaktuBelumBAB(durasiKerja); 
+                        resetTimerBelumBab();
+                        resetWaktuTidurAfterNoSleep();
+                        tambahDurasiBerkunjung(durasiKerja);
+                        totalKerja += durasiKerja;
+                        //gajian();
+                    }catch(InterruptedException e){
+                        System.out.println("Proses bekerja terganggu");
+                    }
+
+                    /* if (sec == 240.0){
+                        setUang(pekerjaan.getGaji());
+                    } */
+                }
+                else if (durasiKerja == 240){ // kerja 4 menit (langsung gajian)
+                    System.out.println("Sim sedang bekerja");
+                    Thread t = new Thread (()->{
+                    try{
+                        Thread.sleep(3000); // 240 detik (1 siklus kerja) cit dulu
+                        //setUang(getGaji());
+                        setDurasiKerja(240);
+                        getKesejahteraan().setMood(-80);
+                        getKesejahteraan().setHunger(-80);
+                    } catch(InterruptedException e){
+                        System.out.println("Proses bekerja terganggu");
+                    }
+                    });
+                    t.start();
+                    try{
+                        t.join();
+                        System.out.println("Proses bekerja selesai"); 
+                        getKesejahteraan().setMood(-80);
+                        getKesejahteraan().setHunger(-80);
+                        World.getInstance().addWaktu(durasiKerja);
+                        setDurasiKerja(120);
+                        // World.getInstance().checkSimTime(durasiKerja);
+                        tambahWaktuBelumTidur(durasiKerja);
+                        tambahWaktuBelumBAB(durasiKerja); 
+                        resetTimerBelumBab();
+                        resetWaktuTidurAfterNoSleep();
+                        tambahDurasiBerkunjung(durasiKerja);
+                        totalKerja += durasiKerja;
+                        //gajian();
+                    }catch(InterruptedException e){
+                        System.out.println("Proses bekerja terganggu");
+                    }
+                }
+                if(getdurasiKerja() >= 240){
                     setUang(pekerjaan.getGaji());
                 }
-            }
-            else if (waktuKerja == 240){ // kerja 4 menit (langsung gajian)
-                System.out.println("Sim sedang bekerja");
-                Thread t = new Thread (()->{
-                try{
-                    Thread.sleep(3000); // 240 detik (1 siklus kerja)
-                    //setUang(getGaji());
-                    getKesejahteraan().setMood(-80);
-                    getKesejahteraan().setHunger(-80);
-                } catch(InterruptedException e){
-                    System.out.println("Proses bekerja terganggu");
-                }
-                });
-                t.start();
-                try{
-                    t.join();
-                    System.out.println("Proses bekerja selesai");
-                    getKesejahteraan().setMood(-80);
-                    getKesejahteraan().setHunger(-80);
-                    gajian();
-                }catch(InterruptedException e){
-                    System.out.println("Proses bekerja terganggu");
-                }
-            }
-            else if(waktuKerja > 240){ //360
-                throw new DeadException();
-            }
         }
-        scan.close();
-
-
     }
-    public void gajian(){
-        elapsedTimeKerja = System.currentTimeMillis() - startKerja;
-        secKerja = Math.floor(elapsedTimeKerja/1000);
-        if(secKerja > 240.0){
+    /* public void gajian(){
+        /* elapsedTimeKerja = System.currentTimeMillis() - startKerja;
+        secKerja = Math.floor(elapsedTimeKerja/1000); */
+        /* if(getdurasiKerja() > 240.0){
             setUang(pekerjaan.getGaji());
+        } */
+    //} */
+     public void GantiPekerjaan(){
+        if (getdurasiKerja()<720){
+            JOptionPane.showMessageDialog(null, "Kerjanya kurang lama", "Ganti Pekerjaan", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-     public void GantiPekerjaan(Pekerjaan pekerjaan){
-        Scanner scan = new Scanner(System.in);
-        String profesiBaru = this.pekerjaan.getProfesi();
-        boolean valid = false;
-        //cek apakah pekerjaan baru ada di list pekerjaan
-        while (profesiBaru != "Dokter" || profesiBaru != "Badut Sulap" || profesiBaru != "Programmer" || profesiBaru != "Polisi" || profesiBaru != "Koki"){
-                try{
-                    System.out.print("Masukkan nama pekerjaan: ");
-                    profesiBaru = scan.nextLine();
-                    valid = true;
+        else{
+            String[] fullList = {"Dokter", "Badut Sulap", "Programmer", "Polisi", "Koki"};
+            String[] listKerja = new String[fullList.length-1];
+            int i = 0;
+            for (String s: fullList){
+                if (!(s.equals(pekerjaan.getProfesi()))){
+                    listKerja[i] = s;
                 }
-                catch (Exception e)
-                {
-                    System.out.println("Input tidak valid. Masukkan input berupa angka!");
-                    scan.nextLine();
-                }
-        }
-        
-        if(getdurasiKerja()>720){
-            valid = true;
-        }
-        if(valid){
-            //cek uang cukup apa belom
-            if(profesiBaru == "Dokter"){
+            }
+            String profesiBaru = (String) JOptionPane.showInputDialog(null, "Pilih pekerjaan baru", "Ganti Pekerjaan", JOptionPane.QUESTION_MESSAGE, null, listKerja, listKerja[0]);
+            setisGantiKerja(true);
+            /* if(profesiBaru == "Dokter"){
                 setUang(-25);
                 pekerjaan.setPekerjaan("Dokter");
                 setDurasiKerja(-getdurasiKerja());
                 System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+
             }
             else if(profesiBaru == "Programmer"){
                 setUang(-23);
@@ -578,8 +605,41 @@ public class Sim {
             }
             else{
                 System.out.println("Gagal mengganti pekerjaan");
+            } */
+            switch(profesiBaru){
+                case "Dokter":
+                    setUang(-25);
+                    pekerjaan.setPekerjaan("Dokter");
+                    setDurasiKerja(-getdurasiKerja());
+                    System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+                    break;
+                case "Koki":
+                    setUang(-10);
+                    pekerjaan.setPekerjaan("Koki");
+                    setDurasiKerja(-getdurasiKerja());
+                    System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+                    break;
+                case "Badut Sulap":
+                    setUang(-8);
+                    pekerjaan.setPekerjaan("Badut Sulap");
+                    setDurasiKerja(-getdurasiKerja());
+                    System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+                    break;
+                case "Programmer":
+                    setUang(-23);
+                    pekerjaan.setPekerjaan("Programmer");
+                    setDurasiKerja(-getdurasiKerja());
+                    System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+                    break;
+                case "Polisi":
+                    setUang(-18);
+                    pekerjaan.setPekerjaan("Polisi");
+                    setDurasiKerja(-getdurasiKerja());
+                    System.out.println("Pekerjaan berhasil diganti menjadi"+ this.pekerjaan);
+                    break;
             }
+            timerAfterChangeOccupation = 0;
         }
-            scan.close();
+        
 }
     }

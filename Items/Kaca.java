@@ -28,8 +28,12 @@ public class Kaca extends NonMakanan {
             sim.getKesejahteraan().setMood(5); //namabah mood 5
             sim.getKesejahteraan().setHunger(-3); //ngurang kenyang 3
             System.out.println("Proses berkaca selesai");
-            sim.tambahWaktuBelumTidur(1);
-            sim.tambahWaktuBelumBAB(1);
+            sim.tambahWaktuBelumTidur(5000);
+            sim.tambahWaktuBelumBAB(5000);
+            sim.setTimerGantiKerja(5000);
+            sim.resetTimerBelumBab();
+            sim.resetWaktuTidurAfterNoSleep();
+            sim.tambahDurasiBerkunjung(5000);
         }catch(InterruptedException e){
             System.out.println("Proses berkaca terganggu");
         }
