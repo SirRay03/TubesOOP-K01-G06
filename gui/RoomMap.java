@@ -9,7 +9,7 @@ import Items.*;
 
 public class RoomMap {
     RoomMap(Sim sim){
-        MyFrame frame = new MyFrame("You are now in " + sim.getFirstName() + "'s house", sim.getRuangan().getNamaRuangan() + " Room");
+        MyFrame frame = new MyFrame("You are now in " + sim.getcurrentRumah().getOwner().getFirstName() + "'s house", sim.getRuangan().getNamaRuangan() + " Room");
 
         JPanel map = new JPanel();
         map.setLayout(new GridLayout(6,6));

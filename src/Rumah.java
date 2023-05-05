@@ -50,6 +50,10 @@ public class Rumah{
         return null;
     }
 
+    public Ruangan[][] getDenahRumah(){
+        return denahRumah;
+    }
+
     public int getWaktuMulai(){
         return waktuMulai;
     }
