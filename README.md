@@ -23,7 +23,7 @@ Download semua file zip dari github di branch Main
 Tulis command berikut di terminal yang berada di directory file 
 javac -cp ".;gui/*;src/*;Items/*" -d . Main.java gui/*.java src/*.java Items/*.java && jar cvfm SimPlicity.jar META-INF/MANIFEST.MF *.class gui/*.class src/*.class Items/*.class
 
-### Step 5 : Run
+### Step 4 : Run
 Double click file simplicity tersebut dan aplikasi berhasil dibuka dan bisa dimainkan
 
 ## Happy Playing Sims!
