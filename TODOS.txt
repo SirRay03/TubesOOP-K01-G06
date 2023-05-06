@@ -1,0 +1,29 @@
+Josua 6 MAY TESTING
+
+(ALL)
+- ini di jam yang ada di Main Menu jadi kacau, main sedetik nambah sehari wkwk, trus bisa sampe 120 second
+(TBS)
+- (SIM) SPEK: Aksi menambah SIM hanya dapat dilakukan satu hari sekali (kita masih bisa beberapa kali)
+- (PASANG BARANG) Pas milih kotak untuk masang barang, dibawahnya persis gabisa, tp 2 kotak dibawah bisa. Pas kepasang, jadinya dibawah 1 kotak
+- (SIM) pas bikin SIM selanjut2nya, ternyata tempat mendirikan rumah nya bisa milih coy wkwkwk 
+
+(HUGO)
+- (KERJA) belum konsumsi waktu
+- (KERJA) gua kerja as programmer cuma 120 detik dapet 90, di spek 4 menit 45
+- (KERJA) gua kerja as polisi cuma 120 detik dapet 35, di spek 4 menit 35
+- (KERJA) gua kerja as polisi cuma 120 detik udah bisa ganti kerjaan
+- (KERJA) pas ganti kerjaan belum kekurang uang nya 1/2 dari kerjaan baru
+- (KERJA) pas baru aja ganti kerjaan, pesan error nya salah, harusnya tungguu satu hari lagi untuk KERJA LAGI bukan GANTI KERJA LAGI
+
+(RAYSI)
+- Status kalo dari spek bisa dilihat
+
+(JOSUA)
+- (MASAK) BUKU RESEP NYA BELUM ADA COOO (tambahin dimana ya?)
+
+(ENJI)
+- (GUI) info terluka kalo belum tiduur nya belum keluar di GUI 
+- (BERKUNJUNG) Kasih flag di semua action kalo dilakukan di luar rumah dia sendiri ada efek berkunjungnya
+
+(WILLY)
+- (JAM) Gamau ada hari nya? Kalo saran gua sih yang sekarang di main menu hari jam menit detik bags  copy lagi ke Jam atau biarin ada tapi di page "Sim Interaction Menu"

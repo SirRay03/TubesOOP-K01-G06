@@ -1,5 +1,4 @@
 package Items;
-import java.util.Scanner;
 import javax.swing.*;
 import java.awt.*;
 
@@ -50,8 +49,9 @@ public class Kasur extends NonMakanan {
 
     public void doAction(Object... args){
         Sim sim = (Sim) args[0];
+        sim.setStatus("Sim sedang tidur");
 
-        MyOverlay frame = new MyOverlay("Your sim is now sleeping zzz...", "Do not panic if the app looks like it's not responding. It's just your sim sleeping.");
+        MyOverlay frame = new MyOverlay("Your sim is now sleeping zzz...", "Do not panic if the app looks like it's not responding. It's just your sim sleeping.", sim.getStatus());
         JPanel panel = new JPanel(new BorderLayout());
         panel.setPreferredSize(new Dimension(500, 100));
         JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 60, 0);
@@ -72,7 +72,7 @@ public class Kasur extends NonMakanan {
             return;
         }
 
-        sim.setStatus("Sim sedang tidur");
+        JOptionPane.showMessageDialog(null, "Your sim is now sleeping for " + slider.getValue() + " minutes!. Don't panic if the screen is frozen. Just press Ok and we'll notify you when it's done!", "Makan", JOptionPane.INFORMATION_MESSAGE);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -80,17 +80,18 @@ public class Kasur extends NonMakanan {
                     Thread.sleep(3000); //duration * 1000
 
                 } catch (InterruptedException e) {
-                    System.out.println("Proses tidur terganggu");
+                    JOptionPane.showMessageDialog(null, "Tidur terganggu");
+                    sim.setStatus("Idle");
+                    frame.close();
                 }
             }
-        });
-        System.out.println("Sedang tidur...");
+        });    
         thread.start();
         try{
             thread.join();
-            sim.getKesejahteraan().setHealth(30 * (duration / 240));
-            sim.getKesejahteraan().setHealth(30 * (duration / 240));
-            System.out.println("Tidur selesai!");
+            sim.getKesejahteraan().setHealth(20 * (duration / 240));
+            sim.getKesejahteraan().setMood(30 * (duration / 240));
+            JOptionPane.showMessageDialog(null, "Tidur selesai!", "Tidur", JOptionPane.INFORMATION_MESSAGE);
             World.getInstance().addWaktu(duration*1000);
             sim.tambahWaktuBelumBAB(duration*1000);
             sim.setTimerGantiKerja(duration*1000);
@@ -99,7 +100,7 @@ public class Kasur extends NonMakanan {
             sim.tambahDurasiBerkunjung(duration);
             frame.dispose();
         }catch(InterruptedException e){
-            System.out.println("Proses tidur terganggu");
+            JOptionPane.showMessageDialog(null, "Tidur terganggu");
             frame.dispose();
         }
     }

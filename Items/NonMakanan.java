@@ -1,6 +1,8 @@
 package Items;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import src.*;
 public abstract class NonMakanan implements Item, Actionable{
     protected int panjang; 
@@ -67,10 +69,8 @@ public abstract class NonMakanan implements Item, Actionable{
         World world = World.getInstance();
         Random random = new Random();
         waktuPengantaran = (random.nextInt(4) + 1)*30;
-        System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
+        JOptionPane.showMessageDialog(null, "Barang berhasil dibeli. Silakan tunggu selama " + waktuPengantaran + " detik.", "Pembelian Berhasil", JOptionPane.INFORMATION_MESSAGE);
         int finalTime = World.getInstance().getTime() + waktuPengantaran*1000;
-        System.out.println(finalTime);
-        System.out.println(World.getInstance().getTime());
         Runnable r = () -> {
             sim.addToListOnDelivery(this); 
             waktuMulai = world.getTime();
@@ -81,16 +81,19 @@ public abstract class NonMakanan implements Item, Actionable{
                         Thread.sleep(1000);
                         //Thread.sleep(waktuPengantaran*1000);
                     } catch (InterruptedException e) {
-                        System.out.println("Aksi terganggu!");
+                        JOptionPane.showMessageDialog(null, "Kurir tewas di jalan! Mohon doanya.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
             }
             sim.deleteFromListOnDelivery(this);
             waktuMulai = 0;
             hariMulai = 0;
             sim.getInventory().addItem(this, 1);
-            System.out.println(finalTime);
-            System.out.println(World.getInstance().getTime());
-            sim.getInventory().printInventory();
+            if(this instanceof Kasur || this instanceof Kompor){
+                JOptionPane.showMessageDialog(null, this.getNama() + " Telah Sampai", "Pengiriman Selesai", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, this.getClass().getSimpleName() + " Telah Sampai", "Pengiriman Selesai", JOptionPane.INFORMATION_MESSAGE);
+            }
             };
         Thread thread = new Thread(r);
         thread.start();

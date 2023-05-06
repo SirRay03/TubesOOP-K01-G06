@@ -145,15 +145,17 @@ public class Inventory<T> {
     public void removeItemNonMakanan(String itemName, int quantity){
         boolean ketemu = false;
         for (T item : items.keySet()) {
-            if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)) {
-                int currentQuantity = items.get(item);
-                if (currentQuantity - quantity == 0) {
-                    items.remove(item);
-                } else {
-                    items.put(item, currentQuantity - quantity);
+            if (item instanceof NonMakanan){
+                if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)) {
+                    int currentQuantity = items.get(item);
+                    if (currentQuantity - quantity == 0) {
+                        items.remove(item);
+                    } else {
+                        items.put(item, currentQuantity - quantity);
+                    }
+                System.out.println("Item berhasil dihapus dari inventory");
+                ketemu = true;
                 }
-            System.out.println("Item berhasil dihapus dari inventory");
-            ketemu = true;
             }
         }
         if (ketemu == false){

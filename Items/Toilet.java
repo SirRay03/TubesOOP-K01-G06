@@ -1,5 +1,8 @@
 package Items;
 import src.*;
+import gui.*;
+import javax.swing.*;
+import java.awt.*;
 public class Toilet extends NonMakanan {
 
     public Toilet(){
@@ -17,40 +20,47 @@ public class Toilet extends NonMakanan {
     
     public void mandi(Sim sim){
         sim.setStatus("Sim sedang mandi");
-        System.out.println("Sim sedang mandi...");
+        MyOverlay frame = new MyOverlay("Your sim will now take a shower, in the toilet (somehow)", "I'll censor this so you can't see anything.", sim.getStatus());
+        frame.interactionBar.setBackground(Color.BLACK);
+        frame.middlePanel.setBackground(Color.BLACK);
+        JOptionPane.showMessageDialog(null, "Please go away!! -" + sim.getFullName(), "In the toilet", JOptionPane.INFORMATION_MESSAGE);
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(10000); 
                 
             }
             catch(InterruptedException e){
-                System.out.println("Proses mandi terganggu");
+                JOptionPane.showMessageDialog(null, "Shower interrupted because someone forgot to pay the bills", "Mandi", JOptionPane.ERROR_MESSAGE);
             }
         });
         t.start();
         try{
             t.join();
+            JOptionPane.showMessageDialog(null, "Your sim is now done showering", "Mandi", JOptionPane.INFORMATION_MESSAGE);
             sim.getKesejahteraan().setMood(10);
-            sim.getKesejahteraan().setHunger(-5); 
-            System.out.println("Proses mandi selesai");
+            sim.getKesejahteraan().setHunger(-5);
             World.getInstance().addWaktu(10000);
             sim.tambahDurasiBerkunjung(10000);
             sim.setTimerGantiKerja(10000);
-            // World.getInstance().checkSimTime(10);
         }catch(InterruptedException e){
-            System.out.println("Proses mandi terganggu");
+            JOptionPane.showMessageDialog(null, "Shower interrupted because someone forgot to pay the bills", "Mandi", JOptionPane.ERROR_MESSAGE);
         }
+        sim.setStatus("Idle");
+        frame.close();
     }
 
     public void doAction(Object... args){
         Sim sim = (Sim) args[0];
         sim.setStatus("Sim sedang buang air");
+        MyOverlay frame = new MyOverlay("What are you doing looking at someone in the toilet???", "Go away, you weirdo! I'll censor this so you can't see anything!", sim.getStatus());
+        frame.interactionBar.setBackground(Color.BLACK);
+        frame.middlePanel.setBackground(Color.BLACK);
+        JOptionPane.showMessageDialog(null, "Please go away!! -" + sim.getFullName(), "In the toilet", JOptionPane.INFORMATION_MESSAGE);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(10000); // waktu buang air 10 detik
-                    System.out.println("Proses buang air selesai");
                     sim.getKesejahteraan().setHunger(-20);
                     sim.getKesejahteraan().setMood(10);
                     sim.setTimerGantiKerja(10000);
@@ -64,12 +74,13 @@ public class Toilet extends NonMakanan {
                 }
             }
         });
-        System.out.println("Sim sedang buang air...");
         thread.start();
         try{
             thread.join();
         }catch(InterruptedException e){
-            System.out.println("Proses buang air terganggu");
+            JOptionPane.showMessageDialog(null, "Great, now I've lost the mood to do it and it's all because of you!", "In the toilet", JOptionPane.INFORMATION_MESSAGE);
         }
+        sim.setStatus("Idle");
+        frame.close();
     }
-    }
+}

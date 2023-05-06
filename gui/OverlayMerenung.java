@@ -12,12 +12,12 @@ public class OverlayMerenung{
     MyOverlay frame;
 
     public OverlayMerenung(Sim sim){
-        frame = new MyOverlay("I am the magic conch shell", "Ïnsert your question here, my child");
-        
+        frame = new MyOverlay("I am the magic conch shell", "Ïnsert your question here", "Sim sedang merenung");
         JTextField textField = new JTextField();
         textField.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        textField.setPreferredSize(new Dimension(1000, 50));
+        textField.setPreferredSize(new Dimension(800, 100));
         textField.setForeground(Color.GRAY); // Set the text color to gray
+        frame.interactionBar.setForeground(Color.GRAY); // Set the text color to gray
         frame.interactionBar.add(textField);
         
         MyButton button = new MyButton("Ask");
@@ -25,20 +25,7 @@ public class OverlayMerenung{
         button.addActionListener(e -> {
             textField.setEditable(false);
             button.setEnabled(false);
-            int pilihanJawaban = new Random().nextInt(11);
-            String[] jawaban = new String[11];
-            jawaban[0] = "Semua akan baik-baik saja!";
-            jawaban[1] = "Lakukan lebih baik!";
-            jawaban[2] = "Semangat!";
-            jawaban[3] = "Tidak perlu overthinking";
-            jawaban[4] = "Just do it!";
-            jawaban[5] = "Ayo, kamu pasti bisa!";
-            jawaban[6] = "Yakin? Coba pikir lagi";
-            jawaban[7] = "Hal itu terlalu rumit untuk direnungkan";
-            jawaban[8] = "Hal yang sangat baik untuk direnungkan";
-            jawaban[9] = "Jangan terlalu dipikirkan";
-            jawaban[10] = "Merenunglah kembali";
-            JOptionPane.showMessageDialog(null,jawaban[pilihanJawaban], "Merenung", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,sim.merenung(), "Merenung", JOptionPane.INFORMATION_MESSAGE);
             sim.getKesejahteraan().setMood(3);
             sim.getKesejahteraan().setHunger(-2);
             World.getInstance().addWaktu(1000);

@@ -2,6 +2,7 @@ package Items;
 
 import javax.swing.JOptionPane;
 
+import gui.*;
 import src.Sim;
 import src.World;
 public class Kompor extends NonMakanan {
@@ -39,10 +40,16 @@ public class Kompor extends NonMakanan {
 
     public void doAction(Object... args){//memasak(Sim sim, String namaMasakan)
         Sim sim = (Sim) args[0];
+        sim.setStatus("Sim sedang memasak");
+        MyOverlay frame = new MyOverlay(sim.getFirstName() + " is now cooking!", "Call them Walter White because they be cookin' some addictive stuff..." , sim.getStatus());
         String[] cookBook = {"Nasi Ayam", "Nasi Kari", "Susu Kacang", "Tumis Sayur", "Bistik"};
         String namaMasakan = (String) JOptionPane.showInputDialog(null, "Makanan apa yang ingin dimasak?", "Masak", JOptionPane.QUESTION_MESSAGE, null, cookBook, cookBook[0]);
         MasakanBuilder builder = new MasakanBuilder();
         boolean cukup = false;
+        if (namaMasakan == null) {
+            JOptionPane.showMessageDialog(null, "You have cancelled this action.", "Masak", JOptionPane.INFORMATION_MESSAGE);
+            frame.close();
+        } else {
         switch(namaMasakan){
             case "Nasi Ayam":
                 if (sim.getInventory().checkerItemBahanMakanan("Nasi", 1) || sim.getInventory().checkerItemBahanMakanan("Ayam", 1)){
@@ -102,17 +109,18 @@ public class Kompor extends NonMakanan {
             }
                 break;
         }
+        }
         int durasiMasak = (int)Math.round(builder.getKekenyangan()*1.5);
         if (cukup){
             Masakan masakan = builder.build();
-            sim.setStatus("Sim sedang memasak");
-            System.out.println("Sim sedang memasak...");
+            JOptionPane.showMessageDialog(null, "Your sim is now cooking " + namaMasakan + " for " + durasiMasak + " seconds!. Don't panic if the screen is frozen. Just press Ok and we'll notify you when it's done!", "Masak", JOptionPane.INFORMATION_MESSAGE);
             Thread t = new Thread(()->{
             try{
                     Thread.sleep(builder.getKekenyangan()*1500); 
                 }
                 catch(InterruptedException e){
-                    System.out.println("Proses memasak terganggu");
+                    JOptionPane.showMessageDialog(null, "Proses memasak terganggu", "Gagal", JOptionPane.ERROR_MESSAGE);
+                    frame.close();
                 }
             });
             t.start();
@@ -126,11 +134,16 @@ public class Kompor extends NonMakanan {
                 sim.resetTimerBelumBab();
                 sim.resetWaktuTidurAfterNoSleep();
                 sim.tambahDurasiBerkunjung(durasiMasak);
-                System.out.println("Proses memasak selesai");
+                JOptionPane.showMessageDialog(null, "Your sim is done cooking " + namaMasakan + "!", "Masak", JOptionPane.INFORMATION_MESSAGE);
+                frame.close();
             }catch(InterruptedException e){
-                System.out.println("Proses memasak terganggu");
+                JOptionPane.showMessageDialog(null, "Proses memasak terganggu", "Gagal", JOptionPane.ERROR_MESSAGE);
+                frame.close();
             }
             sim.getInventory().addItem(masakan, 1); //ini masukin ke inventory
+        }
+        else{
+            frame.close();
         }
     }
 }

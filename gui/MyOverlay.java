@@ -5,15 +5,16 @@ import java.awt.*;
 
 public class MyOverlay extends JFrame{
 
-    JPanel middlePanel;
-    JPanel interactionBar;
+    public JPanel middlePanel;
+    public JPanel interactionBar;
 
-    public MyOverlay(String title, String subtitle){
+    public MyOverlay(String title, String subtitle, String status){
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(1250,850);
+        this.setSize(1250,875);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setLayout(new BorderLayout());
+        this.setTitle("SimplyCity 5 - TubesOOP-K01-G06");
 
         JPanel introGroup = new JPanel();
         introGroup.setPreferredSize(new Dimension(1250,100));
@@ -40,15 +41,28 @@ public class MyOverlay extends JFrame{
         
         interactionBar = new JPanel();
         interactionBar.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
-        interactionBar.setPreferredSize(new Dimension(1250, 70));
-        interactionBar.setBackground(Color.black);
+        interactionBar.setPreferredSize(new Dimension(1250, 200));
         
         middlePanel = new JPanel();
-        middlePanel.setPreferredSize(new Dimension(1250, 680));
+        middlePanel.setPreferredSize(new Dimension(1250, 550));
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setPreferredSize(new Dimension(1250, 50));
+        bottomPanel.setBackground(Color.BLACK);
+        JLabel statusBar = new JLabel("Status: " + status);
+        statusBar.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+        statusBar.setForeground(Color.white);
+        bottomPanel.add(statusBar);
+
+        JPanel bottomGroup = new JPanel();
+        bottomGroup.setPreferredSize(new Dimension(1250, 600));
+        bottomGroup.setLayout(new BorderLayout());
+        bottomGroup.add(bottomPanel, BorderLayout.SOUTH);
+        bottomGroup.add(middlePanel, BorderLayout.NORTH);
   
         this.add(introGroup, BorderLayout.NORTH);
         this.add(interactionBar, BorderLayout.CENTER);
-        this.add(middlePanel, BorderLayout.SOUTH);
+        this.add(bottomGroup, BorderLayout.SOUTH);
         this.setVisible(true);
     }
 

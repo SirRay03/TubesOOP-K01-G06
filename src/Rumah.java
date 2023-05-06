@@ -100,7 +100,11 @@ public class Rumah{
                 String selectedRoom = (String) JOptionPane.showInputDialog(null, "Pilih ruangan acuan:", "Upgrade Ruangan", JOptionPane.QUESTION_MESSAGE, null, roomNames, roomNames[0]);
                 for (int i = 0; i < 21; i++){
                     for (int j = 0; j < 21; j++){
-                        if (denahRumah[i][j] != null && selectedRoom.equals(denahRumah[i][j].getNamaRuangan())){
+                        if (selectedRoom.equals("Under Construction")){
+                            JOptionPane.showMessageDialog(null, "Ruangan masih dalam konstruksi!", "Error", JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                        else if (denahRumah[i][j] != null && selectedRoom.equals(denahRumah[i][j].getNamaRuangan())){
                             horizontal = i;
                             vertical = j;
                         }
@@ -171,6 +175,8 @@ public class Rumah{
                         owner.addToListUpgrade(this); 
                         waktuMulai = world.getTime();
                         hariMulai = world.getDay();
+                        denahRumah[h][v] = new Ruangan("Under Construction");
+                        roomCount++;
                         while (World.getInstance().getTime() <  finalTime){
                                 try {
                                     //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
@@ -179,10 +185,10 @@ public class Rumah{
                                 } catch (InterruptedException e) {
                                     System.out.println("Aksi terganggu!");
                                 }
-                        } 
+                        }
+                            denahRumah[h][v] = null; 
                             owner.deleteFromListUpgrade(this);
                             denahRumah[h][v] = new Ruangan(nama);
-                            roomCount++;
                             //JANGAN LUPA NGURANGI DUIT
                             JOptionPane.showMessageDialog(null, "Ruangan " + nama + " berhasil ditambahkan!");
                         };

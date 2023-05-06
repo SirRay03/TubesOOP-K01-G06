@@ -1,7 +1,8 @@
 package src;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
+import javax.swing.JOptionPane;
 
 import Items.*;
 
@@ -171,6 +172,7 @@ public class Ruangan {
                 }
             }
         }
+        listBarang.remove(barangDiambil);
         sim.getInventory().addItem(barangDiambil, 1);
     }
 
@@ -179,12 +181,18 @@ public class Ruangan {
         boolean isPlaced = false;
         boolean cek = false;
 
-        for(NonMakanan any : listBarang){
-            if(any.getClass().getSimpleName().equals(barang.getClass().getSimpleName())){
-                cek = true;
+        for (NonMakanan[] a : matriksPemetaan) {
+            for (NonMakanan b : a) {
+                if (b != null) {
+                    if (b.getClass().getSimpleName().equals(barang.getClass().getSimpleName())) {
+                        cek = true;
+                    }
+                }
             }
         }
+
         if(cek){
+            JOptionPane.showMessageDialog(null,"Sudah ada furniture yang sama di ruangan ini", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("Sudah ada furniture yang sama di ruangan ini");
         }
         else if(barang.getPanjang() + x <= 6 && barang.getPanjang() + x >=0 && barang.getLebar() +y <= 6 && barang.getLebar() + y >=0){
@@ -243,7 +251,7 @@ public class Ruangan {
                 else if(barang instanceof Kasur){
                     Kasur kasur = (Kasur) barang;
                     listBarang.add(kasur);
-                    sim.getInventory().removeItemNonMakanan(kasur.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItemNonMakanan(kasur.getNama(),1);
                 }
                 else if(barang instanceof Kertas){
                     Kertas kertas = (Kertas) barang;
@@ -263,7 +271,7 @@ public class Ruangan {
                 else if(barang instanceof Kompor){
                     Kompor kompor = (Kompor) barang;
                     listBarang.add(kompor);
-                    sim.getInventory().removeItemNonMakanan(kompor.getClass().getSimpleName(),1);
+                    sim.getInventory().removeItemNonMakanan(kompor.getNama(),1);
                 }
                 /*
                 while(barang.getPanjang() < barang.getLebar()){
@@ -277,44 +285,6 @@ public class Ruangan {
         }
         else{
             System.out.println("Objek melewati ruangan");
-        }
-        return isPlaced;
-    }
-    public boolean pindahBarang(NonMakanan barang,int x,int y,Sim sim){
-        boolean cekMatriks;
-        boolean isPlaced;
-
-        cekMatriks = true;
-        isPlaced = false;
-        if(barang.getPanjang() + x-1 <= 6 && barang.getPanjang() + x-1 >=0 && barang.getLebar() + y-1 <= 6 && barang.getLebar() + y -1 >=0){
-            for (int i = x-1; i < barang.getPanjang() + x-1; i++){
-                for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
-                    if( matriksPemetaan[i][j] != null ) {
-                        if(matriksPemetaan[i][j] != barang){
-                            cekMatriks = false;
-                        }
-                    }
-                }
-            }
-            if(cekMatriks){
-                for (int i = x-1; i < barang.getPanjang() + x-1; i++){
-                    for(int j = y-1; j <barang.getLebar() + y-1 ; j++){
-                        if( matriksPemetaan[i][j] == barang ) {
-                            matriksPemetaan[i][j] = null;                
-                        }
-                    }
-                }
-                isPlaced = true;
-                listBarang.remove(barang);
-                sim.getInventory().addItem(barang,1);
-                memasangBarang(barang, x, y,sim);
-            }
-            else{
-                System.out.println("Objek gagal dipindahkan karena ada objek lain");
-            }
-        }
-        else{
-            System.out.println("Objek gagal dipindahkan karena melewati batas ruangan");
         }
         return isPlaced;
     }
@@ -344,87 +314,5 @@ public class Ruangan {
         }
         return objek;
     }
-    /*
-    public static void main(String[] args){
-     Sim sim = new Sim("Ayam", "Goreng");
-     Kasur kasurTes = new Kasur(Kasur.tipeKasur.Kecil);
-     Scanner scan =new   Scanner(System.in);  
-     Ruangan ruangan = new Ruangan("Kamar");
-     String input ="";
-     sim.getInventory().addItem(kasurTes, 1); 
-        //Memasang barang
-     NonMakanan barang = ((NonMakanan)sim.getInventory().getItemNonMakanan("Kasur", 1));
-     boolean sukses = ruangan.memasangBarang(barang, 1, 1, sim);//rentang kordinatnya 1-6;
-     while(!sukses && !input.equals("Gak Jadi") ){
-         input = scan.nextLine();
-         if(input.equals("Gak Jadi")){
-             while(barang.getPanjang()<0 || barang.getLebar()<0){
-                 ruangan.rotateRight(barang);
-             }
-             if(barang instanceof Jam){
-                 Jam jam = (Jam) barang;
-                 sim.getInventory().addItem(jam, 1);
-             }
-             else if(barang instanceof Kaca){
-                 Kaca kaca = (Kaca) barang;
-                 sim.getInventory().addItem(kaca, 1);
-             }
-             else if(barang instanceof Kasur){
-                 Kasur kasur = (Kasur) barang;
-                 sim.getInventory().addItem(kasur, 1);
-             }
-             else if(barang instanceof Kertas){
-                 Kertas kertas = (Kertas) barang;
-                 sim.getInventory().addItem(kertas, 1);
-             }
-             else if(barang instanceof MejaKursi){
-                 MejaKursi mejaKursi = (MejaKursi) barang;
-                 sim.getInventory().addItem(mejaKursi, 1);
-             }
-             else if(barang instanceof Toilet){
-                 Toilet toilet = (Toilet) barang;
-                 sim.getInventory().addItem(toilet, 1);
-             }
-             else if(barang instanceof Kompor){
-                 Kompor kompor = (Kompor) barang;
-                 sim.getInventory().addItem(kompor, 1);
-             }
-         }
-         else if(input.equals("rotate kanan")){
-             ruangan.rotateRight(barang);
-             sukses = ruangan.memasangBarang(barang, 1, 1, sim);
-         }
-         else if(input.equals("rotate kiri")){
-             ruangan.rotateLeft(barang);
-             sukses = ruangan.memasangBarang(barang, 1, 1, sim);
-         }
-     }
-        if(sukses){
-            NonMakanan tes =ruangan.mengambilBarang("Kasur");
-            System.out.println(tes.getClass().getSimpleName());
-            for(int i =0;i<6;i++){
-                for(int j=0; j<6; j++){
-                    if(j==5){
-                        System.out.println(ruangan.getMatriksPemetaan()[i][j]);
-                    }
-                    else{
-                        System.out.println(ruangan.getMatriksPemetaan()[i][j] + " |");
-                    }
-                }
-            }
-
-        }
-     //mengambil barang
     
-    //Pindah barang
-    // misal pakke inputan yg sebelumnya kasur 
-    NonMakanan barang2 = ruangan.searchObjek("Kasur");
-    sukses = ruangan.pindahBarang(barang2, 2,2 , sim);
-    
-    if(sukses){
-        System.out.println("Berhasil dipindahkan");
-    }
-    scan.close();
-        
- }  */
 }     

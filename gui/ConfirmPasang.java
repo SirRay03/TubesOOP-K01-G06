@@ -40,6 +40,13 @@ public class ConfirmPasang {
         });
         frame.bottomPanel.add(confirm);
 
+        MyButton back = new MyButton("Back");
+        back.setPreferredSize(new Dimension(200, 50));
+        back.addActionListener(e -> {
+            frame.dispose();
+            new LandingPage(sim);
+        });
+
         frame.setVisible(true);
 
         JPanel map = new JPanel();
@@ -72,11 +79,19 @@ public class ConfirmPasang {
                     prop.setBorder(BorderFactory.createLineBorder(Color.BLACK));
                     map.add(prop);
                 }
-                // if (diffCount == 0){
-                //     frame.middlePanel.remove(map);
-                //     frame.middlePanel.add(new JLabel("No changes made."));
-                // }
             }
+        }
+        if (diffCount == 0){
+            frame.middlePanel.remove(map);
+            JLabel label = new JLabel("Invalid placement. No changes made.");
+            label.setPreferredSize(new Dimension(600,600));
+            label.setHorizontalAlignment(JLabel.CENTER);
+            label.setVerticalAlignment(JLabel.CENTER);
+            label.setForeground(Color.RED);
+            frame.middlePanel.add(label);
+            frame.bottomPanel.remove(cancel);
+            frame.bottomPanel.remove(confirm);
+            frame.bottomPanel.add(back);
         }
     }
 }

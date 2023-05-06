@@ -9,7 +9,7 @@ public class LandingPage {
     String[] welcome = {"Hi there, ", "Welcome, ", "Willkomen, ", "Annyeong, ", "Bonjour, ", "Hola, ", "Ciao, ", "Konnichiwa, ", "Ni hao, ", "Sawasdee, ", "Namaste, ", "Merhaba, ", "Salam, ", "Szia, ", "Sveiki, ", "Saluton, ", "Hej, ", "Hallo, ", "Hei, ", "Ahoj, ", "Hoi, ", "Halo, "};
     int random = (int)(Math.random() * 22);
 
-    LandingPage(Sim sim){
+    public LandingPage(Sim sim){
         MyFrame frame = new MyFrame("Sim Interaction Menu", welcome[random] + sim.getFirstName() + "!");
 
         MyButton viewSimInfo = new MyButton("View Sim Info");
@@ -52,7 +52,7 @@ public class LandingPage {
             public void actionPerformed(ActionEvent e) {
                 int confirm = (int) JOptionPane.showConfirmDialog(null, "Are you sure you want to exercise?", "Exercise", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    new OverlayOlahraga(sim);
+                    sim.olahraga();;
                 } else {
                     JOptionPane.showMessageDialog(null, "You have cancelled the exercise.", "Exercise", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -60,14 +60,12 @@ public class LandingPage {
         });
         frame.middlePanel.add(exercise);
 
-        MyButton goToWork = new MyButton("Go to Work");
+        MyButton goToWork = new MyButton("Work");
         goToWork.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //new WorkOverlay(sim);
                 int confirm = (int) JOptionPane.showConfirmDialog(null, "Are you sure you want to go to work?", "Work", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    //JOptionPane.showMessageDialog(null, "This feature is coming soon.", "Coming Soon", JOptionPane.INFORMATION_MESSAGE);
-                    try{
+                   try{
                         sim.kerja();
                         sim.getKesejahteraan().isAlive();
                     } catch (DeadException dead){

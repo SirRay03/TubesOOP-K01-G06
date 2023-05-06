@@ -40,7 +40,7 @@ NEW 6 MAY TESTING
 - (KERJA) pas baru aja ganti kerjaan, pesan error nya salah, harusnya tungguu satu hari lagi untuk KERJA LAGI bukan GANTI KERJA LAGI
 - (GUI) Kata nya Work aja biar kesannya aksi bukan go to someting
 - (GUI) specify aja satuannya, krn ini tidur 4 menit, tapi kerja sama olahraga tadi detik
-- (TIDUR) belum bener ini efeknya, moodnya ganaik
+- (TIDUR) belum bener ini efeknya, moodnya ganaik (done)
 - (GUI) info terluka kalo belum tiduur nya belum keluar di GUI
 - (JAM) Gamau ada hari nya? Kalo saran gua sih yang sekarang di main menu hari jam menit detik bags  copy lagi ke Jam atau biarin ada tapi di page "Sim Interaction Menu"
 - (GUI) Overlay masak belum ada
@@ -63,3 +63,31 @@ NEW 6 MAY TESTING
 - (GUI) di map barang2 yang ada di ruangan, cuma ada kasur2 doang gaada spesifikasi kasur apa atau kompor apa
 
 
+class diagram
+-Actionable
+-DeadException
+-Exit
+- Help
+-inventory
+-kesejahteraan
+-Pekerjaan
+-Ruangan 
+-Sim(done)
+-Ruamah
+-waktu
+-World (done)
+
+-BahanMakanan
+-item
+-jam
+-kaca
+-kasur
+-kertas
+-kompor
+-makanan
+-Masakan
+-masakan builder
+-mejakursi
+-NonMakanan
+-time
+-toilet

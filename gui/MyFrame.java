@@ -45,9 +45,11 @@ public class MyFrame extends JFrame {
         bottomPanel.setPreferredSize(new Dimension(1200, 50));
         bottomPanel.setBackground(Color.GRAY);
 
+
         this.add(introGroup, BorderLayout.NORTH);        
         this.add(middlePanel, BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
+        this.pack();
         this.setVisible(true);
     } 
 }

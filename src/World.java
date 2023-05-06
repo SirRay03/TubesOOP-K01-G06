@@ -23,14 +23,6 @@ public class World{
     public static World getInstance(){
         return instance;
     }
-    
-    public int getHorizontal(){
-        return horizontal;
-    }
-
-    public int getVertical(){
-        return vertical;
-    }
 
     public int getTime(){
         return time;
@@ -95,7 +87,7 @@ public class World{
     }
 
     public String displayTime() {
-        return day + " day, " + ((time%720000)/1000/60) + "minute" + ((time%720000)/1000) + "second";
+        return " day " + day + " " + ((time%720000)/1000/60) + " minute " + ((time%720000)/1000) + " second ";
     }
 
     public void addDay() {
@@ -112,15 +104,6 @@ public class World{
         }
             time += timeinput;
     }
-        // if (time + timeinput >= 720000) 
-        // {
-        //     addDay();
-        //     time = time + timeinput - 720000;
-        // }
-        // else 
-        // {
-        //     time += timeinput;
-        // }
 
     public int getDistance (int x1, int y1, int x2, int y2) {
         double distance = Math.sqrt(Math.pow(x2-x1,2)+ Math.pow(y2-y1,2));

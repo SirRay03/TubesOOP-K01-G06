@@ -7,7 +7,44 @@
     }
 
 
-
+public void goToObject(String objek){
+    //     boolean notFound = true;
+    //     for(NonMakanan nonMakanan : currRuangan.getListObjek()){
+    //         if(notFound){
+    //             if(nonMakanan.toString().equals(objek)){
+    //                 if(nonMakanan instanceof Jam){
+    //                     Jam jam = (Jam) nonMakanan;
+    //                     jam.printListAction();
+    //                 }
+    //                 else if(nonMakanan instanceof Kaca){
+    //                     Kaca kaca = (Kaca) nonMakanan;
+    //                     kaca.printListAction();
+    //                 }
+    //                 else if(nonMakanan instanceof Kasur){
+    //                     Kasur kasur = (Kasur) nonMakanan;
+    //                     kasur.printListAction();
+    //                 }
+    //                 else if(nonMakanan instanceof Kertas){
+    //                     Kertas kertas = (Kertas) nonMakanan;
+    //                     kertas.printListAction();
+    //                 }
+    //                 else if(nonMakanan instanceof MejaKursi){
+    //                     MejaKursi mejaKursi = (MejaKursi) nonMakanan;
+    //                     mejaKursi.printListAction();
+    //                 }
+    //                 else if(nonMakanan instanceof Toilet){
+    //                     Toilet toilet = (Toilet) nonMakanan;
+    //                     toilet.printListAction();
+    //                 }
+    //                 else if(nonMakanan instanceof Kompor){
+    //                     Kompor kompor = (Kompor) nonMakanan;
+    //                     kompor.printListAction();
+    //                 }
+    //                 notFound = false;
+    //             }
+    //         }
+    //     }
+    // }
 
         // firstName = new JTextField();
         // firstName.setBounds(575, 200, 500, 50);

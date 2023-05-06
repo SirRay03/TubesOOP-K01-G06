@@ -1,5 +1,6 @@
 package Items;
 import java.util.*;
+import javax.swing.*;
 
 import src.*;
 
@@ -32,11 +33,11 @@ public abstract class Makanan implements Item{
     public void beliBarang(Sim sim){
         World world = World.getInstance();
         Random random = new Random();
+
         waktuPengantaran = (random.nextInt(4) + 1)*30;
         System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran);
         int finalTime = World.getInstance().getTime() + waktuPengantaran*1000;
-        System.out.println(finalTime);
-        System.out.println(World.getInstance().getTime());
+        JOptionPane.showMessageDialog(null, "Barang berhasil dibeli. Silakan tunggu selama " + waktuPengantaran + " detik.", "Pembelian Sedang diproses", JOptionPane.INFORMATION_MESSAGE);
         Runnable r = () -> {
             sim.addToListOnDelivery(this); 
             hariMulai = world.getDay();
@@ -47,16 +48,14 @@ public abstract class Makanan implements Item{
                         Thread.sleep(1000);
                         //Thread.sleep(waktuPengantaran*1000);
                     } catch (InterruptedException e) {
-                        System.out.println("Aksi terganggu!");
+                        JOptionPane.showMessageDialog(null,"Kurir nyasar, barang tidak sampai", "Kurir Nyasar", JOptionPane.ERROR_MESSAGE);
                     }
             } 
             sim.deleteFromListOnDelivery(this);
             waktuMulai = 0;
             hariMulai = 0;
-            sim.getInventory().addItem(this, 1);   
-            System.out.println(finalTime);
-            System.out.println(World.getInstance().getTime());
-            sim.getInventory().printInventory();
+            sim.getInventory().addItem(this, 1);
+            JOptionPane.showMessageDialog(null, ((BahanMakanan) this).getNama() + " Telah Sampai", "Pengiriman Selesai", JOptionPane.INFORMATION_MESSAGE);  
             };
         Thread thread = new Thread(r);
         thread.start();
