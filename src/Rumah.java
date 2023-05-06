@@ -171,7 +171,7 @@ public class Rumah{
                         owner.addToListUpgrade(this); 
                         waktuMulai = world.getTime();
                         hariMulai = world.getDay();
-                        while (World.getInstance().getTime() <=  finalTime){
+                        while (World.getInstance().getTime() <  finalTime){
                                 try {
                                     //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
                                     Thread.sleep(1000);

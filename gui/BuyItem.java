@@ -84,23 +84,23 @@ public class BuyItem {
                             Ayam.beliBarang(sim);
                             break;
                         case "Sapi":
-                            BahanMakanan Sapi = new BahanMakanan("Sapi", 8, 10);
+                            BahanMakanan Sapi = new BahanMakanan("Sapi", 15, 12);
                             Sapi.beliBarang(sim);
                             break;
                         case "Wortel":
-                            BahanMakanan Wortel = new BahanMakanan("Wortel", 8, 10);
+                            BahanMakanan Wortel = new BahanMakanan("Wortel", 2, 3);
                             Wortel.beliBarang(sim);
                             break;
                         case "Bayam":
-                            BahanMakanan Bayam = new BahanMakanan("Bayam", 8, 10);
+                            BahanMakanan Bayam = new BahanMakanan("Bayam", 2, 3);
                             Bayam.beliBarang(sim);
                             break;
                         case "Kacang":
-                            BahanMakanan Kacang = new BahanMakanan("Kacang", 8, 10);
+                            BahanMakanan Kacang = new BahanMakanan("Kacang", 2, 2);
                             Kacang.beliBarang(sim);
                             break;
                         case "Susu":
-                            BahanMakanan Susu = new BahanMakanan("Susu", 8, 10);
+                            BahanMakanan Susu = new BahanMakanan("Susu", 1, 2);
                             Susu.beliBarang(sim);
                             break;
                         }   

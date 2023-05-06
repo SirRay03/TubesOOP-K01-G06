@@ -85,8 +85,8 @@ public class MejaKursi extends NonMakanan {
         t.start();
         try{
             t.join();
-            sim.getKesejahteraan().setMood(waktu*2); //namabah mood waktu*2
-            sim.getKesejahteraan().setHunger(-waktu); //ngurang kenyang waktu
+            // sim.getKesejahteraan().setMood(waktu*2); //namabah mood waktu*2
+            // sim.getKesejahteraan().setHunger(-waktu); //ngurang kenyang waktu
             System.out.println("Proses main selesai");
             World.getInstance().addWaktu(waktu*1000);
             // World.getInstance().checkSimTime(waktu);

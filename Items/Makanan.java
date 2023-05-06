@@ -41,7 +41,7 @@ public abstract class Makanan implements Item{
             sim.addToListOnDelivery(this); 
             hariMulai = world.getDay();
             waktuMulai = world.getTime();
-            while (World.getInstance().getTime() <=  finalTime){
+            while (World.getInstance().getTime() <  finalTime){
                     try {
                         //System.out.format("Barang berhasil dibeli. Silakan tunggu selama %d detik.\n", waktuPengantaran); 
                         Thread.sleep(1000);

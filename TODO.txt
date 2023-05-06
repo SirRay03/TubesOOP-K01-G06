@@ -12,18 +12,9 @@ MOVE ROOM ERROR PAS CANCEL
 
 MASALAH GUI
 3. Overlay (Main, Makan, Minum, Berdoa, Masak, Kerja, Jam, Beli barang)
-4. merenung dipindahin ke sim sama buat sim mati
-6. Percantik GUI (KALO SEMPET AJA YE)
-Non Makanan ga muncul di GUI inventory padahal kebeli di terminal 
-Work masih di kunci di GUI (janlup pake slider aja ya, pastinya tanya ke hugo)
-DayDream -> Di laptop gua, Field buat ketik pertanyaan masih kepotong gt, tp udh jalan fungsinya
+
 
 MASALAH FUNGSI
-Ruangan -> Non makanan kalo dipasang ga ilang ya 
-Ruangan -> Rotate Properti (rotate barang kalau hapus barang)
-Kerja -> gua masukin 240, dia kerja, selesai, trus kerja lagi kedua kali padahal ga di input apa2
-Pasang barang
-22. rotate barang blom dicoba
 Cek efek2 dari tiap aksi, nambah ngurang mood nya dkk
 
 CHEAT
@@ -31,3 +22,44 @@ main
 upgrade rumah
 efek tidur
 kerja
+
+
+
+
+NEW 6 MAY TESTING
+- Status kalo dari spek bisa dilihat
+- Go To House -> move -> cancel -> rusak
+- Phrasing load game menurut gua ganti ke change sim aja
+- new game ganti ke new sim
+- ini di jam yang ada di Main Menu jadi kacau, main sedetik nambah sehari wkwk, trus bisa sampe 120 second
+- (KERJA) belum konsumsi waktu
+- (KERJA) gua kerja as programmer cuma 120 detik dapet 90, di spek 4 menit 45
+- (KERJA) gua kerja as polisi cuma 120 detik dapet 35, di spek 4 menit 35
+- (KERJA) gua kerja as polisi cuma 120 detik udah bisa ganti kerjaan
+- (KERJA) pas ganti kerjaan belum kekurang uang nya 1/2 dari kerjaan baru
+- (KERJA) pas baru aja ganti kerjaan, pesan error nya salah, harusnya tungguu satu hari lagi untuk KERJA LAGI bukan GANTI KERJA LAGI
+- (GUI) Kata nya Work aja biar kesannya aksi bukan go to someting
+- (GUI) specify aja satuannya, krn ini tidur 4 menit, tapi kerja sama olahraga tadi detik
+- (TIDUR) belum bener ini efeknya, moodnya ganaik
+- (GUI) info terluka kalo belum tiduur nya belum keluar di GUI
+- (JAM) Gamau ada hari nya? Kalo saran gua sih yang sekarang di main menu hari jam menit detik bags  copy lagi ke Jam atau biarin ada tapi di page "Sim Interaction Menu"
+- (GUI) Overlay masak belum ada
+- (MASAK) BUKU RESEP NYA BELUM ADA COOO (tambahin dimana ya?)
+- (GUI) Overlay makan belum ada
+- (BUANG AIR) Gua makan -> main 4 menit -> ga kena efek ga buang air
+- (GUI) pindahin merenung balik ke SIM
+- (GUI) DayDream Di laptop gua, Field buat ketik pertanyaan masih kepotong gt, tp udh jalan fungsinya
+- (BERKUNJUNG) Sejauh mana bisa melakukan hal di rumah orang?
+- (PASANG BARANG) Pas milih kotak untuk masang barang, dibawahnya persis gabisa, tp 2 kotak dibawah bisa. Pas kepasang, jadinya dibawah 1 kotak
+- (PASANG BARANG) kadang ijonya muncul kadang engga, kl engga muncul tetep confirm jadi selesai tp gaada apa2, inventory ga ngurang, house juga gaberubah pertanyaan
+- (PASANG BARANG) kadang ijonya muncul kadang engga, kl engga muncul dan cancel, barang itu nambah jumlahnya di inventory wkwkwk
+- (PASANG BARANG) kalo ijo baru aman
+- (PASANG BARANG) masih bisa pasang toilet di kamar utama, 2 objek 1 ruyangan
+- (PASANG BARANG) kadang bbrp objek gabisa samsek dipasang nya
+- (UPGRADE RUMAH) misal bikin ruang diatas kamar utama, abis itu nunggu kan, nah pas nunggu kalo bikin ruang diatas kamar utama lagi masih bisa, padahal udh ada si ruang yg awal. setelah gua coba walaupun berhasil upgrade rumah, tp yg kepake adalah ruangan yg pertama dibuat
+- (GUI) overlay kertas blm ada
+- (SIM) SPEK: Aksi menambah SIM hanya dapat dilakukan satu hari sekali (kita masih bisa beberapa kali)
+- (SIM) pas bikin SIM selanjut2nya, ternyata tempat mendirikan rumah nya bisa milih coy wkwkwk 
+- (GUI) di map barang2 yang ada di ruangan, cuma ada kasur2 doang gaada spesifikasi kasur apa atau kompor apa
+
+
