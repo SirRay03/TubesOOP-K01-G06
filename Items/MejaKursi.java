@@ -2,10 +2,9 @@ package Items;
 
 import gui.*;
 import javax.swing.JOptionPane;
-import src.Sim;
 import java.util.List;
 import java.util.ArrayList;
-import src.World;
+import src.*;
 
 public class MejaKursi extends NonMakanan {
 
@@ -22,7 +21,7 @@ public class MejaKursi extends NonMakanan {
     }
 
     public void printListAction(){
-        System.out.println("1. Main");
+        System.out.println("1. Live Streaming");
         System.out.println("2. Makan");
         System.out.println("3. Minum");
         System.out.println("4. Berdoa");
@@ -54,7 +53,7 @@ public class MejaKursi extends NonMakanan {
             Thread t = new Thread(()->{
             try{
                     System.out.println("Sim sedang makan...");
-                    Thread.sleep(3000); //durasiMakan*1000
+                    Thread.sleep(durasiMakan*1000); //durasiMakan*1000
                 }
                 catch(InterruptedException e){
                     System.out.println("Proses makan terganggu");
@@ -64,37 +63,45 @@ public class MejaKursi extends NonMakanan {
             t.start();
             try{
                 t.join();
-                sim.getKesejahteraan().setHunger(((Makanan) sim.getInventory().getItem(namaMasakan, 1)).getKekenyangan());
-                World.getInstance().addWaktu(durasiMakan*1000);
-                // World.getInstance().checkSimTime(durasiMakan);
-                sim.tambahWaktuBelumTidur(durasiMakan*1000);
-                sim.tambahWaktuBelumBAB(durasiMakan*1000);
-                sim.setTimerGantiKerja(durasiMakan*1000);
-                sim.setStatusBab(true);
-                sim.resetTimerBelumBab();
-                sim.resetWaktuTidurAfterNoSleep();
-                sim.tambahDurasiBerkunjung(durasiMakan);
-                JOptionPane.showMessageDialog(null, "Your sim has finished eating!", "Makan", JOptionPane.INFORMATION_MESSAGE);
-                frame.close();
+                try{
+                    sim.getKesejahteraan().setHunger(((Makanan) sim.getInventory().getItem(namaMasakan, 1)).getKekenyangan());
+                    World.getInstance().addWaktu(durasiMakan*1000);
+                    sim.tambahWaktuBelumTidur(durasiMakan*1000);
+                    sim.tambahWaktuBelumBAB(durasiMakan*1000);
+                    sim.setTimerGantiKerja(durasiMakan*1000);
+                    sim.setStatusBab(true);
+                    sim.resetTimerBelumBab();
+                    sim.resetWaktuTidurAfterNoSleep();
+                    sim.tambahDurasiBerkunjung(durasiMakan);
+                    JOptionPane.showMessageDialog(null, "Your sim has finished eating!", "Makan", JOptionPane.INFORMATION_MESSAGE);
+                    frame.close();
+                    sim.getKesejahteraan().isAlive();
+                }
+                catch( DeadException dead){
+                JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                new MainMenu();
+                World.getInstance().removeSim(sim);
+            }
             }catch(InterruptedException e){
                 System.out.println("Proses makan terganggu");
                 sim.setStatus("Idle");
                 frame.close();
             }
-                }
+            }
         
         }
 
-    public void main(int waktu, Sim sim){//nerima waktu mau berapa lama
-        sim.setStatus("Sim sedang main");
-        System.out.println("Sim sedang main...");
+    public void liveStreaming(int waktu, Sim sim){//nerima waktu mau berapa lama
+        sim.setStatus("Sim sedang live streaming");
+        System.out.println("Sim sedang live streaming");
         MyOverlay frame = new MyOverlay(sim.getFirstName() + " is now playing!", "Playing with digital toys...", sim.getStatus());
+        JOptionPane.showMessageDialog(null, "Sim is Playing", "In the MejaKursi", JOptionPane.INFORMATION_MESSAGE);
         Thread t = new Thread(()->{
         try{
-                Thread.sleep(3000); //1 detik main waktu*1000
+                Thread.sleep(waktu*1000); //1 detik main waktu*1000
             }
             catch(InterruptedException e){
-                System.out.println("Proses main terganggu");
+                System.out.println("Proses live streaming terganggu");
                 sim.setStatus("Idle");
                 frame.close();
             }
@@ -102,21 +109,29 @@ public class MejaKursi extends NonMakanan {
         t.start();
         try{
             t.join();
-            // sim.getKesejahteraan().setMood(waktu*2); //namabah mood waktu*2
-            // sim.getKesejahteraan().setHunger(-waktu); //ngurang kenyang waktu
-            System.out.println("Proses main selesai");
-            sim.setStatus("Idle");
-            frame.close();
-            World.getInstance().addWaktu(waktu*1000);
-            // World.getInstance().checkSimTime(waktu);
-            sim.tambahWaktuBelumTidur(waktu*1000);
-            sim.tambahWaktuBelumBAB(waktu*1000); 
-            sim.setTimerGantiKerja(waktu*1000);
-            sim.resetTimerBelumBab();
-            sim.resetWaktuTidurAfterNoSleep();
-            sim.tambahDurasiBerkunjung(waktu*1000);
+            try{
+                sim.getKesejahteraan().setMood(waktu);
+                sim.getKesejahteraan().setHunger(-waktu);
+                sim.setUang(waktu*2); 
+                System.out.println("Proses live streaming selesai");
+                sim.setStatus("Idle");
+                frame.close();
+                World.getInstance().addWaktu(waktu*1000);
+                // World.getInstance().checkSimTime(waktu);
+                sim.tambahWaktuBelumTidur(waktu*1000);
+                sim.tambahWaktuBelumBAB(waktu*1000); 
+                sim.setTimerGantiKerja(waktu*1000);
+                sim.resetTimerBelumBab();
+                sim.resetWaktuTidurAfterNoSleep();
+                sim.tambahDurasiBerkunjung(waktu*1000);
+                sim.getKesejahteraan().isAlive();
+            }catch( DeadException dead){
+                JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                new MainMenu();
+                World.getInstance().removeSim(sim);
+            }
         }catch(InterruptedException e){
-            System.out.println("Proses main terganggu");
+            System.out.println("Proses Live Streaming terganggu");
             sim.setStatus("Idle");
             frame.close();
         }
@@ -126,7 +141,7 @@ public class MejaKursi extends NonMakanan {
         sim.setStatus("Sim sedang berdoa");
         MyOverlay frame = new MyOverlay(sim.getFirstName() + " is now praying!", "Praying to digital gods...", sim.getStatus());
         System.out.println("Sim sedang berdoa...");
-        JOptionPane.showMessageDialog(null, "Please go away!! -" + sim.getFullName(), "In the toilet", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Sim is now praying", "In MejaKursi", JOptionPane.INFORMATION_MESSAGE);
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(10000); //1 detik berdoa
@@ -140,17 +155,25 @@ public class MejaKursi extends NonMakanan {
         t.start();
         try{
             t.join();
-            sim.getKesejahteraan().setMood(10*3); //namabah mood 10*3
-            sim.getKesejahteraan().setHunger(10); //ngurang kenyang sebanyak waktu
-            sim.tambahWaktuBelumTidur(10000);
-            sim.tambahWaktuBelumBAB(10000); 
-            sim.setTimerGantiKerja(10000);
-            sim.resetTimerBelumBab();
-            sim.resetWaktuTidurAfterNoSleep();
-            sim.tambahDurasiBerkunjung(10000);
-            System.out.println("Proses berdoa selesai");
-            sim.setStatus("Idle");
-            frame.close();
+            try{
+                sim.getKesejahteraan().setMood(10*3); //namabah mood 10*3
+                sim.getKesejahteraan().setHunger(10); //ngurang kenyang sebanyak waktu
+                sim.tambahWaktuBelumTidur(10000);
+                sim.tambahWaktuBelumBAB(10000); 
+                sim.setTimerGantiKerja(10000);
+                sim.resetTimerBelumBab();
+                sim.resetWaktuTidurAfterNoSleep();
+                sim.tambahDurasiBerkunjung(10000);
+                System.out.println("Proses berdoa selesai");
+                sim.setStatus("Idle");
+                frame.close();
+                sim.getKesejahteraan().isAlive();
+            }
+            catch( DeadException dead){
+                JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                new MainMenu();
+                World.getInstance().removeSim(sim);
+            }
         }catch(InterruptedException e){
             System.out.println("Proses berdoa terganggu");
             sim.setStatus("Idle");
@@ -161,31 +184,41 @@ public class MejaKursi extends NonMakanan {
         sim.setStatus("Sim sedang minum");
         MyOverlay frame = new MyOverlay(sim.getFirstName() + " is now drinking!", "Drinking digital water...", sim.getStatus());
         System.out.println("Sim sedang minum...");
-        JOptionPane.showMessageDialog(null, "Please go away!! -" + sim.getFullName(), "In the toilet", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Sim is now drinking", "In MejaKursi", JOptionPane.INFORMATION_MESSAGE);
         Thread t = new Thread(()->{
         try{
                 Thread.sleep(1000); //1 detik minum
             }
             catch(InterruptedException e){
                 System.out.println("Proses minum terganggu");
+                sim.setStatus("Idle");
             }
         });
         t.start();
         try{
             t.join();
-            sim.getKesejahteraan().setMood(1); //namabah mood 1
-            sim.getKesejahteraan().setHunger(-1); //ngurang kenyang 2
-            sim.tambahWaktuBelumTidur(1000);
-            sim.tambahWaktuBelumBAB(1000); 
-            sim.setTimerGantiKerja(1000);
-            sim.resetTimerBelumBab();
-            sim.resetWaktuTidurAfterNoSleep();
-            sim.tambahDurasiBerkunjung(1000);
-            System.out.println("Proses minum selesai");
-            sim.setStatus("Idle");
-            frame.close();
+            try{
+                sim.getKesejahteraan().setMood(1); //namabah mood 1
+                sim.getKesejahteraan().setHunger(-1); //ngurang kenyang 2
+                sim.tambahWaktuBelumTidur(1000);
+                sim.tambahWaktuBelumBAB(1000); 
+                sim.setTimerGantiKerja(1000);
+                sim.resetTimerBelumBab();
+                sim.resetWaktuTidurAfterNoSleep();
+                sim.tambahDurasiBerkunjung(1000);
+                System.out.println("Proses minum selesai");
+                sim.setStatus("Idle");
+                frame.close();
+                sim.getKesejahteraan().isAlive();
+            }
+            catch( DeadException dead){
+                JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                new MainMenu();
+                World.getInstance().removeSim(sim);
+            }
         }catch(InterruptedException e){
             System.out.println("Proses minum terganggu");
+            sim.setStatus("Idle");
         }
     }
 }

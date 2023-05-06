@@ -4,15 +4,11 @@ public class Kesejahteraan{
     private int mood;
     private int hunger;
     private int health;
-    private boolean isSleep;
-    private boolean isBuangAir;
 
     public Kesejahteraan (){
         this.mood = 80;
         this.hunger =  80;
         this.health = 80;
-        this.isSleep  = true;
-        this.isBuangAir = true;
     }
 
     public int getMood(){
@@ -25,14 +21,6 @@ public class Kesejahteraan{
 
     public int getHealth(){
         return health;
-    }
-
-    public boolean getIsSleep(){
-        return isSleep;
-    }
-
-    public boolean getIsBuangAir(){
-        return isBuangAir;
     }
 
     public void setMood( int mood ){
@@ -65,14 +53,6 @@ public class Kesejahteraan{
         }
     }
 
-    public void setIsSleep( Boolean isSleep ){
-        this.isSleep  = isSleep;
-    }
-
-    public void setIsBuangAir( Boolean isBuangAir ){
-        this.isBuangAir = isBuangAir;
-    }
-
     public boolean isAlive() throws DeadException{
         if (mood <= 0 ||  hunger <= 0 || health <= 0 ){
             throw new DeadException();
@@ -81,14 +61,5 @@ public class Kesejahteraan{
             return false;
         }
     }
-
-   /*  public void olahRaga (Time time){
-        long timeLong = time.getTime()/ 1000; 
-        long pengali = Math.floorDiv(timeLong, 20);
-        int pengaliInt = ((int)pengali);
-        setMood(pengaliInt * 10);
-        setHealth(pengaliInt * -5);
-        setHealth(pengaliInt * 5);
-    } */
 
 }

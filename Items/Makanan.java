@@ -54,8 +54,8 @@ public abstract class Makanan implements Item{
             sim.deleteFromListOnDelivery(this);
             waktuMulai = 0;
             hariMulai = 0;
-            sim.getInventory().addItem(this, 1);
-            JOptionPane.showMessageDialog(null, ((BahanMakanan) this).getNama() + " Telah Sampai", "Pengiriman Selesai", JOptionPane.INFORMATION_MESSAGE);  
+            sim.getInventory().addItem(this, 1); 
+            JOptionPane.showMessageDialog(null, ((BahanMakanan) this).getNama() + " Telah Sampai", "Pengiriman Selesai", JOptionPane.INFORMATION_MESSAGE); 
             };
         Thread thread = new Thread(r);
         thread.start();

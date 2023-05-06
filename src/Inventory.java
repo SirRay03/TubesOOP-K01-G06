@@ -123,42 +123,58 @@ public class Inventory<T> {
         }
     }
 
-    public void removeItem(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
-        boolean ketemu = false;
-        for (T item : items.keySet()) {
-            if (((Makanan) item).getNama().equals(itemName)) {
-                int currentQuantity = items.get(item);
-                if (currentQuantity - quantity == 0) {
-                    items.remove(item);
-                } else {
-                    items.put(item, currentQuantity - quantity);
-                }
-            System.out.println("Item berhasil dihapus dari inventory");
-            ketemu = true;
-            }
-        }
-        if (ketemu == false){
-            System.out.println("Item tidak ditemukan di inventory");
-        }
-    }
+    // public void removeItem(String itemName, int quantity) { //pastiin aja kalo itemnya ada di inventory ||  input stringname nya harus sama persis sama nama barangnya beserta juga case sensitive
+    //     boolean ketemu = false;
+    //     for (T item : items.keySet()) {
+    //         if (((Makanan) item).getNama().equals(itemName)) {
+    //             int currentQuantity = items.get(item);
+    //             if (currentQuantity - quantity == 0) {
+    //                 items.remove(item);
+    //             } else {
+    //                 items.put(item, currentQuantity - quantity);
+    //             }
+    //         System.out.println("Item berhasil dihapus dari inventory");
+    //         ketemu = true;
+    //         }
+    //     }
+    //     if (ketemu == false){
+    //         System.out.println("Item tidak ditemukan di inventory");
+    //     }
+    // }
 
     public void removeItemNonMakanan(String itemName, int quantity){
         boolean ketemu = false;
+        NonMakanan nonMakanan = null;
+        int currentQuantity = 0;
         for (T item : items.keySet()) {
             if (item instanceof NonMakanan){
-                if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)) {
-                    int currentQuantity = items.get(item);
-                    if (currentQuantity - quantity == 0) {
-                        items.remove(item);
-                    } else {
-                        items.put(item, currentQuantity - quantity);
+                if (item instanceof Kasur || item instanceof Kompor){
+                    if (((NonMakanan) item).getNama().equals(itemName)){
+                        currentQuantity = items.get(item);
+                        nonMakanan = (NonMakanan) item;
+                        ketemu = true;
+                        break;
                     }
-                System.out.println("Item berhasil dihapus dari inventory");
-                ketemu = true;
+                }
+                else {
+                    if (((NonMakanan) item).getClass().getSimpleName().equals(itemName)){
+                        currentQuantity = items.get(item);
+                        nonMakanan = (NonMakanan) item;
+                        ketemu = true;
+                        break;
+                    }
                 }
             }
         }
-        if (ketemu == false){
+        if (ketemu){
+            if (currentQuantity - quantity == 0) {
+                items.remove(nonMakanan);
+            } else {
+                items.put((T) nonMakanan, currentQuantity - quantity);
+            }
+            System.out.println("Item berhasil dihapus dari inventory");
+        }
+        else{
             System.out.println("Item tidak ditemukan di inventory");
         }
     }

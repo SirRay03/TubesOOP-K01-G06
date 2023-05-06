@@ -104,6 +104,9 @@ public class Rumah{
                             JOptionPane.showMessageDialog(null, "Ruangan masih dalam konstruksi!", "Error", JOptionPane.ERROR_MESSAGE);
                             return;
                         }
+                        else if (selectedRoom.equals("null")){
+                            return;
+                        }
                         else if (denahRumah[i][j] != null && selectedRoom.equals(denahRumah[i][j].getNamaRuangan())){
                             horizontal = i;
                             vertical = j;
@@ -114,6 +117,7 @@ public class Rumah{
             boolean isValid = true;
             String[] opsiArah = {"Atas","Bawah","Kanan","Kiri"};
             String arah = (String) JOptionPane.showInputDialog(null, "Choose room", "Move Room", JOptionPane.QUESTION_MESSAGE, null, opsiArah, opsiArah[0]);
+            if (arah == null) return;
             if (arah.equals("Atas")){
                 if (denahRumah[horizontal][vertical-1] == null){
                     vertical--;
@@ -166,7 +170,7 @@ public class Rumah{
                     namaRuangan = JOptionPane.showInputDialog("Nama ruangan?: ");
                 }
                 int pilihan = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin menambah ruangan " + namaRuangan + "? Proses ini akan memakan waktu 18 menit.", "Upgrade rumah?", JOptionPane.YES_NO_OPTION);         
-                if (pilihan == 0){
+                if (pilihan == JOptionPane.YES_OPTION){
                     final int h = horizontal;
                     final int v = vertical;
                     final String nama = namaRuangan;
@@ -215,7 +219,7 @@ public class Rumah{
             }
         }
         else {
-            System.out.println("Uang tidak cukup!");
+            JOptionPane.showMessageDialog(null, "Uang anda tidak cukup!", "Gagal", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -52,7 +52,7 @@ public class LandingPage {
             public void actionPerformed(ActionEvent e) {
                 int confirm = (int) JOptionPane.showConfirmDialog(null, "Are you sure you want to exercise?", "Exercise", JOptionPane.YES_NO_OPTION);
                 if (confirm == JOptionPane.YES_OPTION) {
-                    sim.olahraga();;
+                    sim.olahraga();
                 } else {
                     JOptionPane.showMessageDialog(null, "You have cancelled the exercise.", "Exercise", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -116,9 +116,7 @@ public class LandingPage {
         berkunjung.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-
-                    new BerkunjungGUI(sim);
-                    
+                new BerkunjungGUI(sim);
             }
         });
         frame.middlePanel.add(berkunjung);

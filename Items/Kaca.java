@@ -1,5 +1,7 @@
 package Items;
 import src.Sim;
+import src.*;
+import gui.*;
 import gui.MyOverlay;
 import java.awt.Color;
 
@@ -17,7 +19,7 @@ public class Kaca extends NonMakanan {
         System.out.println("1. Berkaca");
     }
 
-    public void doAction(Object... args){//doaction kaca cuma butuh 1 aja, yaitu sim
+    public void doAction(Object... args){
         String message;
         Sim sim = (Sim) args[0];
         ngacaCount++;
@@ -34,7 +36,7 @@ public class Kaca extends NonMakanan {
         JOptionPane.showMessageDialog(null, "Your sim (and you) is now looking at themselves in the mirror", "Berkaca", JOptionPane.INFORMATION_MESSAGE);
         Thread t = new Thread(()->{
         try{
-                Thread.sleep(5000); //1 detik berkaca
+                Thread.sleep(5000); //5 detik berkaca
             }
             catch(InterruptedException e){
                 JOptionPane.showMessageDialog(null, "You have cancelled this action.", "Berkaca", JOptionPane.ERROR_MESSAGE);
@@ -42,17 +44,25 @@ public class Kaca extends NonMakanan {
         });
         t.start();
         try{
-            t.join(); 
-            sim.getKesejahteraan().setMood(5); //namabah mood 5
-            sim.getKesejahteraan().setHunger(-3); //ngurang kenyang 3
-            JOptionPane.showMessageDialog(null, "Your sim is now done looking at themselves in the mirror. Maybe you should not just reflect on you looks but also on your attitude", "Berkaca", JOptionPane.INFORMATION_MESSAGE);
-            sim.tambahWaktuBelumTidur(5000);
-            sim.tambahWaktuBelumBAB(5000);
-            sim.setTimerGantiKerja(5000);
-            sim.resetTimerBelumBab();
-            sim.resetWaktuTidurAfterNoSleep();
-            sim.tambahDurasiBerkunjung(5000);
-            frame.close();
+            t.join();
+            try{ 
+                sim.getKesejahteraan().setMood(5); //namabah mood 5
+                sim.getKesejahteraan().setHunger(-3); //ngurang kenyang 3
+                JOptionPane.showMessageDialog(null, "Your sim is now done looking at themselves in the mirror. Maybe you should not just reflect on you looks but also on your attitude", "Berkaca", JOptionPane.INFORMATION_MESSAGE);
+                sim.tambahWaktuBelumTidur(5000);
+                sim.tambahWaktuBelumBAB(5000);
+                sim.setTimerGantiKerja(5000);
+                sim.resetTimerBelumBab();
+                sim.resetWaktuTidurAfterNoSleep();
+                sim.tambahDurasiBerkunjung(5000);
+                sim.getKesejahteraan().isAlive();
+                frame.close();
+            }
+            catch( DeadException dead){
+                JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+                new MainMenu();
+                World.getInstance().removeSim(sim);
+            }
         }catch(InterruptedException e){
             JOptionPane.showMessageDialog(null, "You have cancelled this action.", "Berkaca", JOptionPane.ERROR_MESSAGE);
             sim.setStatus("Idle");

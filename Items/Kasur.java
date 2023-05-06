@@ -62,7 +62,7 @@ public class Kasur extends NonMakanan {
         slider.setPaintLabels(true);
         panel.add(slider, BorderLayout.CENTER);
 
-        int option = JOptionPane.showOptionDialog(null, panel, "Select duration", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+        int option = JOptionPane.showOptionDialog(null, panel, "Select duration (in seconds)", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
 
         if (option == JOptionPane.OK_OPTION) {
             duration = (slider.getValue())*60;
@@ -77,7 +77,7 @@ public class Kasur extends NonMakanan {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(3000); //duration * 1000
+                    Thread.sleep(duration*1000); //duration * 1000
 
                 } catch (InterruptedException e) {
                     JOptionPane.showMessageDialog(null, "Tidur terganggu");

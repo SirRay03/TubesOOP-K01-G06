@@ -12,9 +12,8 @@ public class MainMenu{
     MyFrame frame;
 
     public MainMenu(){
-        String[] quotes = {"TURG!!","Besok adalah hari ini", "When in doubt, kumpulin aja", "Saya Hugo, anda siapa?", "All hail Jim Pickens", "Technoblade never dies", "Juara 1 Speedrun Tubes", "Contains cordyceps","Young, Dumb, Stupid!","No Sana, No Life!","Github susah","Josua ngestan NewJeans sekarang","Sims rasa BitLife","Deadline plis dimundurin kita udah 6 hari pacaran sama laptop","Stuck tengah malem bersama dollar billsnya Lisa", "Todo list: Bangunin Willy","Correction: Josua kpopers skrg","Hugo nyolong chiki di borju"};
+        String[] quotes = {"TURG!!","Besok adalah hari ini", "When in doubt, kumpulin aja", "Saya Hugo, anda siapa?", "All hail Jim Pickens", "Technoblade never dies", "Juara 1 Speedrun Tubes", "Contains cordyceps","Young, Dumb, Stupid!","No Sana, No Life!","Github susah","Josua ngestan NewJeans sekarang","Sims rasa BitLife","Deadline plis dimundurin kita udah 6 hari pacaran sama laptop","Stuck tengah malem bersama dollar billsnya Lisa", "Todo list: Bangunin Willy","Correction: Josua kpopers skrg","Hugo nyolong chiki di borju", "Raysi karena mepet dedline, manjat pager"};
         int random = new Random().nextInt(quotes.length);
-        //quotes[random]
         frame = new MyFrame("Main Menu", World.getInstance().displayTime());
 
         MyButton newGame = new MyButton("New Sim");

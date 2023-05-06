@@ -32,15 +32,15 @@ public class RoomMap {
                 prop.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if (any.getClass().getSimpleName().equals("MejaKursi")){
-                            String[] actionNames = {"Main", "Makan", "Minum", "Berdoa"};
+                            String[] actionNames = {"Live Streaming", "Makan", "Minum", "Berdoa"};
                             String selectedAction = (String) JOptionPane.showInputDialog(null, "Pilih aksi:", "Aksi Meja Kursi", JOptionPane.QUESTION_MESSAGE, null, actionNames, actionNames[0]);
                             if (selectedAction == null) return;
                             switch (selectedAction){
-                                case "Main":
+                                case "Live Streaming":
                                     try {
                                         //try{
-                                            int number = Integer.parseInt((String) JOptionPane.showInputDialog("Lama waktu main?: "));
-                                            ((MejaKursi) any).main(number, sim);
+                                            int number = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Select Duration:", "Select duration (in seconds)", JOptionPane.QUESTION_MESSAGE, null, null, null));
+                                            ((MejaKursi) any).liveStreaming(number, sim);
                                             //sim.getKesejahteraan().isAlive();
                                         //} catch (DeadException dead){
                                             //JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
@@ -68,8 +68,7 @@ public class RoomMap {
                                 case "Makan":
                                     ((MejaKursi) any).doAction(sim);                                         
                                 default:
-                                    JOptionPane.showMessageDialog(null, "Error!", "Gagal", JOptionPane.ERROR_MESSAGE);
-                                    break;
+                                return;
                             }
                         }
                         else if (any instanceof Toilet){

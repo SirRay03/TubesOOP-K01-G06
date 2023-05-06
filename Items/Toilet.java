@@ -42,11 +42,20 @@ public class Toilet extends NonMakanan {
             World.getInstance().addWaktu(10000);
             sim.tambahDurasiBerkunjung(10000);
             sim.setTimerGantiKerja(10000);
+
         }catch(InterruptedException e){
             JOptionPane.showMessageDialog(null, "Shower interrupted because someone forgot to pay the bills", "Mandi", JOptionPane.ERROR_MESSAGE);
         }
-        sim.setStatus("Idle");
-        frame.close();
+        try{
+            sim.setStatus("Idle");
+            frame.close();
+            sim.getKesejahteraan().isAlive();
+        }
+        catch(DeadException dead){
+            JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+            new MainMenu();
+            World.getInstance().removeSim(sim);
+        }
     }
 
     public void doAction(Object... args){
@@ -80,7 +89,15 @@ public class Toilet extends NonMakanan {
         }catch(InterruptedException e){
             JOptionPane.showMessageDialog(null, "Great, now I've lost the mood to do it and it's all because of you!", "In the toilet", JOptionPane.INFORMATION_MESSAGE);
         }
-        sim.setStatus("Idle");
-        frame.close();
+        try{
+            sim.setStatus("Idle");
+            frame.close();
+            sim.getKesejahteraan().isAlive();
+        }
+        catch(DeadException dead){
+            JOptionPane.showMessageDialog(null, dead.getMessage(), "Sim telah mati", JOptionPane.ERROR_MESSAGE);
+            new MainMenu();
+            World.getInstance().removeSim(sim);
+        }
     }
 }

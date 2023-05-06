@@ -11,8 +11,6 @@ public class PasangBarang {
         MyFrame frame = new MyFrame("You are now in " + sim.getFirstName() + "'s house", sim.getRuangan().getNamaRuangan() + " Room");
         frame.bottomPanel.setLayout(new FlowLayout());
 
-        System.out.println("Sebelom pasang:" + buffer);
-
         JPanel map = new JPanel();
         map.setLayout(new GridLayout(6,6));
         map.setBackground(Color.BLUE);
@@ -34,8 +32,6 @@ public class PasangBarang {
                         final int y1 = map.getComponentZOrder(prop) % 6;
                         buffer.memasangBarang(item,x1,y1,sim);
                         frame.dispose();
-                        System.out.println("Buffer setelah pasang: " + buffer);
-                        System.out.println("Current ruangan: " + sim.getcurrentRuangan());
                         new ConfirmPasang(sim, buffer, item);
                     });
                     map.add(prop);

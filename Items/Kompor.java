@@ -42,7 +42,7 @@ public class Kompor extends NonMakanan {
         Sim sim = (Sim) args[0];
         sim.setStatus("Sim sedang memasak");
         MyOverlay frame = new MyOverlay(sim.getFirstName() + " is now cooking!", "Call them Walter White because they be cookin' some addictive stuff..." , sim.getStatus());
-        String[] cookBook = {"Nasi Ayam", "Nasi Kari", "Susu Kacang", "Tumis Sayur", "Bistik"};
+        String[] cookBook = {"Nasi Ayam (Nasi+Ayam)", "Nasi Kari (Nasi+Kentang+Wortel+Sapi)", "Susu Kacang (Susu+Kacang)", "Tumis Sayur (Wortel+Bayam)", "Bistik (Kentang+Sapi)"};
         String namaMasakan = (String) JOptionPane.showInputDialog(null, "Makanan apa yang ingin dimasak?", "Masak", JOptionPane.QUESTION_MESSAGE, null, cookBook, cookBook[0]);
         MasakanBuilder builder = new MasakanBuilder();
         boolean cukup = false;
@@ -51,10 +51,11 @@ public class Kompor extends NonMakanan {
             frame.close();
         } else {
         switch(namaMasakan){
-            case "Nasi Ayam":
+            case "Nasi Ayam (Nasi+Ayam)":
                 if (sim.getInventory().checkerItemBahanMakanan("Nasi", 1) || sim.getInventory().checkerItemBahanMakanan("Ayam", 1)){
                     JOptionPane.showMessageDialog(null, "Bahan makanan tidak cukup", "Gagal", JOptionPane.ERROR_MESSAGE);
                 }else{
+                    namaMasakan = "Nasi Ayam";
                     builder.setNama(namaMasakan);
                     builder.setKekenyangan(16);
                     builder.setNasi((BahanMakanan) sim.getInventory().getItem("Nasi", 1)); //butuh getter nasi dari inventory
@@ -62,10 +63,11 @@ public class Kompor extends NonMakanan {
                     cukup = true;
                 }
                 break;
-            case "Nasi Kari":
+            case "Nasi Kari (Nasi+Kentang+Wortel+Sapi)":
             if (sim.getInventory().checkerItemBahanMakanan("Nasi", 1) || sim.getInventory().checkerItemBahanMakanan("Kentang", 1) || sim.getInventory().checkerItemBahanMakanan("Wortel", 1) || sim.getInventory().checkerItemBahanMakanan("Sapi", 1)){
                 JOptionPane.showMessageDialog(null, "Bahan makanan tidak cukup", "Gagal", JOptionPane.ERROR_MESSAGE);
             }else{
+                namaMasakan = "Nasi Kari";
                 builder.setNama(namaMasakan);
                 builder.setKekenyangan(30);
                 builder.setNasi((BahanMakanan) sim.getInventory().getItem("Nasi", 1)); //butuh getter nasi dari inventory
@@ -75,10 +77,11 @@ public class Kompor extends NonMakanan {
                 cukup = true;
             }
             break;
-            case "Susu Kacang":
+            case "Susu Kacang (Susu+Kacang)":
             if (sim.getInventory().checkerItemBahanMakanan("Susu", 1) || sim.getInventory().checkerItemBahanMakanan("Kacang", 1)){
                 JOptionPane.showMessageDialog(null, "Bahan makanan tidak cukup", "Gagal", JOptionPane.ERROR_MESSAGE);
             }else{
+                namaMasakan = "Susu Kacang";
                 builder.setNama(namaMasakan);
                 builder.setKekenyangan(5);
                 builder.setSusu((BahanMakanan) sim.getInventory().getItem("Susu", 1)); //butuh getter nasi dari inventory
@@ -86,10 +89,11 @@ public class Kompor extends NonMakanan {
                 cukup = true;
             }
                 break;
-            case "Tumis Sayur":
+            case "Tumis Sayur (Wortel+Bayam)":
             if (sim.getInventory().checkerItemBahanMakanan("Wortel", 1) || sim.getInventory().checkerItemBahanMakanan("Bayam", 1)){
                 JOptionPane.showMessageDialog(null, "Bahan makanan tidak cukup", "Gagal", JOptionPane.ERROR_MESSAGE);
             }else{
+                namaMasakan = "Tumis Sayur";
                 builder.setNama(namaMasakan);
                 builder.setKekenyangan(5);
                 builder.setWortel((BahanMakanan) sim.getInventory().getItem("Wortel", 1)); //butuh getter dari inventory
@@ -97,16 +101,20 @@ public class Kompor extends NonMakanan {
                 cukup = true;
             }
                 break;
-            case "Bistik":
+            case "Bistik (Kentang+Sapi)":
             if (sim.getInventory().checkerItemBahanMakanan("Kentang", 1) || sim.getInventory().checkerItemBahanMakanan("Sapi", 1)){
                 JOptionPane.showMessageDialog(null, "Bahan makanan tidak cukup", "Gagal", JOptionPane.ERROR_MESSAGE);
             }else{
+                namaMasakan = "Bistik";
                 builder.setNama(namaMasakan);
                 builder.setKekenyangan(22);
                 builder.setKentang((BahanMakanan) sim.getInventory().getItem("Kentang", 1)); //butuh getter dari inventory
                 builder.setSapi((BahanMakanan) sim.getInventory().getItem("Sapi", 1));//butuh getter dari inventory
                 cukup = true;
             }
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Masakan tidak ditemukan", "Gagal", JOptionPane.ERROR_MESSAGE);
                 break;
         }
         }
@@ -127,13 +135,13 @@ public class Kompor extends NonMakanan {
             try{
                 t.join();
                 sim.getKesejahteraan().setMood(10); //namabah mood 10
-                World.getInstance().addWaktu(durasiMasak);
-                sim.tambahWaktuBelumTidur(durasiMasak);
-                sim.tambahWaktuBelumBAB(durasiMasak); 
-                sim.setTimerGantiKerja(durasiMasak);
+                World.getInstance().addWaktu(durasiMasak*1000);
+                sim.tambahWaktuBelumTidur(durasiMasak*1000);
+                sim.tambahWaktuBelumBAB(durasiMasak*1000); 
+                sim.setTimerGantiKerja(durasiMasak*1000);
                 sim.resetTimerBelumBab();
                 sim.resetWaktuTidurAfterNoSleep();
-                sim.tambahDurasiBerkunjung(durasiMasak);
+                sim.tambahDurasiBerkunjung(durasiMasak*1000);
                 JOptionPane.showMessageDialog(null, "Your sim is done cooking " + namaMasakan + "!", "Masak", JOptionPane.INFORMATION_MESSAGE);
                 frame.close();
             }catch(InterruptedException e){

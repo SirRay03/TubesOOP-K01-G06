@@ -37,7 +37,7 @@ public class Jam extends NonMakanan {
         }
         else{
             for(Item a : sim.getListOnDelivery()){
-                if(a instanceof NonMakanan){
+                if(a instanceof NonMakanan){    
                     NonMakanan nonMakanan = (NonMakanan) a;
                     duration = (nonMakanan.getWaktuPengantaran()*1000 - (world.getTime() - nonMakanan.getWaktuMulai()))/1000;
                     hour = duration/3600;
